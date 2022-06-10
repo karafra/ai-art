@@ -1,0 +1,21 @@
+import { aiArtModelService } from '@Models/ai-art-model.service';
+import { Collage } from '@Utils/collage';
+
+class AiArtService {
+  public async getArt(prompt: string): Promise<Buffer> {
+    const collage = new Collage();
+    for (let i = 0; i < 15; i++) {
+      try {
+        const response = await aiArtModelService.getImageArray(prompt);
+        await collage.constructCollage(response.images);
+        return collage.canvas.toBuffer('image/png');
+      } catch (Error) {
+        await new Promise((f) => setTimeout(f, 2000));
+        continue;
+      }
+    }
+    throw new Error('Could not process this query');
+  }
+}
+
+export const aiArtService = new AiArtService();
