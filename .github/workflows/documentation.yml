@@ -1,0 +1,29 @@
+name: Build documentation
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.3.0
+      - name: Install dependencies
+        run: npm i
+      - name: Generate documentation
+        run: npm run doc
+      - name: Push documentation
+        uses: casperdcl/push-dir@v1
+        with:
+          message: ":memo: Update documentation"
+          branch: documentation
+          dir: ./docs
+          history: false
