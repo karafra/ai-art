@@ -1,6 +1,6 @@
 require('dotenv').config({ path: `.env` });
 
-interface EnvironmentObject {
+export interface EnvironmentObject {
   environment: 'development' | 'production';
   token: string;
   botId: string;

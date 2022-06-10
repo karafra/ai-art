@@ -1,6 +1,6 @@
 import { aiArt } from '@Assets/language/ai-art';
 
-interface Copy {
+export interface Copy {
   [key: string]: string;
 }
 

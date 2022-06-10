@@ -1,7 +1,7 @@
 import { aiArtModelService } from '@Models/ai-art-model.service';
 import { Collage } from '@Utils/collage';
 
-class AiArtService {
+export class AiArtService {
   public async getArt(prompt: string): Promise<Buffer> {
     const collage = new Collage();
     for (let i = 0; i < 15; i++) {
