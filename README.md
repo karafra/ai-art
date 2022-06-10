@@ -26,7 +26,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/karafra/ai-art">
-    <img src=".github/images/logo.png" alt="Logo" width="80" height="80">
+    <img src="https://raw.githubusercontent.com/karafra/ai-art/main/.github/images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">AI Art</h3>
@@ -37,7 +37,7 @@
     <a href="https://github.com/karafra/ai-art"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/karafra/ai-art">View Demo</a>
+    <a href="https://discord.gg/VDKhbrc73Z">View Demo</a>
     ·
     <a href="https://github.com/karafra/ai-art/issues">Report Bug</a>
     ·
@@ -75,7 +75,7 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]]()
 
 Simple discord bot which generates collages based on any query you give it (most of the time). This bot uses model which you can find [here](https://huggingface.co/spaces/dalle-mini/dalle-mini)
 
@@ -209,4 +209,4 @@ Project Link: [https://github.com/karafra/ai-art](https://github.com/karafra/ai-
 [license-url]: https://github.com/karafra/ai-art/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/linkedin_username
-[product-screenshot]: .github/images/showcase.gif
+[product-screenshot]: https://raw.githubusercontent.com/karafra/ai-art/main/.github/images/showcase.gif
