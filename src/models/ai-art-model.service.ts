@@ -2,7 +2,7 @@ import { AiArtResponse } from '../types/api/ai-art';
 import { HttpClient } from '@Interceptors/http-client';
 import { AxiosResponse } from 'axios';
 
-class AiArtModelService extends HttpClient {
+export class AiArtModelService extends HttpClient {
   public constructor() {
     super('https://bf.dallemini.ai');
   }
