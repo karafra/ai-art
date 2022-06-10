@@ -34,7 +34,7 @@
   <p align="center">
     Discord bot generating AI art collages
     <br />
-    <a href="https://github.com/karafra/ai-art"><strong>Explore the docs »</strong></a>
+    <a href="https://karafra.github.io/ai-art/ "><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://discord.gg/VDKhbrc73Z">View Demo</a>
@@ -75,7 +75,11 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]]()
+<div align="center">
+
+  [![Product Name Screen Shot][product-screenshot]]()
+
+</div>
 
 Simple discord bot which generates collages based on any query you give it (most of the time). This bot uses model which you can find [here](https://huggingface.co/spaces/dalle-mini/dalle-mini)
 
@@ -147,7 +151,7 @@ Recommended method of deploying this bot is deployment on [Heroku](https://www.h
 
 Simply type `/art {query}` into discord chat and bot will react.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+_For more examples, please refer to the [Documentation](karafra.github.io/ai-art/)_
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
