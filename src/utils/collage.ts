@@ -22,14 +22,6 @@ export class Collage {
     return this;
   }
 
-  saveCollage(name = 'output'): string {
-    const src = this.canvas.createJPEGStream();
-    const outputPath = __dirname + `/${name}.jpg`;
-    const dest = fs.createWriteStream(outputPath);
-    src.pipe(dest);
-    return outputPath;
-  }
-
   getAsAttachment(name: string = Date.now().toString()): MessageAttachment {
     const buffer = this.canvas.toBuffer('image/png');
     return new MessageAttachment(buffer, `${name}.png`);
