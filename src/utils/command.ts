@@ -15,9 +15,9 @@ export class Command {
 
   /**
    * Find correct translate copy
-   * @param key
-   * @param args
-   * @returns string
+   * @param key for which to look in templates 
+   * @param args arguments to interpolate template with
+   * @returns string resulting interpolated template
    */
   public c(key: string, ...args: string[]): string {
     const selectedKey = Object.keys(this.copy).find((k) => k === key);
@@ -36,11 +36,11 @@ export class Command {
 
   /**
    * Find correct translate copy and make first letter uppercase
-   * @param key
-   * @param args
-   * @returns string
+   * @param key for which to look in templates 
+   * @param args arguments to interpolate template with
+   * @returns string resulting interpolated template
    */
-  public cBold(key: string, ...args: string[]): string {
+  public cCapitalize(key: string, ...args: string[]): string {
     const c = this.c(key, ...args);
 
     let firstLetter = false;

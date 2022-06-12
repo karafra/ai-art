@@ -4,11 +4,11 @@ import * as _ from 'underscore';
 export default class Utility {
   /**
    * Get random value or subset of values
-   * @param array
-   * @param subset
-   * @returns
+   * @param array array to pick from
+   * @param subset how many to pick from array
+   * @returns random elements of array
    */
-  static random(array: any[], subset?: number): any {
+  static random<T>(array: T[], subset?: number): T | T[] {
     if (subset) {
       return _.sample(array, subset);
     }
@@ -18,9 +18,9 @@ export default class Utility {
 
   /**
    * Checks if every substrings is within copy
-   * @param subStrings
-   * @param copy
-   * @returns boolean
+   * @param subStrings strings to look for
+   * @param copy string to check
+   * @returns true if string contains all substrings, false otherwise
    */
   static checkStatementForStrings(subStrings: string[], copy: string): boolean {
     return subStrings.every((s) => copy.indexOf(s) > -1);
@@ -28,8 +28,8 @@ export default class Utility {
 
   /**
    * Find role
-   * @param roleManager
-   * @param roleName
+   * @param roleManager discord role manager
+   * @param roleName name of role
    * @returns Role | undefined
    */
   static findRole(
