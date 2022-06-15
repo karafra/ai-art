@@ -31,6 +31,7 @@
     "skipLibCheck": true                       /* Skip type checking of declaration files. */,
     "forceConsistentCasingInFileNames": true   /* Disallow inconsistently-cased references to the same file. */
   },
-  "include": ["src/**/*.ts", "src/types/typings/settlin__collage.d.ts"],
-  "exclude": ["node_modules", "src/test/utils/**.ts", "src/**/*.spec.ts", "**/typings/*.d.ts"]
+  "typeRoots": ["src/types/typings/", "node_modules/@types/"],
+  "include": ["src/**/*.ts", "src/types/typings/",  "**/typings/*.d.ts"],
+  "exclude": ["node_modules", "src/test/utils/**.ts", "src/**/*.spec.ts"]
 }
