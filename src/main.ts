@@ -3,14 +3,23 @@ import { logger } from '@Services/logger.service';
 import { environment as env } from '@Utils/environment';
 import { importx } from '@discordx/importer';
 import chalk from 'chalk';
-import { Intents, Interaction, Message } from 'discord.js';
+import { Guild, Intents, Interaction, Message } from 'discord.js';
 import { Client, Discord } from 'discordx';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
 
+/**
+ * Runner class.
+ * 
+ * @author Karafra
+ * @since 1.0
+ */
 @Discord()
 export class Main {
+  /**
+   * Discord client.
+   */
   private static _client: Client;
 
   static get Client(): Client {
@@ -63,8 +72,12 @@ export class Main {
     });
 
     Main.Client.on('messageCreate', (message: Message) => {
-      
       Main.Client.executeCommand(message);
+    });
+
+    Main.Client.on("guildCreate", (guild: Guild) => {
+      const applicationCommands = Main.Client.applicationCommands as any;
+      Main.Client.initGuildApplicationCommands(guild.id, applicationCommands);
     });
   }
 }
