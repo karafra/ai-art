@@ -15,7 +15,8 @@
     "doc:watch": "npm run doc --watch",
     "lint:fix": "npm run lint -- --fix",
     "npm:clear": "rm -rf $PWD/node_modules && rm $PWD/package-lock.json && npm cache verify && npm install",
-    "prepare": "husky install && husky add .husky/pre-commit \"npm run lint:fix\""
+    "prepare": "husky install && husky add .husky/pre-commit \"npm run lint:fix\"",
+    "heroku-prebuild": "npm config set ignore-scripts true"
   },
   "keywords": [],
   "author": "dariusKralovic@protonmail.com",
