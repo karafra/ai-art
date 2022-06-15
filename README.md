@@ -143,6 +143,12 @@ Recommended method of deploying this bot is deployment on [Heroku](https://www.h
   <img src="https://img.shields.io/badge/%E2%86%91_Deploy_to-Heroku-7056bf.svg?style=for-the-badge" alt="Deploy">
 </a>
 </p>
+
+##### IMPORTANT
+After successful deployment you will have to switch dyno from `web` to `worker`. If you do not do this, app will not bind to port and fail. 
+
+<img href="https://raw.githubusercontent.com/karafra/ai-art/main/.github/images/heroku-dynos.png" />
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- USAGE EXAMPLES -->
