@@ -8,8 +8,7 @@ export type AiArtImageArray = [
   string,
   string,
   string
-];
-
-export interface AiArtResponse {
-  images: AiArtImageArray;
+]
+export type AiArtResponse = {
+  images: AiArtImageArray
 }

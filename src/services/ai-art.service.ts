@@ -1,21 +1,33 @@
-import { aiArtModelService } from '@Models/ai-art-model.service';
-import { Collage } from '@Utils/collage';
+import { Collage } from '@Utils/collage'
+import { aiArtModelService } from 'Root/models/ai-art.model'
+import { MessageAttachment } from 'discord.js'
 
+/**
+ * AiArt generator service.
+ *
+ * @author Karafra
+ * @since 1.0
+ */
 export class AiArtService {
-  public async getArt(prompt: string): Promise<Buffer> {
-    const collage = new Collage();
+  /**
+   * Generates art from given prompt.
+   *
+   * @param prompt prompt based on which to generate art
+   * @returns message attachment with generated art.
+   */
+  public async getArt(prompt: string): Promise<MessageAttachment> {
+    const collage = new Collage()
     for (let i = 0; i < 30; i++) {
       try {
-        const response = await aiArtModelService.getImageArray(prompt);
-        await collage.constructCollage(response.images);
-        return collage.canvas.toBuffer('image/png');
+        const response = await aiArtModelService.getImageArray(prompt)
+        await collage.constructCollage(response.images)
+        return collage.getAsAttachment()
       } catch (Error) {
-        await new Promise((f) => setTimeout(f, 3000));
-        continue;
+        await new Promise((f) => setTimeout(f, 3000))
       }
     }
-    throw new Error('Could not process this query');
+    throw new Error('Could not process this query')
   }
 }
 
-export const aiArtService = new AiArtService();
+export const aiArtService = new AiArtService()

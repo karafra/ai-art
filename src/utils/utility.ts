@@ -1,5 +1,5 @@
-import { Role, RoleManager } from 'discord.js';
-import * as _ from 'underscore';
+import { Role, RoleManager } from 'discord.js'
+import * as _ from 'underscore'
 
 export default class Utility {
   /**
@@ -10,10 +10,10 @@ export default class Utility {
    */
   static random<T>(array: T[], subset?: number): T | T[] {
     if (subset) {
-      return _.sample(array, subset);
+      return _.sample(array, subset)
     }
 
-    return array[Math.floor(Math.random() * array.length)];
+    return array[Math.floor(Math.random() * array.length)]
   }
 
   /**
@@ -23,7 +23,7 @@ export default class Utility {
    * @returns true if string contains all substrings, false otherwise
    */
   static checkStatementForStrings(subStrings: string[], copy: string): boolean {
-    return subStrings.every((s) => copy.indexOf(s) > -1);
+    return subStrings.every((s) => copy.indexOf(s) > -1)
   }
 
   /**
@@ -36,6 +36,6 @@ export default class Utility {
     roleManager: RoleManager | undefined,
     roleName: string | undefined
   ): Role | undefined {
-    return roleManager?.cache.find((r) => r.name === roleName);
+    return roleManager?.cache.find((r) => r.name === roleName)
   }
 }
