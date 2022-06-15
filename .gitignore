@@ -134,3 +134,6 @@ build/
 
 # Documentation
 docs/
+
+# Husky
+.husky/
