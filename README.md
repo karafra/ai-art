@@ -146,7 +146,10 @@ Recommended method of deploying this bot is deployment on [Heroku](https://www.h
 
 ##### IMPORTANT
 After successful deployment you will have to switch dyno from `web` to `worker`. If you do not do this, app will not bind to port and fail. 
-<img src="https://raw.githubusercontent.com/karafra/ai-art/main/.github/images/heroku-dynos.png" />
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/karafra/ai-art/main/.github/images/heroku-dynos.png" />
+</p>
 
 After successful deployment you can invite bot to your server by clicking on this link `https://discord.com/api/oauth2/authorize?client_id={CLIENT_ID}&permissions=34816&scope=applications.commands%20bot`, where `CLIENT_ID` is your bots client id. Link already contains minimal scopes (_bot_, _application.commands_) and minimal bot permissions (_send messages_, _attach files_)
 
