@@ -1,5 +1,4 @@
 declare module '@settlin/collage' {
-  import { Canvas } from 'canvas'
   interface Options {
     sources: any[]
     width: number
@@ -16,5 +15,5 @@ declare module '@settlin/collage' {
       height?: number
     }
   }
-  export default function (options?: Options): Promise<Canvas>
+  export default function (options?: Options): Promise<any>
 }
