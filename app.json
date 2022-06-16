@@ -2,7 +2,7 @@
     "name": "AI art",
     "description": "Discord bot generating collage of 9 images from given prompt",
     "repository": "https://github.com/karafra/ai-art",
-    "logo": "https://raw.githubusercontent.com/karafra/ai-art/main/.github/img/logo.png",
+    "logo": "https://raw.githubusercontent.com/karafra/ai-art/main/.github/images/logo.png",
     "keywords": [
         "node",
         "typescript",
