@@ -1,4 +1,7 @@
 {
+  "ts-node": {
+    "files": true
+  },
   "compilerOptions": {
     "target": "ES2021"                         /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', 'ES2021', or 'ESNEXT'. */,
     "module": "commonjs"                       /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */,
@@ -6,7 +9,6 @@
     "rootDir": "./src"                         /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */,
     "strict": true                             /* Enable all strict type-checking options. */,
     "esModuleInterop": true                    /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */,
-
     /* Module Resolution Options */
     "baseUrl": ".",
     "paths": {
@@ -31,7 +33,7 @@
     "skipLibCheck": true                       /* Skip type checking of declaration files. */,
     "forceConsistentCasingInFileNames": true   /* Disallow inconsistently-cased references to the same file. */
   },
-  "typeRoots": ["src/types/typings/", "node_modules/@types/"],
-  "include": ["src/**/*.ts", "src/types/typings/",  "**/typings/*.d.ts"],
-  "exclude": ["node_modules", "src/test/utils/**.ts", "src/**/*.spec.ts"]
+  "typeRoots": ["./src/types/typings", "node_modules/@types"],
+  "include": ["src/**/*.ts", "src/types/typings/**/**/*.d.ts",  "**/typings/*.d.ts"],
+  "exclude": ["node_modules", "src/**/*.spec.ts"]
 }
