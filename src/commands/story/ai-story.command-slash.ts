@@ -37,11 +37,11 @@ export class AiStory extends Command {
     try {
       const text = await aiStoryService.getStory(headline, model)
       interaction.editReply({
-        content: this.c('aiStoryProcessed', headline, text)
+        content: this.c('aiStoryProcessed', headline, this.escapeMarkdown(text))
       })
       logger.info(
         `Story with headline ${headline} based on ${
-          model || 'davinci'
+          model || 'davinci-text-002'
         } model has been generated successfully`
       )
     } catch (err) {

@@ -14,7 +14,7 @@ export class AiArtModel extends HttpClient {
   }
 
   /**
-   * Gets response from dall-e mini response
+   * Requests response from dall-e mini endpoint
    *
    * @param prompt prompt base on which to generate art
    * @returns EP response

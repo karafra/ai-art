@@ -71,4 +71,15 @@ export class Command {
 
     return letters.join()
   }
+
+  /**
+   * Escapes discord subset of markdown from text.
+   *
+   * @param text text to escape characters
+   * @returns escaped text
+   */
+  public escapeMarkdown(text: string): string {
+    const unescaped = text.replace(/\\(\*|_|`|~|\\)/g, '$1')
+    return unescaped.replace(/(\*|_|`|>|~|\\)/g, '\\$1')
+  }
 }
