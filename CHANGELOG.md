@@ -1,5 +1,11 @@
 # AiArt changelog
 
+## 1.3.0 -- 20th June, 2022
+
+<p>
+* Add `/story command`
+</p>
+
 ## 1.2.0 -- 16th June, 2022
 
 <p>
