@@ -42,7 +42,7 @@ export class AiStory extends Command {
       logger.info(
         `Story with headline ${headline} based on ${
           model || 'davinci'
-        } model has been generated successfuly`
+        } model has been generated successfully`
       )
     } catch (err) {
       const error = err as Error
