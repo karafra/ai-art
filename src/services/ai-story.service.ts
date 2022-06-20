@@ -16,7 +16,11 @@ export class AiStoryService {
    * @returns generated story.
    */
   public async getStory(prompt: string, model?: Model): Promise<string> {
-    return (await aiStoryModel.getStory(prompt, model)).trimStart()
+    const trimmed = (await aiStoryModel.getStory(prompt, model)).trim()
+    if (trimmed.startsWith('.')) {
+      return trimmed.slice(1).trim()
+    }
+    return trimmed
   }
 }
 

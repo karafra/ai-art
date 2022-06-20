@@ -11,6 +11,7 @@ export interface AiStoryRequest {
   model: Model
   prompt: string
   top_p: number
+  best_of: number
   temperature: number
   max_tokens: number
   frequency_penalty: number

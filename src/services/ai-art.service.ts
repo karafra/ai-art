@@ -1,5 +1,5 @@
 import { Collage } from '@Utils/collage'
-import { aiArtModelService } from 'Root/models/ai-art.model'
+import { aiArtModel } from 'Root/models/ai-art.model'
 import { MessageAttachment } from 'discord.js'
 
 /**
@@ -19,7 +19,7 @@ export class AiArtService {
     const collage = new Collage()
     for (let i = 0; i < 30; i++) {
       try {
-        const response = await aiArtModelService.getImageArray(prompt)
+        const response = await aiArtModel.getImageArray(prompt)
         await collage.constructCollage(response.images)
         return collage.getAsAttachment()
       } catch (Error) {

@@ -40,4 +40,4 @@ export class AiArtModel extends HttpClient {
   }
 }
 
-export const aiArtModelService = new AiArtModel()
+export const aiArtModel = new AiArtModel()

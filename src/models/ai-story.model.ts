@@ -27,10 +27,11 @@ export class AiStoryModel extends HttpClient {
       model: selectedModel,
       prompt,
       temperature: 0.7,
-      max_tokens: 256,
+      max_tokens: 512,
       top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0
+      best_of: 3,
+      frequency_penalty: 0.75,
+      presence_penalty: 0.33
     } as AiStoryRequest
     return this.instance.post('/completions', requestBody, {
       headers: {
