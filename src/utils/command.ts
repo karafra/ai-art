@@ -1,5 +1,5 @@
+import { aiStory } from '../assets/language/ai-story'
 import { aiArt } from '@Assets/language/ai-art'
-
 /**
  *  Generic json interface.
  *
@@ -21,7 +21,8 @@ export class Command {
 
   constructor() {
     this.copy = {
-      ...aiArt
+      ...aiArt,
+      ...aiStory
     }
   }
 
