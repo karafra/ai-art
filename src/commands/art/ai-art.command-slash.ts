@@ -11,7 +11,7 @@ import { Discord, Slash, SlashOption } from 'discordx'
  * @since 1.0
  */
 @Discord()
-export abstract class AiArt extends Command {
+export class AiArt extends Command {
   constructor() {
     super()
   }
