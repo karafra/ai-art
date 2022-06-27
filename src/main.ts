@@ -61,7 +61,7 @@ export class Main {
       await Main.Client.initApplicationCommands()
 
       // Bot Actions
-      Main.Client.user?.setActivity(`@${Main.Client.user.username} • /art`, {
+      Main.Client.user?.setActivity(`@${Main.Client.user.username} • /help`, {
         type: 'LISTENING'
       })
       logger.info(chalk.bold('BOT READY'))
