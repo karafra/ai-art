@@ -4,6 +4,8 @@ import { Command } from '@Utils/command'
 import { EmbedField, MessageEmbed } from 'discord.js'
 
 /**
+ * Class handling logic behind /help command.
+ *
  * @author Karafra
  * @since 1.4.5
  */
@@ -16,8 +18,15 @@ export class HelpService {
     this.commands = __INCLUDE_IN_HELP
   }
 
+  /**
+   * Searches commands for help and returns page with matching index.
+   *
+   * @param index index of help page
+   * @returns page with wih help and given index
+   */
   public getHelpAtIndex(index: number): MessageEmbed {
-    const modularIndex = index % this.commands.length
+    const modularIndex =
+      index >= 0 ? index % this.commands.length : 2 + (index % this.commands.length)
     const help = this.commands[modularIndex].help as ICommandHelp
     const embed = new MessageEmbed()
     embed.setAuthor({
