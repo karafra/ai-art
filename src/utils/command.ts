@@ -1,5 +1,7 @@
 import { aiStory } from '../assets/language/ai-story'
 import { aiArt } from '@Assets/language/ai-art'
+import { ICommandHelp } from '@Types/command/help'
+
 /**
  *  Generic json interface.
  *
@@ -17,6 +19,8 @@ export interface Copy {
  * @since 1.0
  */
 export class Command {
+  public help?: ICommandHelp
+
   copy!: Copy
 
   constructor() {
