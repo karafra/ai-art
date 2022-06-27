@@ -26,6 +26,10 @@ export class CogView2 extends Command {
       {
         name: 'prompt',
         description: 'Description of images'
+      },
+      {
+        name: 'style',
+        description: 'style in which image is to be drawn'
       }
     ]
   }
