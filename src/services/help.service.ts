@@ -26,7 +26,7 @@ export class HelpService {
    */
   public getHelpAtIndex(index: number): MessageEmbed {
     const modularIndex =
-      index >= 0 ? index % this.commands.length : 2 + (index % this.commands.length)
+      index >= 0 ? index % this.commands.length : 2 - ((2 - index) % this.commands.length)
     const help = this.commands[modularIndex].help as ICommandHelp
     const embed = new MessageEmbed()
     embed.setAuthor({
