@@ -20,7 +20,7 @@ import { Discord, Slash, SlashChoice, SlashGroup, SlashOption } from 'discordx'
 export class CogView2 extends Command {
   public static help?: ICommandHelp | undefined = {
     name: '/ai-art cog-view-2',
-    description: 'Generates Collage of 9 images from given prompt using CogView2 model.',
+    description: 'Generates collage of 9 images from given prompt using CogView2 model.',
     usage: '/ai-art cog-view-2 prompt: Homer Simpson in the scream by edward munch',
     parameters: [
       {

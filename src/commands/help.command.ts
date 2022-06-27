@@ -26,7 +26,7 @@ export class Help extends Command {
    *
    * @param interaction command interaction
    */
-  @Slash('help')
+  @Slash('help', { description: 'Shows help. Is visible only to user calling this command.' })
   async init(interaction: CommandInteraction): Promise<void> {
     const embed = new MessageEmbed()
     embed.setTitle('AiArt help')
