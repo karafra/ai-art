@@ -1,5 +1,5 @@
 import { IncludeInHelp } from '@Decorators/include-in-help.decorator'
-import { cog2Service } from '@Services/cogView2.service'
+import { cog2Service } from '@Services/cog-view-2.service'
 import { logger } from '@Services/logger.service'
 import { Style } from '@Types/api/cogView2'
 import { ICommandHelp } from '@Types/command/help'
