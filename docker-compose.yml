@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  discord-chat-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - DISCORD_TOKEN=$TOKEN
+        - DISCORD_BOTID=$BOTID
+        - OPEN_AI_TOKEN="none"
+    networks:
+      - ai-art
+
+networks:
+  ai-art:
