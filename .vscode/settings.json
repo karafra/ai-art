@@ -1,5 +1,8 @@
-{
+{   
+    "eslint.debug": false,
+    "prettier.configPath": "prettier.config.js",
     "cSpell.words": [
+        "autowired",
         "babage",
         "BOTID",
         "copyfiles",
@@ -13,6 +16,7 @@
         "karafra",
         "Karafro",
         "logprobs",
+        "mainbody",
         "minecraft",
         "opusscript",
         "prestart",
