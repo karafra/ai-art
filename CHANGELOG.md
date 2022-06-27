@@ -1,5 +1,54 @@
 # AiArt changelog
 
+## 1.4.0 -- 27th June 2022
+<p>
+
+* :whale: Add Dockerfile and docker-compose.yml
+
+</p>
+
+<p>
+
+* :robot: Add `/cog-view-2` command for generating images using CogView2 model  
+
+</p>
+
+<p>
+
+* :capital_abcd: Add command categorization
+
+    <p align="center">
+        <img src="https://raw.githubusercontent.com/karafra/ai-art/main/.github/images/command-selection.png"/>
+    </p>
+
+</p>
+
+<p>
+
+ * :bulb: Improve comments
+
+</p>
+
+
+<p>
+
+ * :bulb: Improve comments
+
+</p>
+
+<p>
+
+ * :loud_sound: Improve logging 
+
+</p>
+
+
+<p>
+
+* :wastebasket: General code cleanup
+
+</p>
+
 ## 1.3.0 -- 20th June, 2022
 
 <p>
