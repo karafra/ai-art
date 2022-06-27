@@ -20,7 +20,7 @@ import { Discord, Slash, SlashChoice, SlashGroup, SlashOption } from 'discordx'
 export class AiStory extends Command {
   public static help?: ICommandHelp | undefined = {
     name: '/ai-story story',
-    description: 'Generates tory from given headline',
+    description: 'Generates story from given headline',
     usage: '/ai-story story headline: Tell me story about Alice in wonderland',
     parameters: [
       {
