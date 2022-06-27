@@ -2,15 +2,17 @@ import { aiArtService } from '@Services/ai-art.service'
 import { logger } from '@Services/logger.service'
 import { Command } from '@Utils/command'
 import { CommandInteraction } from 'discord.js'
-import { Discord, Slash, SlashOption } from 'discordx'
+import { Discord, Slash, SlashGroup, SlashOption } from 'discordx'
 
 /**
- * Class for /art command
+ * Class for /dalle-mini command
  *
  * @author Karafra
  * @since 1.0
  */
 @Discord()
+@SlashGroup({ name: 'ai-art', description: 'generate visual AI art' })
+@SlashGroup('ai-art')
 export class AiArt extends Command {
   constructor() {
     super()
@@ -22,7 +24,7 @@ export class AiArt extends Command {
    * @param prompt prompt based on which to generate art.
    * @param interaction autowired user-command interaction.
    */
-  @Slash('art', { description: 'Generate AI art!' })
+  @Slash('dalle-mini', { description: 'Generate Dall-e mini art!' })
   async init(
     @SlashOption('prompt', {
       description: 'Enter description of art you want to generate',
@@ -32,17 +34,17 @@ export class AiArt extends Command {
     interaction: CommandInteraction
   ): Promise<void> {
     logger.info(`Processing art for ${prompt}`)
-    interaction.deferReply()
+    await interaction.deferReply()
     try {
       const attachment = await aiArtService.getArt(prompt)
-      interaction.channel?.send({
+      await interaction.channel?.send({
         content: this.c('processedAiArt', prompt, interaction.user.id),
         files: [attachment]
       })
       await interaction.deleteReply()
       logger.info(`Art for prompt ${prompt} processed`)
     } catch (Error) {
-      logger.error(`Could not generate art for prompt ${prompt}`)
+      logger.error(`Could not generate art for prompt ${prompt} (Dall-E mini) `)
       interaction.channel?.send(this.c('couldNotProcessAiArt', prompt))
     }
   }

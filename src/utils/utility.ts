@@ -38,4 +38,19 @@ export default class Utility {
   ): Role | undefined {
     return roleManager?.cache.find((r) => r.name === roleName)
   }
+
+  /**
+   * Generates random string of lowercase characters of given length.
+   * @param length length of id
+   * @returns random id
+   */
+  static makeId(length: number) {
+    let result = ''
+    const characters = 'abcdefghijklmnopqrstuvwxyz'
+    const charactersLength = characters.length
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength))
+    }
+    return result
+  }
 }

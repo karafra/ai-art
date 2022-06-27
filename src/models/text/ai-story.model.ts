@@ -1,6 +1,6 @@
-import { HttpClient } from '../http/http-client'
-import { AiStoryRequest, AiStoryResponse, Model } from '../types/api/ai-story'
-import { environment } from '../utils/environment'
+import { HttpClient } from '@Http/http-client'
+import { AiStoryRequest, AiStoryResponse, Model } from '@Types/api/ai-story'
+import { environment } from '@Utils/environment'
 import { AxiosResponse } from 'axios'
 
 /**

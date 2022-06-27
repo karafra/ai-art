@@ -1,5 +1,5 @@
-import { aiStoryModel } from '../models/ai-story.model'
-import { Model } from '../types/api/ai-story'
+import { aiStoryModel } from '@Models/text/ai-story.model'
+import { Model } from '@Types/api/ai-story'
 
 /**
  * AI story generation service.

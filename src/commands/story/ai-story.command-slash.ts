@@ -1,11 +1,13 @@
-import { Model } from '../../types/api/ai-story'
 import { aiStoryService } from '@Services/ai-story.service'
 import { logger } from '@Services/logger.service'
+import { Model } from '@Types/api/ai-story'
 import { Command } from '@Utils/command'
 import { CommandInteraction } from 'discord.js'
-import { Discord, Slash, SlashChoice, SlashOption } from 'discordx'
+import { Discord, Slash, SlashChoice, SlashGroup, SlashOption } from 'discordx'
 
 @Discord()
+@SlashGroup({ name: 'ai-story', description: 'generate textual AI art' })
+@SlashGroup('ai-story')
 export class AiStory extends Command {
   constructor() {
     super()
@@ -32,7 +34,7 @@ export class AiStory extends Command {
     model: Model,
     interaction: CommandInteraction
   ): Promise<void> {
-    interaction.deferReply()
+    await interaction.deferReply()
     logger.info(`Generating story with headline ${headline} based on ${model || 'davinci'} model`)
     try {
       const text = await aiStoryService.getStory(headline, model)

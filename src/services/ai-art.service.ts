@@ -1,5 +1,5 @@
+import { aiArtModel } from '@Models/image/ai-art.model'
 import { Collage } from '@Utils/collage'
-import { aiArtModel } from 'Root/models/ai-art.model'
 import { MessageAttachment } from 'discord.js'
 
 /**
