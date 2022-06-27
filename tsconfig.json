@@ -22,7 +22,8 @@
       "@Models/*": ["src/models/*"],
       "@Services/*": ["src/services/*"],
       "@Types/*": ["src/types/*"],
-      "@Utils/*": ["src/utils/*"]
+      "@Utils/*": ["src/utils/*"],
+      "@Decorators/*": ["src/decorators/*"]
     },
 
     /* Experimental Options */

@@ -1,6 +1,18 @@
 # AiArt changelog
 
-## 1.4.0 -- 27th June 2022
+## 1.4.5 -- 27th June, 2022
+
+<p>
+
+* :robot: Add `/help` command showing all other commands
+    
+    <p align="center">
+        <img src="https://raw.githubusercontent.com/karafra/ai-art/main/.github/images/help-showcase.gif" />
+    </p>
+
+</p>
+
+## 1.4.0 -- 27th June, 2022
 <p>
 
 * :whale: Add Dockerfile and docker-compose.yml

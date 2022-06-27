@@ -1,5 +1,7 @@
+import { IncludeInHelp } from '@Decorators/include-in-help.decorator'
 import { aiArtService } from '@Services/ai-art.service'
 import { logger } from '@Services/logger.service'
+import { ICommandHelp } from '@Types/command/help'
 import { Command } from '@Utils/command'
 import { CommandInteraction } from 'discord.js'
 import { Discord, Slash, SlashGroup, SlashOption } from 'discordx'
@@ -13,7 +15,20 @@ import { Discord, Slash, SlashGroup, SlashOption } from 'discordx'
 @Discord()
 @SlashGroup({ name: 'ai-art', description: 'generate visual AI art' })
 @SlashGroup('ai-art')
+@IncludeInHelp()
 export class AiArt extends Command {
+  public static help?: ICommandHelp | undefined = {
+    name: '/ai-art dalle-mini',
+    description: 'Generates story from given headline',
+    usage: '/ai-art dalle-mini prompt: Liberty leading people to freedom',
+    parameters: [
+      {
+        name: 'prompt',
+        description: 'Description of image'
+      }
+    ]
+  }
+
   constructor() {
     super()
   }

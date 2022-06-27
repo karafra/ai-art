@@ -1,3 +1,5 @@
+import { ICommandHelp } from '../../types/command/help'
+import { IncludeInHelp } from '@Decorators/include-in-help.decorator'
 import { aiStoryService } from '@Services/ai-story.service'
 import { logger } from '@Services/logger.service'
 import { Model } from '@Types/api/ai-story'
@@ -5,14 +7,45 @@ import { Command } from '@Utils/command'
 import { CommandInteraction } from 'discord.js'
 import { Discord, Slash, SlashChoice, SlashGroup, SlashOption } from 'discordx'
 
+/**
+ * Class for /ai-story story command.
+ *
+ * @since 1.3
+ * @author Karafra
+ */
 @Discord()
 @SlashGroup({ name: 'ai-story', description: 'generate textual AI art' })
 @SlashGroup('ai-story')
+@IncludeInHelp()
 export class AiStory extends Command {
+  public static help?: ICommandHelp | undefined = {
+    name: '/ai-story story',
+    description: 'Generates story from given headline',
+    usage: '/ai-story story headline: Tell me story about Alice in wonderland',
+    parameters: [
+      {
+        name: 'headline',
+        description: 'Headline of story'
+      },
+      {
+        name: 'model',
+        description: 'What model to use',
+        optional: true
+      }
+    ]
+  }
+
   constructor() {
     super()
   }
 
+  /**
+   * Command execution method.
+   *
+   * @param headline story headline
+   * @param model model to use
+   * @param interaction command interaction
+   */
   @Slash('story', { description: 'Generate AI story' })
   async init(
     @SlashOption('headline', {
