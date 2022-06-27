@@ -19,7 +19,7 @@ import { Discord, Slash, SlashGroup, SlashOption } from 'discordx'
 export class AiArt extends Command {
   public static help?: ICommandHelp | undefined = {
     name: '/ai-art dalle-mini',
-    description: 'Generates story from given headline',
+    description: 'Generates collage of 9 images from given prompt using Dall-E ini model.',
     usage: '/ai-art dalle-mini prompt: Liberty leading people to freedom',
     parameters: [
       {
