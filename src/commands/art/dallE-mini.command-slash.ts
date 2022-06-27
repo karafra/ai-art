@@ -1,3 +1,4 @@
+import { ICommandHelp } from '../../types/command/help'
 import { aiArtService } from '@Services/ai-art.service'
 import { logger } from '@Services/logger.service'
 import { Command } from '@Utils/command'
@@ -14,6 +15,18 @@ import { Discord, Slash, SlashGroup, SlashOption } from 'discordx'
 @SlashGroup({ name: 'ai-art', description: 'generate visual AI art' })
 @SlashGroup('ai-art')
 export class AiArt extends Command {
+  public static help?: ICommandHelp | undefined = {
+    name: '/ai-art dalle-mini',
+    description: 'Generates tory from given headline',
+    usage: '/ai-story dalle-mini prompt: Liberty leading people to freedom',
+    parameters: [
+      {
+        name: 'prompt',
+        description: 'Description of image'
+      }
+    ]
+  }
+
   constructor() {
     super()
   }

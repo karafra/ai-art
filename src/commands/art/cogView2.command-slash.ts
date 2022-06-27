@@ -1,6 +1,8 @@
+import { IncludeInHelp } from '@Decorators/include-in-help.decorator'
 import { cog2Service } from '@Services/cogView2.service'
 import { logger } from '@Services/logger.service'
 import { Style } from '@Types/api/cogView2'
+import { ICommandHelp } from '@Types/command/help'
 import { Command } from '@Utils/command'
 import { CommandInteraction } from 'discord.js'
 import { Discord, Slash, SlashChoice, SlashGroup, SlashOption } from 'discordx'
@@ -14,7 +16,20 @@ import { Discord, Slash, SlashChoice, SlashGroup, SlashOption } from 'discordx'
 @Discord()
 @SlashGroup({ name: 'ai-art', description: 'generate visual AI art' })
 @SlashGroup('ai-art')
+@IncludeInHelp()
 export class CogView2 extends Command {
+  public static help?: ICommandHelp | undefined = {
+    name: '/ai-art cog-view-2',
+    description: 'Generates Collage of 9 images from given prompt using CogView2 model.',
+    usage: '/ai-art cog-view-2 prompt: Homer Simpson in the scream by edward munch',
+    parameters: [
+      {
+        name: 'prompt',
+        description: 'Description of images'
+      }
+    ]
+  }
+
   constructor() {
     super()
   }
