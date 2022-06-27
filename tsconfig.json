@@ -18,7 +18,7 @@
       "@Data/*": ["src/data/*"],
       "@Events/*": ["src/events/*"],
       "@Guards/*": ["src/guards/*"],
-      "@Interceptors/*": ["src/http/*"],
+      "@Http/*": ["src/http/*"],
       "@Models/*": ["src/models/*"],
       "@Services/*": ["src/services/*"],
       "@Types/*": ["src/types/*"],
