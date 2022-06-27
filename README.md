@@ -97,10 +97,6 @@ Simple discord bot which generates collages based on any query you give it (most
 <!-- GETTING STARTED -->
 
 ## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
 ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
@@ -125,9 +121,20 @@ This is an example of how to list things you need to use the software and how to
     npm install
     ```
 5. Enter your API key and bot id into [.env](./.env). REquired scopes for 
-    ```js
+    ```sh
+    ############
+    # Required #
+    ############
+
     BOTID = 'ENTER YOUR BOT ID';
-    TOKEN = 'ENTER YOUR API';
+    TOKEN = 'ENTER YOUR API TOKEN';
+    
+    ############
+    # Optional #
+    ############
+    
+    # If you want to use /ai-story story command
+    OPEN_API_TOKEN = 'ENTER YOUR OPEN AI TOKEN'
     ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -160,7 +167,19 @@ After successful deployment you can invite bot to your server by clicking on thi
 
 ## Usage
 
-Simply type `/art {query}` into discord chat and bot will react.
+Commands are separated into 2 command groups
+
+- `/ai-art`
+  - `cog-view-2` - Generates collage of 9 images using CogView2 model
+  - `dalle-mini` - Generates collage of 9 images using Dall-e mini model  
+- `/ai-story`
+  - `story` - Generates story from given headline (Requires OpenAi API) token
+
+Discord offers autocompletion so all you need is to start typing name of the command or group in which command is, discord will then guide you through all the required parameters using its autocompletion.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/karafra/ai-art/main/.github/images/command-selection.png" />
+</p>
 
 _For more examples, please refer to the [Documentation](karafra.github.io/ai-art/)_
 
@@ -205,7 +224,13 @@ Project Link: [https://github.com/karafra/ai-art](https://github.com/karafra/ai-
 
 ## Acknowledgments
 
--   [Dalle mini](https://github.com/borisdayma/dalle-mini)
+- [DALL·E Mini](https://github.com/borisdayma/dalle-mini)
+  - Image generation model for `/ai-art dalle-mini`
+- [CogView2](https://github.com/THUDM/CogView2)
+  - Image generation model for `/ai-art cog-view-2`
+- [Open Ai](https://beta.openai.com/playground)
+  - Story generation model for `/ai-story story`
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
