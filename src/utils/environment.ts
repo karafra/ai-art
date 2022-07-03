@@ -11,11 +11,13 @@ export interface EnvironmentObject {
   token: string
   botId: string
   openAiToken: string
+  rabbitMqUrl: string
 }
 
 export const environment = {
   environment: process.env.NODE_ENV ?? 'production',
   token: process.env.TOKEN ?? '',
   botId: process.env.BOTID ?? '',
-  openAiToken: process.env.OPEN_API_TOKEN ?? ''
+  openAiToken: process.env.OPEN_API_TOKEN ?? '',
+  rabbitMqUrl: process.env.AMQP_URL ?? ''
 } as EnvironmentObject
