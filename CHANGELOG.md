@@ -1,5 +1,9 @@
 # AiArt changelog
 
+## 1.5.0 -- 4th July, 2022
+
+* :necktie: Added command queueing
+
 ## 1.4.5 -- 27th June, 2022
 
 <p>
