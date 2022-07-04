@@ -9,6 +9,7 @@ services:
         - DISCORD_TOKEN=$TOKEN
         - DISCORD_BOTID=$BOTID
         - OPEN_AI_TOKEN="none"
+        - AMQP_URL=$AMQP_URL
     networks:
       - ai-art
 
