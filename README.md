@@ -91,6 +91,7 @@ Simple discord bot which generates collages based on any query you give it (most
 -   [Discord.js](https://discord.js.org/)
 -   [Collage](https://www.npmjs.com/package/@settlin/collage)
 -   [Canvas](https://www.npmjs.com/package/canvas)
+-   [amqp-client.js](https://github.com/cloudamqp/amqp-client.js/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
