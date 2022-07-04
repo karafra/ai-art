@@ -120,14 +120,14 @@ This is an example of how to list things you need to use the software and how to
     ```sh
     npm install
     ```
-5. Enter your API key and bot id into [.env](./.env). REquired scopes for 
+5. Enter your API key and bot id into [.env](./.env). Required scopes for 
     ```sh
     ############
     # Required #
     ############
-
-    BOTID = 'ENTER YOUR BOT ID';
-    TOKEN = 'ENTER YOUR API TOKEN';
+    AMQP_URL = 'ENTER YOUR AMQP URL'
+    BOTID = 'ENTER YOUR BOT ID'
+    TOKEN = 'ENTER YOUR API TOKEN'
     
     ############
     # Optional #

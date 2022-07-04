@@ -12,6 +12,7 @@ export interface EnvironmentObject {
   botId: string
   openAiToken: string
   rabbitMqUrl: string
+  queueTimeout: number
 }
 
 export const environment = {
@@ -19,5 +20,6 @@ export const environment = {
   token: process.env.TOKEN ?? '',
   botId: process.env.BOTID ?? '',
   openAiToken: process.env.OPEN_API_TOKEN ?? '',
-  rabbitMqUrl: process.env.AMQP_URL ?? ''
+  rabbitMqUrl: process.env.AMQP_URL ?? '',
+  queueTimeout: process.env.QUEUE_TIMEOUT ?? 3000
 } as EnvironmentObject

@@ -1,5 +1,5 @@
 import { IncludeInHelp } from '@Decorators/include-in-help.decorator'
-import { aiArtService } from '@Services/ai-art.service'
+import { aiArtService } from '@Services/commands/ai-art.service'
 import { logger } from '@Services/logger.service'
 import { ICommandHelp } from '@Types/command/help'
 import { Command } from '@Utils/command'

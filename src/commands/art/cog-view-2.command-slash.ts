@@ -1,5 +1,6 @@
 import { IncludeInHelp } from '@Decorators/include-in-help.decorator'
-import { cog2Service } from '@Services/cog-view-2.service'
+import { Queued } from '@Decorators/queued.decorator'
+import { cog2Service } from '@Services/commands/cog-view-2.service'
 import { logger } from '@Services/logger.service'
 import { Style } from '@Types/api/cogView2'
 import { ICommandHelp } from '@Types/command/help'
@@ -46,6 +47,7 @@ export class CogView2 extends Command {
    * @param interaction autowired command interaction
    */
   @Slash('cog-view-2', { description: 'Generate CogView2 art' })
+  @Queued(CogView2.name)
   async init(
     @SlashOption('prompt', {
       description: 'Enter description of art you want to generate',
