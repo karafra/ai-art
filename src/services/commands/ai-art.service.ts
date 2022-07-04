@@ -1,3 +1,4 @@
+import { Queued } from '@Decorators/queued.decorator'
 import { aiArtModel } from '@Models/image/ai-art.model'
 import { Collage } from '@Utils/collage'
 import { MessageAttachment } from 'discord.js'
@@ -15,6 +16,7 @@ export class AiArtService {
    * @param prompt prompt based on which to generate art
    * @returns message attachment with generated art.
    */
+  @Queued(AiArtService.name)
   public async getArt(prompt: string): Promise<MessageAttachment> {
     const collage = new Collage()
     for (let i = 0; i < 30; i++) {

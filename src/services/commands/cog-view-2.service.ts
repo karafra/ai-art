@@ -1,6 +1,6 @@
-import { cog2Model } from '../models/image/cogView2.model'
-import { Style } from '../types/api/cogView2'
-import { Collage } from '../utils/collage'
+import { cog2Model } from '@Models/image/cogView2.model'
+import { Style } from '@Types/api/cogView2'
+import { Collage } from '@Utils/collage'
 import { MessageAttachment } from 'discord.js'
 
 /**

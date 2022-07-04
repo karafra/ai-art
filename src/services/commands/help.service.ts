@@ -1,5 +1,5 @@
-import { ICommandHelp } from '../types/command/help'
 import { __INCLUDE_IN_HELP } from '@Decorators/include-in-help.decorator'
+import { ICommandHelp } from '@Types/command/help'
 import { Command } from '@Utils/command'
 import { EmbedField, MessageEmbed } from 'discord.js'
 
