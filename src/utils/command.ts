@@ -1,5 +1,5 @@
-import { aiStory } from '../assets/language/ai-story'
 import { aiArt } from '@Assets/language/ai-art'
+import { aiStory } from '@Assets/language/ai-story'
 import { ICommandHelp } from '@Types/command/help'
 
 /**

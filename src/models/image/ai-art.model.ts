@@ -1,4 +1,4 @@
-import { AiArtResponse } from '../../types/api/ai-art'
+import { AiArtResponse } from '@Types/api/ai-art'
 import { HttpClient } from 'Root/http/http-client'
 import { AxiosResponse } from 'axios'
 

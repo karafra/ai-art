@@ -1,4 +1,4 @@
-import { HelpService } from '@Services/help.service'
+import { HelpService } from '@Services/commands/help.service'
 import { Command } from '@Utils/command'
 import {
   ButtonInteraction,
