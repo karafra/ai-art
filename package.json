@@ -18,7 +18,14 @@
     "prepare": "$SKIP_HUSKY || \"husky install && husky add .husky/pre-commit \"npm run lint:fix\"\"",
     "heroku-prebuild": "export SKIP_HUSKY=true"
   },
-  "keywords": ["discord", "bot", "ai", "art", "integration", "dall-e"],
+  "keywords": [
+    "discord",
+    "bot",
+    "ai",
+    "art",
+    "integration",
+    "dall-e"
+  ],
   "author": "dariusKralovic@protonmail.com",
   "license": "Apache2.0",
   "repository": {
@@ -26,6 +33,7 @@
     "url": "https://github.com/karafra/ai-art.git"
   },
   "dependencies": {
+    "@cloudamqp/amqp-client": "^2.0.3",
     "@discordjs/builders": "^0.13.0",
     "@discordx/importer": "^1.1.2",
     "@discordx/pagination": "^2.1.1",
