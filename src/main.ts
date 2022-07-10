@@ -47,7 +47,6 @@ export class Main {
       botGuilds: [(client) => client.guilds.cache.map((guild) => guild.id)],
       silent: environment === 'production' ? undefined : false
     })
-
     await importx(`${__dirname}/commands/**/*.{ts,js}`)
     await importx(`${__dirname}/events/**/*.{ts,js}`)
     await Main.Client.login(token ?? '')
@@ -78,6 +77,12 @@ export class Main {
     Main.Client.on('guildCreate', (guild: Guild) => {
       const applicationCommands = Main.Client.applicationCommands as any
       Main.Client.initGuildApplicationCommands(guild.id, applicationCommands)
+    })
+    process.on('SIGINT', () => {
+      logger.info(chalk.bold('BOT SHUTING DOWN'))
+      Main.Client.user?.setStatus('invisible')
+      Main.Client.destroy()
+      return 0
     })
   }
 }
