@@ -1,5 +1,15 @@
 # AiArt changelog
 
+## 1.6.0 -- 11t July, 2022
+
+* :necktie: Fully containerized deployment 
+
+* :rabbit: RabbitMQ channels are now being closed automatically
+
+* :rabbit: RabbitMQ connection is started before in started class.
+
+* :art: Graceful shutdown 
+
 ## 1.5.0 -- 4th July, 2022
 
 * :necktie: Added command queueing
