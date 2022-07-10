@@ -21,6 +21,8 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
+[![Discord][discord-shield]][discord-invite]
+[![TOP.GG][top-gg-shield]][top-gg-link]
 
 <!-- PROJECT LOGO -->
 <br />
@@ -251,3 +253,7 @@ Project Link: [https://github.com/karafra/ai-art](https://github.com/karafra/ai-
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/linkedin_username
 [product-screenshot]: https://raw.githubusercontent.com/karafra/ai-art/main/.github/images/showcase.gif
+[discord-shield]: https://img.shields.io/discord/984823638333210715?color=purple&label=DEMO%20SERVER&logo=discord&logoColor=white&style=for-the-badge
+[discord-invite]:https://discord.gg/VDKhbrc73Z
+[top-gg-shield]: https://img.shields.io/static/v1?label=TOP.GG&message=LISTED&color=purple&style=for-the-badge&logo=google-chrome&logoColor=white
+[top-gg-link]: https://top.gg/bot/984821826096091206
