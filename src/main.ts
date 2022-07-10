@@ -78,7 +78,7 @@ export class Main {
       const applicationCommands = Main.Client.applicationCommands as any
       Main.Client.initGuildApplicationCommands(guild.id, applicationCommands)
     })
-    process.on('SIGINT', () => {
+    process.on('SIGTERM', () => {
       logger.info(chalk.bold('BOT SHUTING DOWN'))
       Main.Client.user?.setStatus('invisible')
       Main.Client.destroy()
