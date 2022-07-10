@@ -177,7 +177,7 @@ Another even easier method of deployment is deployment via docker container.
     B] If this command throws an error, you have to follow [docker-compose installation guide](https://docs.docker.com/compose/install/)
 
 2. Set required variables
-    - Only required variables are `BOTID` and `TOKEN`, these can be set as environment variables using `export ...` on linux based OS or `$env:VARIABLE_NAME=VALUE` on Windows based OS.
+    - Only required variables are `BOTID` and `TOKEN`, these can be set as environment variables using `export ENV_NAME=VALUE` on linux based OS or `$env:VARIABLE_NAME=VALUE` on Windows based OS.
 
 3. Building Docker containers
   - Type `docker-compose build` into terminal, this will automatically build all required docker images.
