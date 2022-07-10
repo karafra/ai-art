@@ -41,6 +41,7 @@ export class RabbitMqService extends AMQPClient {
     const channel = (await this.connection?.channel()) as AMQPChannel
     const queue = await channel.queue(queueName, { autoDelete: false })
     await queue?.publish(JSON.stringify({ data: item }), { deliveryMode: 2 })
+    channel.close('Service stopped', 320)
     return item
   }
 
@@ -60,9 +61,10 @@ export class RabbitMqService extends AMQPClient {
       await new Promise((resolve) => setTimeout(resolve, environment.queueTimeout - timePassed))
     }
 
-    const channel = await this.connection?.channel()
+    const channel = (await this.connection?.channel()) as AMQPChannel
     const queue = await channel?.queue(queueName)
     const message = await queue?.get({ noAck: true })
+    channel.close('Service stopped', 320)
     return JSON.parse(message?.bodyToString() as string).data
   }
 
@@ -73,6 +75,7 @@ export class RabbitMqService extends AMQPClient {
 
     this.connection?.channels.forEach(async (channel) => {
       await channel.queuePurge(queueName)
+      channel.close('Service stopped', 320)
     })
   }
 }
