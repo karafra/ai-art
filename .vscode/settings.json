@@ -5,6 +5,7 @@
         "autowired",
         "babage",
         "BOTID",
+        "cloudamqp",
         "copyfiles",
         "dall",
         "Dalle",
