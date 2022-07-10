@@ -146,6 +146,8 @@ This is an example of how to list things you need to use the software and how to
 
 ## Deployment
 
+### Method 1: Deployment to Heroku
+
 Recommended method of deploying this bot is deployment on [Heroku](https://www.heroku.com/). To deploy to Heroku please click on button bellow.
 
 <p align="center">
@@ -155,6 +157,8 @@ Recommended method of deploying this bot is deployment on [Heroku](https://www.h
 </p>
 
 ##### IMPORTANT
+
+
 After successful deployment you will have to switch dyno from `web` to `worker`. If you do not do this, app will not bind to port and fail. 
 
 <p align="center">
@@ -163,6 +167,29 @@ After successful deployment you will have to switch dyno from `web` to `worker`.
 
 After successful deployment you can invite bot to your server by clicking on this link `https://discord.com/api/oauth2/authorize?client_id={CLIENT_ID}&permissions=34816&scope=applications.commands%20bot`, where `CLIENT_ID` is your bots client id. Link already contains minimal scopes (_bot_, _application.commands_) and minimal bot permissions (_send messages_, _attach files_)
 
+### Method 2: Containerized deployment:
+Another even easier method of deployment is deployment via docker container.
+
+1. Verify docker-compose installation
+
+    A] Type `docker-compose -v` into terminal. if output looks similar to `docker-compose version 1.29.2, build 5becea4c` then you can continue to the next step.
+
+    B] If this command throws an error, you have to follow [docker-compose installation guide](https://docs.docker.com/compose/install/)
+
+2. Set required variables
+    - Only required variables are `BOTID` and `TOKEN`, these can be set as environment variables using `export ...` on linux based OS or `$env:VARIABLE_NAME=VALUE` on Windows based OS.
+
+3. Building Docker containers
+  - Type `docker-compose build` into terminal, this will automatically build all required docker images.
+
+4. Start container
+    - Type `docker-compose up` into terminal. This will start all services needed. RabbitMQ management console will be accessible [here](http://localhost:15673/) with login credentials being:
+      - username:   
+        - `guest`
+      - password:
+        - `guest`
+
+__This network is not external, so it will not be accessible from outside.__
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
