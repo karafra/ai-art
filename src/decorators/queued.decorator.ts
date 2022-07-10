@@ -1,5 +1,7 @@
 import { rabbitMqService } from '@Services/amqp/rabbit-mq.service'
 
+const purgedQueues: string[] = []
+
 /**
  * Decorator used for delaying function calls certain time.
  * Time can be set with QUEUE_TIMEOUT env var.
@@ -15,6 +17,10 @@ export function Queued(queueName: string) {
   ) {
     const method = descriptor.value as (...args: any[]) => any
     descriptor.value = async function (...args: any[]) {
+      if (purgedQueues.indexOf(queueName) > -1) {
+        await rabbitMqService.purgeQueue(queueName)
+        purgedQueues.push(queueName)
+      }
       await rabbitMqService.publishToQueue(queueName, args)
       const dequeuedArgs = await rabbitMqService.popFromQueue<any[]>(queueName)
       return method.apply(this, dequeuedArgs)

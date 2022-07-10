@@ -65,6 +65,16 @@ export class RabbitMqService extends AMQPClient {
     const message = await queue?.get({ noAck: true })
     return JSON.parse(message?.bodyToString() as string).data
   }
+
+  public async purgeQueue(queueName: string) {
+    if (!this.connection) {
+      await this.connectToInstance()
+    }
+
+    this.connection?.channels.forEach(async (channel) => {
+      await channel.queuePurge(queueName)
+    })
+  }
 }
 
 export const rabbitMqService = new RabbitMqService()
