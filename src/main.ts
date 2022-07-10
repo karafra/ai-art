@@ -1,4 +1,5 @@
 import 'reflect-metadata'
+import { rabbitMqService } from '@Services/amqp/rabbit-mq.service'
 import { logger } from '@Services/logger.service'
 import { environment as env } from '@Utils/environment'
 import { importx } from '@discordx/importer'
@@ -36,6 +37,7 @@ export class Main {
    */
   static async start(): Promise<void> {
     const { environment, token } = env
+    await rabbitMqService.connectToInstance()
     Main.Client = new Client({
       intents: [
         Intents.FLAGS.GUILDS,
