@@ -1,3 +1,4 @@
+import { Queued } from '@Decorators/queued.decorator'
 import { cog2Model } from '@Models/image/cogView2.model'
 import { Style } from '@Types/api/cogView2'
 import { Collage } from '@Utils/collage'
@@ -17,6 +18,7 @@ export class CogView2Service {
    * @param style style of art to be used
    * @returns message attachment with generated art.
    */
+  @Queued(CogView2Service.name)
   public async getArt(prompt: string, style?: Style): Promise<MessageAttachment> {
     const collage = new Collage()
     const response = await cog2Model.getImageArray(prompt, style)
