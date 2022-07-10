@@ -44,10 +44,10 @@ export class Main {
         Intents.FLAGS.GUILD_MEMBERS,
         Intents.FLAGS.GUILD_MESSAGES,
         Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-        Intents.FLAGS.GUILD_VOICE_STATES,
+        Intents.FLAGS.GUILD_VOICE_STATES
       ],
       botGuilds: [(client) => client.guilds.cache.map((guild) => guild.id)],
-      silent: environment === 'production' ? undefined : false,
+      silent: environment === 'production' ? undefined : false
     })
     await importx(`${__dirname}/commands/**/*.{ts,js}`)
     await importx(`${__dirname}/events/**/*.{ts,js}`)
@@ -63,7 +63,7 @@ export class Main {
 
       // Bot Actions
       Main.Client.user?.setActivity(`@${Main.Client.user.username} • /help`, {
-        type: 'LISTENING',
+        type: 'LISTENING'
       })
       logger.info(chalk.bold('BOT READY'))
     })
