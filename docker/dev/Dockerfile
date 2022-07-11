@@ -1,6 +1,5 @@
 FROM node:16
 
-# Environmnet vairables runtime configuration
 ARG DISCORD_TOKEN
 ENV TOKEN="$DISCORD_TOKEN"
 
@@ -22,10 +21,7 @@ COPY . .
 # Install dependencies
 RUN npm install
 
-RUN ls -a
-
 # Build js files
 RUN npm run build
-
 
 CMD [ "npm", "start" ]
