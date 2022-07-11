@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "5672" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    ports:
+        - 5672:5672
+        - 15673:15672
+    networks:
+        - ai-art
+
+  discord-chat-bot:
+    depends_on: 
+      rabbitmq:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - DISCORD_TOKEN=$TOKEN
+        - DISCORD_BOTID=$BOTID
+        - OPEN_AI_TOKEN="none"
+        - AMQP_URL=amqp://guest:guest@rabbitmq:5672
+    networks:
+      - ai-art
+
+networks:
+  ai-art:
