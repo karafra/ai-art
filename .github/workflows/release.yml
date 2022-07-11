@@ -27,7 +27,8 @@ jobs:
         registry: ghcr.io
         username: $GITHUB_USER
         password: ${{ secrets.GITHUB_TOKEN }}
-
+    - run: ls -a
+    - run: ls docker
     - name: Build and Push Docker Image
       env:
         REGISTRY: ghcr.io
