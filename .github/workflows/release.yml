@@ -39,6 +39,6 @@ jobs:
         target: final
         push: true
         tags: |
-          "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.tag }}" , "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest"
+          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.tag }} , ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
         build-args: |
           ENVIRONMENT=production
