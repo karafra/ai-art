@@ -36,7 +36,6 @@ jobs:
       with:
         context: .
         file: Dockerfile
-        target: final
         push: true
         tags: |
           ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} , ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
