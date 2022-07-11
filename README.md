@@ -180,10 +180,10 @@ Another even easier method of deployment is deployment via docker container.
     - Only required variables are `BOTID` and `TOKEN`, these can be set as environment variables using `export ENV_NAME=VALUE` on linux based OS or `$env:VARIABLE_NAME=VALUE` on Windows based OS.
 
 3. Building Docker containers
-  - Type `docker-compose build` into terminal, this will automatically build all required docker images.
+  - Type `docker-compose -f "docker/deploy/docker-compose.yml" build` into terminal, this will automatically build all required docker images.
 
 4. Start container
-    - Type `docker-compose up` into terminal. This will start all services needed. RabbitMQ management console will be accessible [here](http://localhost:15673/) with login credentials being:
+    - Type `docker-compose -f "docker/deploy/docker-compose.yml" up` into terminal. This will start all services needed. RabbitMQ management console will be accessible [here](http://localhost:15673/) with login credentials being:
       - username:   
         - `guest`
       - password:
