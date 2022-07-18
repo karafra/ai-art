@@ -1,0 +1,28 @@
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { ModelsModule } from '../models/models.module';
+import { UtilitiesModule } from '../utilities/utilities.module';
+import { AmqpService } from './amqp/amqp.service';
+import { CogView2Service } from './commands/art/cog-view-2/cog-view-2.service';
+import { DalleMiniService } from './commands/art/dalle-mini/dalle-mini.service';
+import { HelpService } from './commands/help/help.service';
+import { AiStoryService } from './commands/story/ai-story/ai-story.service';
+
+@Module({
+  providers: [
+    CogView2Service,
+    DalleMiniService,
+    AiStoryService,
+    AmqpService,
+    HelpService,
+  ],
+  exports: [
+    CogView2Service,
+    DalleMiniService,
+    AiStoryService,
+    AmqpService,
+    HelpService,
+  ],
+  imports: [ModelsModule, UtilitiesModule, ConfigModule],
+})
+export class ServicesModule {}

@@ -26,6 +26,11 @@
         "OPEN_API_TOKEN": {
             "description": "Api key for open AI (only if you want to use /ai-story story command)",
             "required": false
+        },
+        "SENTRY_DSN": {
+            "description": "DSN to sentry for error tracking",
+            "value": "https://4870ed33904f4d8fabe79658ceda6dee@o970705.ingest.sentry.io/6580305",
+            "required": true
         }
     }
 }

@@ -1,5 +1,28 @@
 # AiArt changelog
 
+## 2.0.0 -- 18th July, 2022
+
+* :bricks: Switched to NestJs framework
+
+* :white_check_mark: Added tests
+
+* :white_check_mark: Added codecov coverage reporter
+
+* :white_check_mark: Added automated testing workflow
+
+* :goal_net: Added support for [sentry.io](https://sentry.io) error reporter
+
+* :whale: Fixed docked files
+
+* :art: Switched documentatin generation engine to [compodoc](https://compodoc.app)
+
+* :necktie: Created custom amqp client wrapper for Nestjs
+
+* :memo: Added ToS and Privacy policy files for github bot verification process
+
+* :wrench: Switch configuration from .env file to yaml file with environment variable substitution
+
+
 ## 1.6.0 -- 11t July, 2022
 
 * :necktie: Fully containerized deployment 

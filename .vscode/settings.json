@@ -1,26 +1,11 @@
-{   
-    "eslint.debug": false,
-    "prettier.configPath": "prettier.config.js",
+{
     "cSpell.words": [
-        "autowired",
-        "babage",
-        "BOTID",
-        "cloudamqp",
-        "copyfiles",
+        "BABAGE",
         "dall",
         "Dalle",
         "davinci",
-        "discordjs",
-        "discordx",
-        "dyno",
-        "importx",
         "karafra",
-        "Karafro",
-        "logprobs",
-        "mainbody",
-        "minecraft",
-        "opusscript",
-        "prestart",
-        "settlin"
+        "nestjs",
+        "ntegral"
     ]
 }

@@ -1,10 +1,12 @@
-import type { Config } from '@jest/types'
+import type { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
   verbose: true,
   transform: {
-    '^.+\\.tsx?$': 'ts-jest'
+    '^.+\\.tsx?$': 'ts-jest',
   },
+  moduleFileExtensions: ['js', 'json', 'ts'],
+  rootDir: 'src',
   moduleNameMapper: {
     '^Root/(.*)$': '<rootDir>/src',
     '^@Assets/(.*)$': '<rootDir>/src/assets/$1',
@@ -14,7 +16,18 @@ const config: Config.InitialOptions = {
     '^@Interceptors/(.*)$': '<rootDir>/src/interceptors/$1',
     '^@Services/(.*)$': '<rootDir>/src/services/$1',
     '^@Types/(.*)$': '<rootDir>/src/types/$1',
-    '^@Utils/(.*)$': '<rootDir>/src/utils/$1'
-  }
-}
-export default config
+    '^@Utils/(.*)$': '<rootDir>/src/utils/$1',
+  },
+  collectCoverageFrom: [
+    '**/*.(t|j)s',
+    '!**/*.module.(t|j)s',
+    '!**/types/**',
+    '!**/utilities/**',
+    '!**/config/**',
+    '!**/main.ts',
+    '!**/collectors/**',
+  ],
+  coverageDirectory: '../coverage',
+  testEnvironment: 'node',
+};
+export default config;

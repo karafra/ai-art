@@ -1,19 +1,19 @@
 declare module '@settlin/collage' {
   interface Options {
-    sources: any[]
-    width: number
-    height: number
-    imageWidth: number
-    imageHeight?: number
-    spacing?: number
-    backgroundColor?: string
-    lines?: string[]
+    sources: any[];
+    width: number;
+    height: number;
+    imageWidth: number;
+    imageHeight?: number;
+    spacing?: number;
+    backgroundColor?: string;
+    lines?: string[];
     textStyle?: {
-      height?: number
-    }
+      height?: number;
+    };
     header?: {
-      height?: number
-    }
+      height?: number;
+    };
   }
-  export default function (options?: Options): Promise<any>
+  export default function (options?: Options): Promise<any>;
 }
