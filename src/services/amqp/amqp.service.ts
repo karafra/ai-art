@@ -4,15 +4,18 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class AmqpService {
   private lastDispatch: number = Date.now();
-
   public constructor(
     @InjectAmqpClient() private readonly amqpClient: AmqpClient,
   ) {}
 
   public async purgeQueue(queueName: string): Promise<void> {
     const channel = await this.amqpClient.channel();
-    await channel.queuePurge(queueName);
-    await channel.close('Service stopped', 320);
+    try {
+      await channel.queuePurge(queueName);
+    } catch {
+    } finally {
+      await channel.close('Service stopped', 320);
+    }
   }
 
   public async popFromQueue<T>(queueName: string): Promise<T> {
