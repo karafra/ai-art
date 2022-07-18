@@ -10,17 +10,16 @@ const getEnvVarValue = (value: string): string | undefined => {
   if (param !== null) {
     return process.env[param[1]];
   }
-  return undefined;
+  return null;
 };
 
 const replaceEnvVars = (obj: any): void => {
   Object.keys(obj).forEach((key) => {
-    let value;
-    if (
-      typeof obj[key] !== 'object' &&
-      (value = getEnvVarValue(obj[key])) !== undefined
-    ) {
-      obj[key] = value;
+    if (typeof obj[key] !== 'object') {
+      const value = getEnvVarValue(obj[key]);
+      if (value !== null) {
+        obj[key] = value;
+      }
     }
     if (typeof obj[key] === 'object' && obj[key] !== null) {
       replaceEnvVars(obj[key]);
