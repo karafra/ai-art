@@ -8,14 +8,17 @@ export class AmqpService {
     @InjectAmqpClient() private readonly amqpClient: AmqpClient,
   ) {}
 
+  /**
+   * Softly purges queue.
+   *
+   * @param queueName name of queue to purge
+   */
   public async purgeQueue(queueName: string): Promise<void> {
     const channel = await this.amqpClient.channel();
-    try {
-      await channel.queuePurge(queueName);
-    } catch {
-    } finally {
-      await channel.close('Service stopped', 320);
-    }
+    // Ensures queue is present
+    channel.queue(queueName);
+    await channel.queuePurge(queueName);
+    await channel.close('Service stopped', 320);
   }
 
   public async popFromQueue<T>(queueName: string): Promise<T> {
