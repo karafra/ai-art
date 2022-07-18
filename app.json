@@ -15,13 +15,12 @@
     ],
     "env": {
         "TOKEN": {
-            "description": "Discord bot token"
-        },
-        "BOTID": {
-            "description": "ID of bot"
+            "description": "Discord bot token",
+            "required": true
         },
         "AMQP_URL": {
-            "description": "URL TO YOUR AMQP INSTANCE"
+            "description": "URL TO YOUR AMQP INSTANCE",
+            "required": true
         },
         "OPEN_API_TOKEN": {
             "description": "Api key for open AI (only if you want to use /ai-story story command)",

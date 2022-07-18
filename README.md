@@ -20,10 +20,10 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
+[![Codecov][codecov-shield]][codecov-url]
 [![MIT License][license-shield]][license-url]
 [![Discord][discord-shield]][discord-invite]
 [![TOP.GG][top-gg-shield]][top-gg-link]
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -290,3 +290,5 @@ Project Link: [https://github.com/karafra/ai-art](https://github.com/karafra/ai-
 [discord-invite]:https://discord.gg/VDKhbrc73Z
 [top-gg-shield]: https://img.shields.io/static/v1?label=TOP.GG&message=LISTED&color=purple&style=for-the-badge&logo=google-chrome&logoColor=white
 [top-gg-link]: https://top.gg/bot/984821826096091206
+[codecov-shield]: https://img.shields.io/codecov/c/github/karafra/ai-art?style=for-the-badge&token=zeGtflSZ48
+[codecov-url]: https://app.codecov.io/gh/karafra/ai-art
