@@ -128,13 +128,5 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-
-# Build
-build/
-
-# Documentation
-docs/
-
-# Husky
-.husky/
-!docker/build
+docs
+docs

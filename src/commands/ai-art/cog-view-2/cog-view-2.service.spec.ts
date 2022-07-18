@@ -1,0 +1,146 @@
+import { TransformedCommandExecutionContext } from '@discord-nestjs/core';
+import { Test, TestingModule } from '@nestjs/testing';
+import { SENTRY_TOKEN } from '@ntegral/nestjs-sentry';
+import { CogView2Service } from '../../../services/commands/art/cog-view-2/cog-view-2.service';
+import { CogView2Command } from './cog-view-2.command';
+import { CogView2CommandDto, Style } from './cog-view-2.dto';
+
+describe('CogView2Service', () => {
+  let service: CogView2Command;
+  const mockAddBreadcrumb = jest.fn();
+  const mockCaptureException = jest.fn();
+  const mockSentryService = {
+    instance: jest.fn(() => ({
+      addBreadcrumb: mockAddBreadcrumb,
+      captureException: mockCaptureException,
+    })),
+  };
+  const mockCogView2Service = {
+    getArt: jest.fn(),
+  };
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [
+        CogView2Command,
+        {
+          provide: SENTRY_TOKEN,
+          useValue: mockSentryService,
+        },
+        {
+          provide: CogView2Service,
+          useValue: mockCogView2Service,
+        },
+      ],
+    }).compile();
+
+    service = module.get<CogView2Command>(CogView2Command);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+
+  describe('handler', () => {
+    const dto = new CogView2CommandDto();
+    const prompt = 'prompt';
+    const id = 'id';
+    const style: Style = Style.FLAT;
+    const mockExecutionContext = {
+      interaction: {
+        deleteReply: jest.fn(),
+        followUp: jest.fn(),
+        deferReply: jest.fn(),
+        user: {
+          id,
+        },
+        channel: {
+          send: jest.fn(),
+        },
+      },
+    } as any as TransformedCommandExecutionContext;
+    beforeEach(() => {
+      jest.clearAllMocks();
+      dto.prompt = prompt;
+      dto.style = style;
+    });
+    it('Should generate art', async () => {
+      // Given
+      const art = 'art';
+      mockCogView2Service.getArt.mockResolvedValue(art);
+      // When
+      await service.handler(dto, mockExecutionContext);
+      // Then
+      expect(mockExecutionContext.interaction.deleteReply).toBeCalledTimes(1);
+      expect(mockExecutionContext.interaction.channel.send).toBeCalledTimes(1);
+      expect(mockExecutionContext.interaction.channel.send).toBeCalledWith({
+        files: [art],
+        content: expect.any(String),
+      });
+      expect(mockCogView2Service.getArt).toBeCalledTimes(1);
+      expect(mockCogView2Service.getArt).toBeCalledWith(dto.prompt, dto.style);
+      expect(mockAddBreadcrumb).toBeCalledTimes(2);
+      expect(mockAddBreadcrumb).toBeCalledWith({
+        category: 'Commands',
+        level: 'info',
+        message: '/ai-art cog-view-2 command called',
+      });
+      expect(mockAddBreadcrumb).toBeCalledWith({
+        category: 'Commands',
+        level: 'info',
+        message: 'cogView2 collage generated',
+      });
+    });
+    it('Should generate art without style', async () => {
+      // Given
+      const art = 'art';
+      dto.style = undefined;
+      mockCogView2Service.getArt.mockResolvedValue(art);
+      // When
+      await service.handler(dto, mockExecutionContext);
+      // Then
+      expect(mockExecutionContext.interaction.deleteReply).toBeCalledTimes(1);
+      expect(mockExecutionContext.interaction.channel.send).toBeCalledTimes(1);
+      expect(mockExecutionContext.interaction.channel.send).toBeCalledWith({
+        files: [art],
+        content: expect.any(String),
+      });
+      expect(mockCogView2Service.getArt).toBeCalledTimes(1);
+      expect(mockCogView2Service.getArt).toBeCalledWith(dto.prompt, undefined);
+      expect(mockAddBreadcrumb).toBeCalledTimes(2);
+      expect(mockAddBreadcrumb).toBeCalledWith({
+        category: 'Commands',
+        level: 'info',
+        message: '/ai-art cog-view-2 command called',
+      });
+      expect(mockAddBreadcrumb).toBeCalledWith({
+        category: 'Commands',
+        level: 'info',
+        message: 'cogView2 collage generated',
+      });
+    });
+    it('Should handle error', async () => {
+      // Given
+      const error = new Error('test error');
+      mockCogView2Service.getArt.mockImplementation(() => {
+        throw error;
+      });
+      // When
+      await service.handler(dto, mockExecutionContext);
+      // Then
+      expect(mockAddBreadcrumb).toBeCalledTimes(1);
+      expect(mockAddBreadcrumb).toBeCalledWith({
+        category: 'Commands',
+        level: 'info',
+        message: '/ai-art cog-view-2 command called',
+      });
+      expect(mockExecutionContext.interaction.deleteReply).not.toBeCalled();
+      expect(mockExecutionContext.interaction.channel.send).not.toBeCalled();
+      expect(mockCaptureException).toHaveBeenCalledTimes(1);
+      expect(mockCaptureException).toBeCalledWith(error);
+      expect(mockExecutionContext.interaction.followUp).toBeCalledTimes(1);
+      expect(mockExecutionContext.interaction.followUp).toBeCalledWith(
+        expect.any(String),
+      );
+    });
+  });
+});

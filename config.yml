@@ -1,0 +1,12 @@
+sentry:
+  dsn: "{SENTRY_DSN}"
+
+# This one is optional ... only if you want to use ai-story command
+openAi:
+  token: ...
+amqp:
+  url: "{AMQP_URL}"
+discord:
+    token: "{DISCORD_TOKEN}"
+deploy:
+  port: "{PORT}"

@@ -94,6 +94,12 @@ Simple discord bot which generates collages based on any query you give it (most
 -   [Collage](https://www.npmjs.com/package/@settlin/collage)
 -   [Canvas](https://www.npmjs.com/package/canvas)
 -   [amqp-client.js](https://github.com/cloudamqp/amqp-client.js/)
+-   [Sentry.io](https://sentry.io)
+-   [Jest](https://jestjs.io)
+-   [Codecov](https://codecov.io)
+-   [Docker](https://docker.com)
+-   [NestJs](https://nestjs.com)
+-   [Compodoc](https://compodoc.app)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -123,22 +129,22 @@ This is an example of how to list things you need to use the software and how to
     ```sh
     npm install
     ```
-5. Enter your API key and bot id into [.env](./.env). Required scopes for 
-    ```sh
-    ############
-    # Required #
-    ############
-    AMQP_URL = 'ENTER YOUR AMQP URL'
-    BOTID = 'ENTER YOUR BOT ID'
-    TOKEN = 'ENTER YOUR API TOKEN'
-    
-    ############
-    # Optional #
-    ############
-    
-    # If you want to use /ai-story story command
-    OPEN_API_TOKEN = 'ENTER YOUR OPEN AI TOKEN'
+5. Enter your API key and bot id into [config.yml](./.config.yml). 
+    ```yaml
+    sentry:
+      dsn: "{SENTRY_DSN}"
+    # This one is optional ... only if you want to use ai-story command
+    openAi:
+      token: ...
+    amqp:
+      url: "{AMQP_URL}"
+    discord:
+        token: "{DISCORD_TOKEN}"
+    deploy:
+      port: "{PORT}"
     ```
+
+    Configuration file supports simple environment variable substitution in format __"{VARIABLE_NAME}"__, where parentheses are __required__. 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -177,7 +183,7 @@ Another even easier method of deployment is deployment via docker container.
     B] If this command throws an error, you have to follow [docker-compose installation guide](https://docs.docker.com/compose/install/)
 
 2. Set required variables
-    - Only required variables are `BOTID` and `TOKEN`, these can be set as environment variables using `export ENV_NAME=VALUE` on linux based OS or `$env:VARIABLE_NAME=VALUE` on Windows based OS.
+    - Only required variables is `TOKEN`, this can be set as environment variables using `export ENV_NAME=VALUE` on linux based OS or `$env:VARIABLE_NAME=VALUE` on Windows based OS
 
 3. Building Docker containers
   - Type `docker-compose -f "docker/deploy/docker-compose.yml" build` into terminal, this will automatically build all required docker images.

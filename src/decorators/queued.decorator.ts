@@ -1,30 +1,31 @@
-import { rabbitMqService } from '@Services/amqp/rabbit-mq.service'
+import { Inject } from '@nestjs/common';
+import { AmqpService } from '../services/amqp/amqp.service';
 
-const purgedQueues: string[] = []
+const purgedQueues = [] as string[];
 
-/**
- * Decorator used for delaying function calls certain time.
- * Time can be set with QUEUE_TIMEOUT env var.
- *
- * @author Karafra
- * @param queueName name of queue
- */
 export function Queued(queueName: string) {
-  return function (
-    _target: any,
-    _key: string,
-    descriptor: TypedPropertyDescriptor<(...args: any[]) => Promise<any>>
-  ) {
-    const method = descriptor.value as (...args: any[]) => any
+  // injector decorator
+  // same as putting @Inject(CACHE_MANAGER) in constructor
+  const injector = Inject(AmqpService);
+
+  return (
+    target: any,
+    _key?: string | symbol,
+    descriptor?: TypedPropertyDescriptor<any>,
+  ) => {
+    injector(target, 'amqpService');
+    const method = descriptor.value as (...args: any[]) => any;
     descriptor.value = async function (...args: any[]) {
-      if (purgedQueues.indexOf(queueName) > -1) {
-        await rabbitMqService.purgeQueue(queueName)
-        purgedQueues.push(queueName)
+      const service: AmqpService = this.amqpService;
+      if (purgedQueues.indexOf(queueName) === -1) {
+        await service.purgeQueue(queueName);
+        purgedQueues.push(queueName);
       }
-      await rabbitMqService.publishToQueue(queueName, args)
-      const dequeuedArgs = await rabbitMqService.popFromQueue<any[]>(queueName)
-      return method.apply(this, dequeuedArgs)
-    }
-    return descriptor
-  }
+
+      await service.publishToQueue(queueName, args);
+      const dequeuedArgs = await service.popFromQueue<any[]>(queueName);
+      return method.apply(this, dequeuedArgs);
+    };
+    return descriptor;
+  };
 }

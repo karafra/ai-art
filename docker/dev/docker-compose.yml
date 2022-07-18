@@ -20,12 +20,12 @@ services:
       rabbitmq:
         condition: service_healthy
     build:
-      context: .
+      context: ../../
+      dockerfile: ./docker/dev/Dockerfile
       args:
         - DISCORD_TOKEN=$TOKEN
-        - DISCORD_BOTID=$BOTID
         - OPEN_AI_TOKEN="none"
-        - AMQP_URL="amqp://guest:guest@rabbitmq:5672"
+        - AMQP_URL=amqp://guest:guest@rabbitmq:5672
     networks:
       - ai-art
 
