@@ -8,7 +8,7 @@ async function bootstrap() {
   const configurationService: ConfigService =
     app.get<ConfigService>(ConfigService);
   const logger = new Logger('Bootstrap');
-  const port = configurationService.get<number>('deploy.port');
+  const port = configurationService.get<number>('deploy.port', 5000);
   await app.listen(port, () => logger.log(`🚀 App running on port ${port}`));
 }
 bootstrap();
