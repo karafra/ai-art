@@ -7,6 +7,6 @@ openAi:
 amqp:
   url: "{AMQP_URL}"
 discord:
-    token: "{DISCORD_TOKEN}"
+    token: "{TOKEN}"
 deploy:
   port: "{PORT}"
