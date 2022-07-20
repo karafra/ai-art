@@ -30,6 +30,11 @@
             "description": "DSN to sentry for error tracking",
             "value": "https://4870ed33904f4d8fabe79658ceda6dee@o970705.ingest.sentry.io/6580305",
             "required": true
+        },
+        "SENTRY_RELEASE_NAME": {
+            "description": "Release name for sentry to tract errors",
+            "value": "",
+            "required": true
         }
     }
 }
