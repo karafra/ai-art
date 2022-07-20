@@ -24,25 +24,33 @@ jobs:
         with:
           environment: production
 
+  set-up-heroku-deploy:
+    name: Set up heroku deploy
+    runs-on: ubuntu-latest
+    needs:
+      build-and-push-to-ghcr
+    steps:
+      - name: Get all heroku instances
+        id: get-instances
+        run: echo "::set-output name=matrix::$(${{ secrets.HEROKU_INSTANCES_CONFIG_JSON }})"
+    outputs:
+      matrix: ${{ steps.get-instances.outputs.matrix }}
+  
   deploy-to-heroku:
       name: Deploy to heroku
+      needs: set-up-heroku-deploy
       runs-on: ubuntu-latest
-      needs: build-and-push-to-ghcr
+      strategy:
+        fail-fast: false
+        matrix:
+          conf: ${{ fromJson(needs.set-up-heroku-deploy.outputs.matrix) }}
       steps:
-        - name: Checkout repository
-          uses: actions/checkout@v2
-        - name: Log into heroku
-          env: 
-            HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          run: heroku container:login 
-        - name: Build and push
-          env:
-            HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          run: heroku container:push -a ${{ secrets.HEROKU_APP_NAME }} worker 
+        - name: Tag image
+          run: docker tag ghcr.io/karafra/ai-art:latest ${{ matrix.conf.containerUrl }}
+        - name: Push to heroku container registry
+          run: docker push ${{ matrix.conf.containerUrl }}
         - name: Release
-          env:
-            HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          run: heroku container:release -a ${{ secrets.HEROKU_APP_NAME }} worker  
+          run: heroku container:release worker -a ${{ matrix.conf.applicationName }}
 
   build-and-push-to-ghcr:
     name: Build and push Docker image to GitHub Container registry
@@ -81,7 +89,6 @@ jobs:
   update-heroku-button-config:
    name: Update heroku button config
    needs:
-    - build-and-push-to-ghcr
     - deploy-to-heroku
     - release-sentry
    runs-on: ubuntu-latest
