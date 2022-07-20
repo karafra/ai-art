@@ -45,6 +45,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build and Push Docker Image
       env:
+        SENTRY_RELEASE_NAME: ${{ github.sha }}
         REGISTRY: ghcr.io
         IMAGE_NAME: ${{ github.repository }}
       uses: docker/build-push-action@v2

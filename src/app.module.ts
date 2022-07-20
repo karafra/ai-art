@@ -26,6 +26,7 @@ import { UtilitiesModule } from './utilities/utilities.module';
       useFactory: (configService: ConfigService) => ({
         dsn: configService.get<string>('sentry.dsn'),
         logLevels: ['debug'],
+        release: configService.get<string>('sentry.release.name'),
         environment: 'production',
       }),
       inject: [ConfigService],

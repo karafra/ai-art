@@ -1,6 +1,7 @@
 sentry:
   dsn: "{SENTRY_DSN}"
-
+  release:
+    name: "{SENTRY_RELEASE_NAME}"
 # This one is optional ... only if you want to use ai-story command
 openAi:
   token: ...
