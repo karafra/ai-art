@@ -32,7 +32,7 @@ jobs:
     steps:
       - name: Get all heroku instances
         id: get-instances
-        run: echo "::set-output name=matrix::$(${{ secrets.HEROKU_INSTANCES_CONFIG_JSON }})"
+        run: echo "::set-output name=matrix::$( ${{ secrets.HEROKU_INSTANCES_CONFIG_JSON }} )"
     outputs:
       matrix: ${{ steps.get-instances.outputs.matrix }}
   
