@@ -8,7 +8,39 @@ on:
   
 
 jobs:
-  build-push:
+  deploy-to-heroku:
+    name: Deploy new version to heroku hosting
+    needs: build-and-push-to-ghcr
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log into Heroku
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:login
+      - name: Build and push to Heroku
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:push -a ${{ secrets.HEROKU_APP_NAME }} worker
+      - name: Release
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:release -a ${{ secrets.HEROKU_APP_NAME }} worker
+  
+  release-sentry:
+    name: Release sentry
+    needs: build-and-push-to-ghcr
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create sentry release
+        uses: getsentry/action-release@v1
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+        with:
+          environment: production
+
+  build-and-push-to-ghcr:
     name: Build and push Docker image to GitHub Container registry
     runs-on: ubuntu-latest
     permissions:
