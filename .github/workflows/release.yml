@@ -76,6 +76,6 @@ jobs:
       run: |
         git config --global user.name 'karafra'
         git config --global user.email 'karafra@users.noreply.github.com'
-        git commit -am ":bookmark Update sentry release name"
+        git commit -am ":bookmark: Update sentry release name"
         git push
       
