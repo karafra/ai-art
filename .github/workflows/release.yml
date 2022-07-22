@@ -24,34 +24,6 @@ jobs:
         with:
           environment: production
 
-  set-up-heroku-deploy:
-    name: Set up heroku deploy
-    runs-on: ubuntu-latest
-    needs:
-      build-and-push-to-ghcr
-    steps:
-      - name: Get all heroku instances
-        id: get-instances
-        run: echo "::set-output name=matrix::$( fromJson(${{ secrets.HEROKU_INSTANCES_CONFIG_JSON }}) )"
-    outputs:
-      matrix: ${{ steps.get-instances.outputs.matrix }}
-  
-  deploy-to-heroku:
-      name: Deploy to heroku
-      needs: set-up-heroku-deploy
-      runs-on: ubuntu-latest
-      strategy:
-        fail-fast: false
-        matrix:
-          conf: ${{ fromJson(needs.set-up-heroku-deploy.outputs.matrix) }}
-      steps:
-        - name: Tag image
-          run: docker tag ghcr.io/karafra/ai-art:latest ${{ matrix.conf.containerUrl }}
-        - name: Push to heroku container registry
-          run: docker push ${{ matrix.conf.containerUrl }}
-        - name: Release
-          run: heroku container:release worker -a ${{ matrix.conf.applicationName }}
-
   build-and-push-to-ghcr:
     name: Build and push Docker image to GitHub Container registry
     runs-on: ubuntu-latest
