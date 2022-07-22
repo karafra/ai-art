@@ -61,7 +61,6 @@ jobs:
   update-heroku-button-config:
    name: Update heroku button config
    needs:
-    - deploy-to-heroku
     - release-sentry
    runs-on: ubuntu-latest
    steps:
