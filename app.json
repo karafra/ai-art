@@ -33,7 +33,7 @@
     },
     "SENTRY_RELEASE_NAME": {
       "description": "Release name for sentry to tract errors",
-      "value": "08cca88b3676cff707fa18bbef27ddd75b9b3cce",
+      "value": "51d136f4efb400e07208dabe28d3448afd4c6e3b",
       "required": true
     }
   }
