@@ -24,7 +24,7 @@
 [![MIT License][license-shield]][license-url]
 [![Discord][discord-shield]][discord-invite]
 [![TOP.GG][top-gg-shield]][top-gg-link]
-[![Buy Me A Coffee][buy-me-a-coffee-badge]][buy-me-a-coffee-url]
+[![Buy Me A Coffee][buy-me-a-coffe-badge]][buy-me-a-coffe-url]
 
 <!-- PROJECT LOGO -->
 <br />
