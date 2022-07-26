@@ -22,6 +22,10 @@
       "description": "URL TO YOUR AMQP INSTANCE",
       "required": true
     },
+    "MONGO_URI": {
+      "description": "URI to your mongodb database",
+      "required": true
+    },
     "OPEN_API_TOKEN": {
       "description": "Api key for open AI (only if you want to use /ai-story story command)",
       "required": false
