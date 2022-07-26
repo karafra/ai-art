@@ -3,9 +3,9 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AxiosResponse } from 'axios';
 import {
-    AiStoryRequest,
-    AiStoryResponse,
-    Model
+  AiStoryRequest,
+  AiStoryResponse,
+  Model,
 } from '../../types/api/ai-story';
 
 @Injectable()

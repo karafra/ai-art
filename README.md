@@ -24,7 +24,8 @@
 [![MIT License][license-shield]][license-url]
 [![Discord][discord-shield]][discord-invite]
 [![TOP.GG][top-gg-shield]][top-gg-link]
-[![Buy Me A Coffee][buy-me-a-coffe-badge]][buy-me-a-coffe-url]
+[![Buy me a coffee][buy-me-a-coffee-badge]][buy-me-a-coffee-url]
+
 
 <!-- PROJECT LOGO -->
 <br />
@@ -81,7 +82,7 @@
 
 <div align="center">
 
-  [![Product Name Screen Shot][product-screenshot]]()
+  [![Product Name Screen Shot][product-screenshot]][discord-invite]
 
 </div>
 
@@ -102,6 +103,9 @@ Simple discord bot which generates collages based on any query you give it (most
 -   [Docker](https://docker.com)
 -   [NestJs](https://nestjs.com)
 -   [Compodoc](https://compodoc.app)
+-   [Mongo](https://www.mongodb.com/)
+-   [TypeORM](https://typeorm.io/)
+-   [GraphQl](https://graphql.org/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -131,7 +135,7 @@ This is an example of how to list things you need to use the software and how to
     ```sh
     npm install
     ```
-5. Enter your API key and bot id into [config.yml](./.config.yml). 
+5. Enter your API key and bot id into [config.yml](./config.yml). 
     ```yaml
     sentry:
       dsn: "{SENTRY_DSN}"
@@ -196,6 +200,8 @@ Another even easier method of deployment is deployment via docker container.
         - `guest`
       - password:
         - `guest`
+    
+    - MongoDb management console will be accessible [here](https://localhost:8081/) without any login credentials
 
 __This network is not external, so it will not be accessible from outside.__
 
@@ -212,6 +218,8 @@ Commands are separated into 2 command groups
   - `dalle-mini` - Generates collage of 9 images using Dall-e mini model  
 - `/ai-story`
   - `story` - Generates story from given headline (Requires OpenAi API) token
+
+- React with :envelope: to any collage and bot will dm it to you.
 
 Discord offers autocompletion so all you need is to start typing name of the command or group in which command is, discord will then guide you through all the required parameters using its autocompletion.
 
@@ -275,8 +283,6 @@ Project Link: [https://github.com/karafra/ai-art](https://github.com/karafra/ai-
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[buy-me-a-coffe-url]: https://www.buymeacoffee.com/karafra
-[buy-me-a-coffe-badge]: https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png
 [contributors-shield]: https://img.shields.io/github/contributors/karafra/ai-art.svg?style=for-the-badge
 [contributors-url]: https://github.com/karafra/ai-art/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/karafra/ai-art.svg?style=for-the-badge
@@ -296,3 +302,5 @@ Project Link: [https://github.com/karafra/ai-art](https://github.com/karafra/ai-
 [top-gg-link]: https://top.gg/bot/984821826096091206
 [codecov-shield]: https://img.shields.io/codecov/c/github/karafra/ai-art?style=for-the-badge&token=zeGtflSZ48
 [codecov-url]: https://app.codecov.io/gh/karafra/ai-art
+[buy-me-a-coffee-badge]: https://img.shields.io/badge/-buy_me_a%C2%A0coffee-gray?logo=buy-me-a-coffee&style=for-the-badge
+[buy-me-a-coffee-url]: https://www.buymeacoffee.com/karafra

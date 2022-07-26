@@ -1,5 +1,16 @@
 # AiArt changelog
 
+## 2.1.4 --26th July, 2022
+
+ * :envelope: When you add reaction ":envelope" to any message with images bot will them to you in DM
+
+ * :card_file_box: Add mongo database
+
+  * :monocle_face: Add graphql for data exploration
+
+  * :whale: Update docker files
+
+  * :bug: Fix bug wih command scoping
 ## 2.0.0 -- 18th July, 2022
 
 * :bricks: Switched to NestJs framework

@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
+        "amqp",
         "BABAGE",
         "codecov",
         "Compodoc",
@@ -10,6 +11,7 @@
         "karafra",
         "Karafro",
         "nestjs",
-        "ntegral"
+        "ntegral",
+        "typeorm"
     ]
 }

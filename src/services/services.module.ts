@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { EntityModule } from '../entity/entity.module';
 import { ModelsModule } from '../models/models.module';
 import { UtilitiesModule } from '../utilities/utilities.module';
 import { AmqpService } from './amqp/amqp.service';
@@ -23,6 +24,6 @@ import { AiStoryService } from './commands/story/ai-story/ai-story.service';
     AmqpService,
     HelpService,
   ],
-  imports: [ModelsModule, UtilitiesModule, ConfigModule],
+  imports: [ModelsModule, UtilitiesModule, ConfigModule, EntityModule],
 })
 export class ServicesModule {}

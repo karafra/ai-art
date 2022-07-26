@@ -6,7 +6,7 @@ import {
   TransformedCommandExecutionContext,
   UsePipes,
 } from '@discord-nestjs/core';
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, Scope } from '@nestjs/common';
 import { InjectSentry, SentryService } from '@ntegral/nestjs-sentry';
 import { IncludeInHelp } from '../../../decorators/includeInHelp.decorator';
 import { AiStoryService } from '../../../services/commands/story/ai-story/ai-story.service';
@@ -32,7 +32,7 @@ import { OpenAiCommandDto } from './open-ai.dto';
   name: 'open-ai',
   description: 'Generate short story based on openAiModel of your choosing ',
 })
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 @UsePipes(TransformPipe)
 export class OpenAiCommand
   implements DiscordTransformedCommand<OpenAiCommandDto>

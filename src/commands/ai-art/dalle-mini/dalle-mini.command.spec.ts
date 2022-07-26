@@ -1,6 +1,6 @@
-import { TransformedCommandExecutionContext } from '@discord-nestjs/core';
 import { Test, TestingModule } from '@nestjs/testing';
 import { SENTRY_TOKEN } from '@ntegral/nestjs-sentry';
+import { JobResolver } from '../../../entity/job/job.resolver';
 import { DalleMiniService } from '../../../services/commands/art/dalle-mini/dalle-mini.service';
 import { DalleMiniCommand } from './dalle-mini.command';
 import { DalleMiniCommandDto } from './dalle-mini.dto';
@@ -15,26 +15,32 @@ describe('AiArtService', () => {
       captureException: mockCaptureException,
     })),
   };
-  const mockCogView2Service = {
+  const mockDalleMiniService = {
     getArt: jest.fn(),
   };
-
+  const mockJobResolver = {
+    update: jest.fn(),
+  };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         DalleMiniCommand,
+        {
+          provide: JobResolver,
+          useValue: mockJobResolver,
+        },
         {
           provide: SENTRY_TOKEN,
           useValue: mockSentryService,
         },
         {
           provide: DalleMiniService,
-          useValue: mockCogView2Service,
+          useValue: mockDalleMiniService,
         },
       ],
     }).compile();
 
-    service = module.get<DalleMiniCommand>(DalleMiniCommand);
+    service = await module.resolve<DalleMiniCommand>(DalleMiniCommand);
   });
 
   it('should be defined', () => {
@@ -56,26 +62,45 @@ describe('AiArtService', () => {
           send: jest.fn(),
         },
       },
-    } as any as TransformedCommandExecutionContext;
+    };
     beforeEach(() => {
       jest.clearAllMocks();
       dto.prompt = prompt;
     });
     it('Should generate art', async () => {
       // Given
-      const art = 'art';
-      mockCogView2Service.getArt.mockResolvedValue(art);
+      const dbId = 'dbId';
+      const art = {
+        dbRecord: {
+          _id: dbId,
+        },
+        attachment: 'attachment',
+      };
+      const mockMessage = {
+        id: 'id',
+        url: 'url',
+      };
+      mockDalleMiniService.getArt.mockResolvedValue(art);
+      mockExecutionContext.interaction.channel.send.mockResolvedValue(
+        mockMessage,
+      );
       // When
-      await service.handler(dto, mockExecutionContext);
+      await service.handler(dto, mockExecutionContext as any);
       // Then
+      expect(mockJobResolver.update).toBeCalledTimes(1);
+      expect(mockJobResolver.update).toBeCalledWith({
+        ...art.dbRecord,
+        messageId: mockMessage.id,
+        messageLink: mockMessage.url,
+      });
       expect(mockExecutionContext.interaction.deleteReply).toBeCalledTimes(1);
       expect(mockExecutionContext.interaction.channel.send).toBeCalledTimes(1);
       expect(mockExecutionContext.interaction.channel.send).toBeCalledWith({
-        files: [art],
+        files: [art.attachment],
         content: expect.any(String),
       });
-      expect(mockCogView2Service.getArt).toBeCalledTimes(1);
-      expect(mockCogView2Service.getArt).toBeCalledWith(dto.prompt);
+      expect(mockDalleMiniService.getArt).toBeCalledTimes(1);
+      expect(mockDalleMiniService.getArt).toBeCalledWith(dto.prompt);
       expect(mockAddBreadcrumb).toBeCalledTimes(2);
       expect(mockAddBreadcrumb).toBeCalledWith({
         category: 'Commands',
@@ -91,12 +116,13 @@ describe('AiArtService', () => {
     it('Should handle error', async () => {
       // Given
       const error = new Error('test error');
-      mockCogView2Service.getArt.mockImplementation(() => {
+      mockDalleMiniService.getArt.mockImplementation(() => {
         throw error;
       });
       // When
-      await service.handler(dto, mockExecutionContext);
+      await service.handler(dto, mockExecutionContext as any);
       // Then
+      expect(mockJobResolver.update).toBeCalledTimes(0);
       expect(mockAddBreadcrumb).toBeCalledTimes(1);
       expect(mockAddBreadcrumb).toBeCalledWith({
         category: 'Commands',
@@ -111,6 +137,51 @@ describe('AiArtService', () => {
       expect(mockExecutionContext.interaction.followUp).toBeCalledWith(
         expect.any(String),
       );
+    });
+    it('Should handle database error', async () => {
+      // Given
+      const error = new Error('test error');
+      mockJobResolver.update.mockImplementation(() => {
+        throw error;
+      });
+      const dbId = 'dbId';
+      const art = {
+        dbRecord: {
+          _id: dbId,
+        },
+        attachment: 'attachment',
+      };
+      const mockMessage = {
+        id: 'id',
+        url: 'url',
+      };
+      mockExecutionContext.interaction.channel.send.mockResolvedValue(
+        mockMessage,
+      );
+      mockDalleMiniService.getArt.mockResolvedValue(art);
+      // When
+      await service.handler(dto, mockExecutionContext as any);
+      // Then
+      expect(mockCaptureException).toHaveBeenCalledTimes(1);
+      expect(mockCaptureException).toBeCalledWith(error);
+      expect(mockJobResolver.update).toBeCalledTimes(1);
+      expect(mockExecutionContext.interaction.deleteReply).toBeCalledTimes(1);
+      expect(mockExecutionContext.interaction.channel.send).toBeCalledTimes(1);
+      expect(mockExecutionContext.interaction.followUp).toBeCalledTimes(1);
+      expect(mockExecutionContext.interaction.followUp).toBeCalledWith(
+        expect.any(String),
+      );
+      expect(mockAddBreadcrumb).toBeCalledTimes(2);
+      expect(mockAddBreadcrumb).toBeCalledWith({
+        category: 'Commands',
+        level: 'info',
+        message: '/ai-art dalle-mini command called',
+      });
+      expect(mockAddBreadcrumb).toBeCalledWith({
+        category: 'Commands',
+        level: 'info',
+        message: 'dalle-mini collage generated',
+      });
     });
   });
 });

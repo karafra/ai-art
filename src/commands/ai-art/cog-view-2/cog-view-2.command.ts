@@ -6,9 +6,10 @@ import {
   TransformedCommandExecutionContext,
   UsePipes,
 } from '@discord-nestjs/core';
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, Scope } from '@nestjs/common';
 import { InjectSentry, SentryService } from '@ntegral/nestjs-sentry';
 import { IncludeInHelp } from '../../../decorators/includeInHelp.decorator';
+import { JobResolver } from '../../../entity/job/job.resolver';
 import { CogView2Service } from '../../../services/commands/art/cog-view-2/cog-view-2.service';
 import { CogView2CommandDto } from './cog-view-2.dto';
 /**
@@ -38,7 +39,7 @@ import { CogView2CommandDto } from './cog-view-2.dto';
   name: 'cog-view2',
   description: 'generate AiArt based on given prompt using dall-e mini model',
 })
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 @UsePipes(TransformPipe)
 export class CogView2Command
   implements DiscordTransformedCommand<CogView2CommandDto>
@@ -52,6 +53,7 @@ export class CogView2Command
    * @param sentryService service handling error reporting
    */
   public constructor(
+    private readonly jobResolver: JobResolver,
     private readonly cogView2Service: CogView2Service,
     @InjectSentry() private readonly sentryService: SentryService,
   ) {}
@@ -74,17 +76,23 @@ export class CogView2Command
       message: '/ai-art cog-view-2 command called',
     });
     try {
-      const collage = await this.cogView2Service.getArt(dto.prompt, dto.style);
+      const { attachment, dbRecord } = await this.cogView2Service.getArt(
+        dto.prompt,
+        dto.style,
+      );
       this.sentryService.instance().addBreadcrumb({
         category: 'Commands',
         level: 'info',
         message: 'cogView2 collage generated',
       });
       await executionContext.interaction.deleteReply();
-      await executionContext.interaction.channel.send({
-        files: [collage],
+      const message = await executionContext.interaction.channel.send({
+        files: [attachment],
         content: `<@${executionContext.interaction.user.id}> \n\n :art: ${dto.prompt} :frame_photo:`,
       });
+      dbRecord.messageId = message.id;
+      dbRecord.messageLink = message.url;
+      await this.jobResolver.update(dbRecord);
       this.logger.debug('Cog-view-2 command execution finished successfully');
     } catch (err) {
       this.logger.error(

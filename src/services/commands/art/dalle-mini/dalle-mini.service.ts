@@ -1,22 +1,27 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectSentry, SentryService } from '@ntegral/nestjs-sentry';
-import { MessageAttachment } from 'discord.js';
 import { Queued } from '../../../../decorators/queued.decorator';
+import { Job } from '../../../../entity/job/entities/job.entity';
+import { JobResolver } from '../../../../entity/job/job.resolver';
 import { CouldNotGenerateArtException } from '../../../../exceptions/CouldNotGenerateArtException';
 import { AiArtModel } from '../../../../models/ai-art/ai-art.model';
+import { MessageAttachmentWithDbRecord } from '../../../../types/extensions/MessageAttachmentWithDbRecord';
 import { Collage } from '../../../../utilities/collage/collage';
 
 @Injectable()
 export class DalleMiniService {
   private readonly logger = new Logger(DalleMiniService.name);
   public constructor(
+    private readonly jobsResolver: JobResolver,
     private readonly collage: Collage,
     private readonly dalleMiniModel: AiArtModel,
     @InjectSentry() private readonly sentryService: SentryService,
   ) {}
 
   @Queued(DalleMiniService.name)
-  public async getArt(prompt: string): Promise<MessageAttachment> {
+  public async getArt(
+    prompt: string,
+  ): Promise<MessageAttachmentWithDbRecord<Job>> {
     this.logger.debug(`Started processing art for ${prompt}`);
     this.sentryService.instance().addBreadcrumb({
       category: 'Service',
@@ -32,7 +37,11 @@ export class DalleMiniService {
           level: 'debug',
           message: `Generated collage for ${prompt}`,
         });
-        return this.collage.getAsAttachment();
+        const attachment = this.collage.getAsAttachment();
+        const record = await this.jobsResolver.create({
+          images: response,
+        });
+        return new MessageAttachmentWithDbRecord(attachment, record);
       } catch (err) {
         this.sentryService.instance().addBreadcrumb({
           level: 'debug',

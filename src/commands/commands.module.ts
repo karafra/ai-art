@@ -1,6 +1,7 @@
 import { DiscordModule } from '@discord-nestjs/core';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { EntityModule } from '../entity/entity.module';
 import { ServicesModule } from '../services/services.module';
 import { AiArtCommand } from './ai-art/ai-art.command';
 import { CogView2Command } from './ai-art/cog-view-2/cog-view-2.command';
@@ -21,6 +22,11 @@ import { HelpCommand } from './help/help.command';
     // Help
     HelpCommand,
   ],
-  imports: [ServicesModule, DiscordModule.forFeature(), ConfigModule],
+  imports: [
+    ServicesModule,
+    DiscordModule.forFeature(),
+    ConfigModule,
+    EntityModule,
+  ],
 })
 export class CommandsModule {}

@@ -21,9 +21,4 @@ export class HelpInteractionCollector {
       embeds: [help],
     });
   }
-
-  @Once('end')
-  public async onceEnd(interaction: ButtonInteraction): Promise<void> {
-    await interaction.update({});
-  }
 }
