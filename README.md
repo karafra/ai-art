@@ -81,7 +81,7 @@
 
 <div align="center">
 
-  [![Product Name Screen Shot][product-screenshot]]()
+  [![Product Name Screen Shot][product-screenshot]][discord-invite]
 
 </div>
 
@@ -102,6 +102,9 @@ Simple discord bot which generates collages based on any query you give it (most
 -   [Docker](https://docker.com)
 -   [NestJs](https://nestjs.com)
 -   [Compodoc](https://compodoc.app)
+-   [Mongo](https://www.mongodb.com/)
+-   [TypeORM](https://typeorm.io/)
+-   [GraphQl](https://graphql.org/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -131,7 +134,7 @@ This is an example of how to list things you need to use the software and how to
     ```sh
     npm install
     ```
-5. Enter your API key and bot id into [config.yml](./.config.yml). 
+5. Enter your API key and bot id into [config.yml](./config.yml). 
     ```yaml
     sentry:
       dsn: "{SENTRY_DSN}"
@@ -196,6 +199,8 @@ Another even easier method of deployment is deployment via docker container.
         - `guest`
       - password:
         - `guest`
+    
+    - MongoDb management console will be accessible [here](https://localhost:8081/) without any login credentials
 
 __This network is not external, so it will not be accessible from outside.__
 
@@ -212,6 +217,8 @@ Commands are separated into 2 command groups
   - `dalle-mini` - Generates collage of 9 images using Dall-e mini model  
 - `/ai-story`
   - `story` - Generates story from given headline (Requires OpenAi API) token
+
+- React with :envelope: to any collage and bot will dm it to you.
 
 Discord offers autocompletion so all you need is to start typing name of the command or group in which command is, discord will then guide you through all the required parameters using its autocompletion.
 
