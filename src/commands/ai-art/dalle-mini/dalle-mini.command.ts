@@ -9,6 +9,7 @@ import {
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectSentry, SentryService } from '@ntegral/nestjs-sentry';
 import { IncludeInHelp } from '../../../decorators/includeInHelp.decorator';
+import { JobResolver } from '../../../entity/job/job.resolver';
 import { DalleMiniService } from '../../../services/commands/art/dalle-mini/dalle-mini.service';
 import { DalleMiniCommandDto } from './dalle-mini.dto';
 
@@ -36,6 +37,7 @@ export class DalleMiniCommand
   private readonly logger = new Logger(DalleMiniCommand.name);
 
   public constructor(
+    private readonly jobsResolver: JobResolver,
     private readonly dalleMiniService: DalleMiniService,
     @InjectSentry() private readonly sentryService: SentryService,
   ) {}
@@ -52,17 +54,23 @@ export class DalleMiniCommand
       message: '/ai-art dalle-mini command called',
     });
     try {
-      const collage = await this.dalleMiniService.getArt(dto.prompt);
+      const messageAttachmentWithDbRecord = await this.dalleMiniService.getArt(
+        dto.prompt,
+      );
       this.sentryService.instance().addBreadcrumb({
         category: 'Commands',
         level: 'info',
         message: 'dalle-mini collage generated',
       });
       await executionContext.interaction.deleteReply();
-      await executionContext.interaction.channel.send({
-        files: [collage],
+      const message = await executionContext.interaction.channel.send({
+        files: [messageAttachmentWithDbRecord.attachment],
         content: `<@${executionContext.interaction.user.id}> \n\n :art: ${dto.prompt} :frame_photo:`,
       });
+      const { dbRecord } = messageAttachmentWithDbRecord;
+      dbRecord.messageId = message.id;
+      dbRecord.messageLink = message.url;
+      this.jobsResolver.update(dbRecord);
       this.logger.debug('Dalle mini command execution finished successfully');
     } catch (err) {
       this.logger.error(
