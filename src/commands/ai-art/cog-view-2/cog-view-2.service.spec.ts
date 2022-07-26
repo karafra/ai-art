@@ -40,7 +40,7 @@ describe('CogView2Service', () => {
       ],
     }).compile();
 
-    service = module.get<CogView2Command>(CogView2Command);
+    service = await module.resolve<CogView2Command>(CogView2Command);
   });
 
   it('should be defined', () => {
