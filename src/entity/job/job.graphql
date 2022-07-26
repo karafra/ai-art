@@ -1,0 +1,28 @@
+type Job {
+  _id: String
+  images: [String]
+  messageId: String
+  messageLink: String
+}
+
+input CreateJobInput {
+  _id: String
+  messageLink: String
+  images:  [String]
+  messageId: String
+}
+
+input UpdateJobInput {
+  id: Int!
+}
+
+type Query {
+  jobs: [Job]!
+  job(_id: String!): Job
+}
+
+type Mutation {
+  createJob(createJobInput: CreateJobInput!): Job!
+  updateJob(updateJobInput: UpdateJobInput!): Job!
+  removeJob(id: String!): Job
+}
