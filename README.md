@@ -24,6 +24,8 @@
 [![MIT License][license-shield]][license-url]
 [![Discord][discord-shield]][discord-invite]
 [![TOP.GG][top-gg-shield]][top-gg-link]
+[![Buy me a coffee][buy-me-a-coffee-badge]][buy-me-a-coffee-url]
+
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -292,3 +294,5 @@ Project Link: [https://github.com/karafra/ai-art](https://github.com/karafra/ai-
 [top-gg-link]: https://top.gg/bot/984821826096091206
 [codecov-shield]: https://img.shields.io/codecov/c/github/karafra/ai-art?style=for-the-badge&token=zeGtflSZ48
 [codecov-url]: https://app.codecov.io/gh/karafra/ai-art
+[buy-me-a-coffee-badge]: https://img.shields.io/badge/-buy_me_a%C2%A0coffee-gray?logo=buy-me-a-coffee&style=for-the-badge
+[buy-me-a-coffee-url]: https://www.buymeacoffee.com/karafra
