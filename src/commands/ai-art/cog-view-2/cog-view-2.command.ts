@@ -6,7 +6,7 @@ import {
   TransformedCommandExecutionContext,
   UsePipes,
 } from '@discord-nestjs/core';
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, Scope } from '@nestjs/common';
 import { InjectSentry, SentryService } from '@ntegral/nestjs-sentry';
 import { IncludeInHelp } from '../../../decorators/includeInHelp.decorator';
 import { JobResolver } from '../../../entity/job/job.resolver';
@@ -39,7 +39,7 @@ import { CogView2CommandDto } from './cog-view-2.dto';
   name: 'cog-view2',
   description: 'generate AiArt based on given prompt using dall-e mini model',
 })
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 @UsePipes(TransformPipe)
 export class CogView2Command
   implements DiscordTransformedCommand<CogView2CommandDto>

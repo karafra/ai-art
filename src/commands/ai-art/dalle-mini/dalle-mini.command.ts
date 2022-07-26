@@ -6,7 +6,7 @@ import {
   TransformedCommandExecutionContext,
   UsePipes,
 } from '@discord-nestjs/core';
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, Scope } from '@nestjs/common';
 import { InjectSentry, SentryService } from '@ntegral/nestjs-sentry';
 import { IncludeInHelp } from '../../../decorators/includeInHelp.decorator';
 import { JobResolver } from '../../../entity/job/job.resolver';
@@ -29,7 +29,7 @@ import { DalleMiniCommandDto } from './dalle-mini.dto';
   name: 'dalle-mini',
   description: 'generate AiArt based on given prompt using dall-e mini model',
 })
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 @UsePipes(TransformPipe)
 export class DalleMiniCommand
   implements DiscordTransformedCommand<DalleMiniCommandDto>
