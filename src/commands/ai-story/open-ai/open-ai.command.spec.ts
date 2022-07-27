@@ -33,7 +33,7 @@ describe('OpenAiService', () => {
       ],
     }).compile();
 
-    service = await module.resolve<OpenAiCommand>(OpenAiCommand);
+    service = await module.get<OpenAiCommand>(OpenAiCommand);
   });
 
   it('should be defined', () => {

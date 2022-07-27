@@ -39,7 +39,7 @@ import { CogView2CommandDto } from './cog-view-2.dto';
   name: 'cog-view2',
   description: 'generate AiArt based on given prompt using dall-e mini model',
 })
-@Injectable({ scope: Scope.REQUEST })
+@Injectable()
 @UsePipes(TransformPipe)
 export class CogView2Command
   implements DiscordTransformedCommand<CogView2CommandDto>
