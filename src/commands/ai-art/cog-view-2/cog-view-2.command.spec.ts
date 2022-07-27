@@ -40,11 +40,7 @@ describe('CogView2Service', () => {
       ],
     }).compile();
 
-<<<<<<< HEAD:src/commands/ai-art/cog-view-2/cog-view-2.command.spec.ts
     service = await module.get<CogView2Command>(CogView2Command);
-=======
-    service = await module.resolve<CogView2Command>(CogView2Command);
->>>>>>> d200a43adf04fb985661122149d06735123c5833:src/commands/ai-art/cog-view-2/cog-view-2.service.spec.ts
   });
 
   it('should be defined', () => {
