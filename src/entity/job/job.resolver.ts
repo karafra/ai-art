@@ -1,8 +1,8 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { JobService } from './job.service';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { InjectSentry, SentryService } from '@ntegral/nestjs-sentry';
 import { CreateJobInput } from './dto/create-job.input';
 import { UpdateJobInput } from './dto/update-job.input';
-import { InjectSentry, SentryService } from '@ntegral/nestjs-sentry';
+import { JobService } from './job.service';
 
 @Resolver('Job')
 export class JobResolver {

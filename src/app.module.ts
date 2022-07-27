@@ -1,20 +1,20 @@
 import { DiscordModule } from '@discord-nestjs/core';
 import { AmqpModule } from '@karafra/nestjs-amqp';
+import { ApolloDriver } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { SentryModule } from '@ntegral/nestjs-sentry';
 import { Intents } from 'discord.js';
 import { CommandsModule } from './commands/commands.module';
 import yamlConfigurationLoader from './config/yamlConfigurationLoader';
-import { ModelsModule } from './models/models.module';
-import { ServicesModule } from './services/services.module';
-import { UtilitiesModule } from './utilities/utilities.module';
-import { ApolloDriver } from '@nestjs/apollo';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { EntityModule } from './entity/entity.module';
 import { Job } from './entity/job/entities/job.entity';
 import { BotGateway } from './gateway/discord/discord.gateway';
+import { ModelsModule } from './models/models.module';
+import { ServicesModule } from './services/services.module';
+import { UtilitiesModule } from './utilities/utilities.module';
 @Module({
   imports: [
     ModelsModule,

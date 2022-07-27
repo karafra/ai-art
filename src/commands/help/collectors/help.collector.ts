@@ -1,4 +1,4 @@
-import { InteractionEventCollector, On, Once } from '@discord-nestjs/core';
+import { InteractionEventCollector, On } from '@discord-nestjs/core';
 import { Injectable } from '@nestjs/common';
 import { ButtonInteraction } from 'discord.js';
 import { HelpService } from '../../../services/commands/help/help.service';
