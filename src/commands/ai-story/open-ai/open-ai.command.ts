@@ -32,7 +32,7 @@ import { OpenAiCommandDto } from './open-ai.dto';
   name: 'open-ai',
   description: 'Generate short story based on openAiModel of your choosing ',
 })
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 @UsePipes(TransformPipe)
 export class OpenAiCommand
   implements DiscordTransformedCommand<OpenAiCommandDto>

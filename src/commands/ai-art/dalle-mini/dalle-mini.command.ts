@@ -29,7 +29,7 @@ import { DalleMiniCommandDto } from './dalle-mini.dto';
   name: 'dalle-mini',
   description: 'generate AiArt based on given prompt using dall-e mini model',
 })
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 @UsePipes(TransformPipe)
 export class DalleMiniCommand
   implements DiscordTransformedCommand<DalleMiniCommandDto>

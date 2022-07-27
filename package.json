@@ -1,6 +1,10 @@
 {
   "name": "ai-art",
+<<<<<<< HEAD
   "version": "2.1.5",
+=======
+  "version": "2.1.4",
+>>>>>>> d200a43adf04fb985661122149d06735123c5833
   "description": "",
   "author": "",
   "private": true,
