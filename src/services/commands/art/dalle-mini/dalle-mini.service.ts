@@ -49,7 +49,7 @@ export class DalleMiniService {
           category: 'Service',
           message: `Could not generate art for ${prompt} on try ${i}. Retrying`,
         });
-        //await new Promise((f) => setTimeout(f, 3000));
+        await new Promise((f) => setTimeout(f, 3000));
       }
     }
     this.sentryService.instance().addBreadcrumb({
