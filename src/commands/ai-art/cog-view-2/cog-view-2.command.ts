@@ -12,6 +12,7 @@ import { IncludeInHelp } from '../../../decorators/includeInHelp.decorator';
 import { JobResolver } from '../../../entity/job/job.resolver';
 import { CogView2Service } from '../../../services/commands/art/cog-view-2/cog-view-2.service';
 import { CogView2CommandDto } from './cog-view-2.dto';
+
 /**
  * Command generating art form prompt based on cog view 2 model
  *
@@ -46,11 +47,13 @@ export class CogView2Command
 {
   private readonly logger = new Logger(CogView2Command.name);
 
-  /**
-   * Public constructor for cog-view-2 command.
+  /** Service service handling web requests to api.
    *
-   * @param cogView2Service service handling web requests to api
    * @param sentryService service handling error reporting
+   * @param jobResolver databse resolver for jobs entity
+   * @param cogView2Service service handling iage generation for cogView2 mode
+   *
+   * @see JobResolver
    */
   public constructor(
     private readonly jobResolver: JobResolver,
