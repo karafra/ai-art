@@ -1,10 +1,10 @@
 {
   "name": "ai-art",
   "version": "2.1.5",
-  "description": "",
-  "author": "",
+  "description": "Simple discord bot generating art from various AI models",
+  "author": "Karafra",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "Apache 2.0",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "npm run build:canvas && nest build",
