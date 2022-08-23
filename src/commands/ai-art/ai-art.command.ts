@@ -1,8 +1,8 @@
 import { Command } from '@discord-nestjs/core';
-import { CogView2Command } from './cog-view-2/cog-view-2.command';
-import { DalleMiniCommand } from './dalle-mini/dalle-mini.command';
-import { WomboDreamCommand } from './wombo-dream/wombo-dream.command';
 import { Injectable } from '@nestjs/common';
+import { DalleMiniCommand } from './dalle-mini/dalle-mini.command';
+import { CogView2Command } from './cog-view-2/cog-view-2.command';
+import { WomboDreamCommand } from './wombo-dream/wombo-dream.command';
 
 @Injectable()
 @Command({
