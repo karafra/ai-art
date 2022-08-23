@@ -11,6 +11,7 @@ import { Collage } from '../../../../utilities/collage/collage';
 @Injectable()
 export class DalleMiniService {
   private readonly logger = new Logger(DalleMiniService.name);
+
   public constructor(
     private readonly jobsResolver: JobResolver,
     private readonly collage: Collage,
@@ -48,7 +49,7 @@ export class DalleMiniService {
           category: 'Service',
           message: `Could not generate art for ${prompt} on try ${i}. Retrying`,
         });
-        await new Promise((f) => setTimeout(f, 3000));
+        //await new Promise((f) => setTimeout(f, 3000));
       }
     }
     this.sentryService.instance().addBreadcrumb({

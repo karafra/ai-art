@@ -8,8 +8,12 @@ openAi:
 amqp:
   url: "{AMQP_URL}"
 discord:
-    token: "{TOKEN}"
+  token: "{TOKEN}"
 deploy:
   port: "{PORT}"
 mongo:
   uri: "${MONGO_URI}"
+wombo-dream:
+  api:
+    url: "https://paint.api.wombo.ai/api"
+  googleAuthUrl: "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyDCvp5MTJLUdtBYEKYWXJrlLzu1zuKM6Xw"
