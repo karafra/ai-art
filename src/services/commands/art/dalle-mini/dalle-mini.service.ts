@@ -11,6 +11,7 @@ import { Collage } from '../../../../utilities/collage/collage';
 @Injectable()
 export class DalleMiniService {
   private readonly logger = new Logger(DalleMiniService.name);
+
   public constructor(
     private readonly jobsResolver: JobResolver,
     private readonly collage: Collage,

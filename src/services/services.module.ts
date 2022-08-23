@@ -8,6 +8,7 @@ import { CogView2Service } from './commands/art/cog-view-2/cog-view-2.service';
 import { DalleMiniService } from './commands/art/dalle-mini/dalle-mini.service';
 import { HelpService } from './commands/help/help.service';
 import { AiStoryService } from './commands/story/ai-story/ai-story.service';
+import { WomboDreamService } from './commands/art/wombo-dream/wombo-dream.service';
 
 @Module({
   providers: [
@@ -16,6 +17,7 @@ import { AiStoryService } from './commands/story/ai-story/ai-story.service';
     AiStoryService,
     AmqpService,
     HelpService,
+    WomboDreamService,
   ],
   exports: [
     CogView2Service,
@@ -23,6 +25,7 @@ import { AiStoryService } from './commands/story/ai-story/ai-story.service';
     AiStoryService,
     AmqpService,
     HelpService,
+    WomboDreamService,
   ],
   imports: [ModelsModule, UtilitiesModule, ConfigModule, EntityModule],
 })
