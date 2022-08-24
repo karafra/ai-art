@@ -3,6 +3,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectSentry, SentryService } from '@ntegral/nestjs-sentry';
 import {
   Client,
+  DiscordAPIError,
   MessageActionRow,
   MessageAttachment,
   MessageButton,
@@ -34,6 +35,7 @@ export class BotGateway {
       `Bot connected to gateway with ping ${this.discordClient.ws.ping}ms`,
     );
   }
+
   @On('error')
   public onError(error: Error) {
     this.sentryService.instance().addBreadcrumb({
@@ -67,7 +69,17 @@ export class BotGateway {
       });
       return;
     }
-    await messageReaction.remove();
+    try {
+      await messageReaction.remove();
+    } catch (err) {
+      if (err instanceof DiscordAPIError) {
+        this.logger.warn(
+          `Bot on server ${messageReaction.message.guild.name} does not have permission to clear reactions. Enveloper feature disabled`,
+        );
+        return;
+      }
+      throw err;
+    }
     const dbRecord = await this.jobsResolver.findOneByMessageId(
       messageReaction.message.id,
     );

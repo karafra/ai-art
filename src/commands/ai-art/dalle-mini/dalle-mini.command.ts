@@ -13,6 +13,15 @@ import { JobResolver } from '../../../entity/job/job.resolver';
 import { DalleMiniService } from '../../../services/commands/art/dalle-mini/dalle-mini.service';
 import { DalleMiniCommandDto } from './dalle-mini.dto';
 
+/**
+ * Command handling interactions related to dalle-mini art generation,
+ *
+ * @class
+ * @classdesc Top level command handling image generation using Dalle-mini model. For example art please see {@link https://huggingface.co/spaces/dalle-mini/dalle-mini Dalle-mini website}
+ * @example /ai-art dalle-mini prompt: "Adam and Eve in the garden of Eden
+ * @since 2.0.0
+ * @author Karafra
+ */
 @IncludeInHelp({
   name: '/ai-art dalle-mini',
   description:
@@ -70,7 +79,7 @@ export class DalleMiniCommand
       const { dbRecord } = messageAttachmentWithDbRecord;
       dbRecord.messageId = message.id;
       dbRecord.messageLink = message.url;
-      this.jobsResolver.update(dbRecord);
+      await this.jobsResolver.create(dbRecord);
       this.logger.debug('Dalle mini command execution finished successfully');
     } catch (err) {
       this.logger.error(

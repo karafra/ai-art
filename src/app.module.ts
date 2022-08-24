@@ -15,6 +15,7 @@ import { BotGateway } from './gateway/discord/discord.gateway';
 import { ModelsModule } from './models/models.module';
 import { ServicesModule } from './services/services.module';
 import { UtilitiesModule } from './utilities/utilities.module';
+
 @Module({
   imports: [
     ModelsModule,
@@ -61,6 +62,9 @@ import { UtilitiesModule } from './utilities/utilities.module';
         url: configService.get<string>('mongo.uri'),
         logging: true,
         synchronize: true,
+        migrationsTableName: 'migrations',
+        migrations: ['dist/migrations/*.migration.js'],
+        migrationsRun: true,
       }),
       inject: [ConfigService],
     }),

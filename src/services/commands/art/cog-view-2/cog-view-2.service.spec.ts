@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { SENTRY_TOKEN } from '@ntegral/nestjs-sentry';
-import { JobResolver } from '../../../../entity/job/job.resolver';
 import { CogView2Model } from '../../../../models/cog-view-2/cog-view-2.model';
 import { Style } from '../../../../types/api/cogView2';
 import { Collage } from '../../../../utilities/collage/collage';
@@ -30,10 +29,6 @@ describe('CogView2Service', () => {
     purgeQueue: jest.fn(),
     publishToQueue: jest.fn(),
   };
-  const mockJobResolver = {
-    update: jest.fn(),
-    create: jest.fn(),
-  };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -54,10 +49,6 @@ describe('CogView2Service', () => {
           provide: AmqpService,
           useValue: mockAmqpService,
         },
-        {
-          provide: JobResolver,
-          useValue: mockJobResolver,
-        },
       ],
     }).compile();
 
@@ -77,13 +68,11 @@ describe('CogView2Service', () => {
       mockAmqpService.popFromQueue.mockResolvedValue([prompt, undefined]);
       const attachment = 'attachment';
       mockCollage.getAsAttachment.mockReturnValue(attachment);
-      const dbRecord = 'dbRecord';
-      mockJobResolver.create.mockResolvedValue(dbRecord);
       // When
       const response = await service.getArt(prompt);
       // Then
       expect(response.attachment).toBe(attachment);
-      expect(response.dbRecord).toBe(dbRecord);
+      expect(response.dbRecord.images).toBe(mockImageArray);
       expect(mockAddBreadcrumb).toBeCalledTimes(2);
       expect(mockAddBreadcrumb).toBeCalledWith({
         level: 'debug',
@@ -114,12 +103,10 @@ describe('CogView2Service', () => {
       mockAmqpService.popFromQueue.mockResolvedValue([prompt, style]);
       const attachment = 'attachment';
       mockCollage.getAsAttachment.mockReturnValue(attachment);
-      const dbRecord = 'dbRecord';
-      mockJobResolver.create.mockResolvedValue(dbRecord);
       // When
       const response = await service.getArt(prompt, style);
       // Then
-      expect(response.dbRecord).toBe(dbRecord);
+      expect(response.dbRecord.images).toBe(mockImageArray);
       expect(response.attachment).toBe(attachment);
       expect(mockAddBreadcrumb).toBeCalledTimes(2);
       expect(mockAddBreadcrumb).toBeCalledWith({
@@ -131,10 +118,6 @@ describe('CogView2Service', () => {
         level: 'debug',
         category: 'Service',
         message: 'Started collage generation',
-      });
-      expect(mockJobResolver.create).toBeCalledTimes(1);
-      expect(mockJobResolver.create).toBeCalledWith({
-        images: mockImageArray,
       });
       expect(mockAmqpService.popFromQueue).toBeCalledTimes(1);
       expect(mockAmqpService.purgeQueue).toBeCalledTimes(0);
@@ -150,39 +133,6 @@ describe('CogView2Service', () => {
       mockAmqpService.popFromQueue.mockResolvedValue([prompt, undefined]);
       const ex = new Error('Test error');
       mockCogView2Model.getImageArray.mockImplementation(() => {
-        throw ex;
-      });
-      // When
-      await expect(service.getArt(prompt)).rejects.toThrow(
-        'Could not generate art "prompt" based on CogView2Service',
-      );
-      // Then
-      expect(mockAddBreadcrumb).toBeCalledTimes(2);
-      expect(mockAddBreadcrumb).toBeCalledWith({
-        level: 'error',
-        message: `Failed to generate art ${prompt}`,
-        category: 'Service',
-      });
-      expect(mockAddBreadcrumb).toBeCalledWith({
-        level: 'debug',
-        category: 'Service',
-        message: 'Started collage generation',
-      });
-      expect(mockJobResolver.create).not.toBeCalled();
-      expect(mockAmqpService.popFromQueue).toBeCalledTimes(1);
-      expect(mockAmqpService.purgeQueue).toBeCalledTimes(0);
-      expect(mockAmqpService.publishToQueue).toBeCalledTimes(1);
-      expect(mockCaptureException).not.toBeCalled();
-      expect(mockCogView2Model.getImageArray).toBeCalledTimes(1);
-      expect(mockCogView2Model.getImageArray).toBeCalledWith(prompt, undefined);
-    });
-
-    it('Should database handle error', async () => {
-      // Given
-      const prompt = 'prompt';
-      mockAmqpService.popFromQueue.mockResolvedValue([prompt, undefined]);
-      const ex = new Error('Test error');
-      mockJobResolver.create.mockImplementation(() => {
         throw ex;
       });
       // When
