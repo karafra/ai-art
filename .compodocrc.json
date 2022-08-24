@@ -1,0 +1,11 @@
+{
+  "$schema": "node_modules/@compodoc/compodoc/src/config/schema.json",
+  "name": "AiArt documentation",
+  "hideGenerator": true,
+  "disableCoverage": true,
+  "output": "docs",
+  "tsconfig": "tsconfig.json",
+  "includes": "markdown",
+  "assetsFolder": ".github/images",
+  "customFavicon": ".github/images/logo.png"
+}
