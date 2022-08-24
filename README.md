@@ -39,7 +39,7 @@
   <p align="center">
     Discord bot generating AI art collages
     <br />
-    <a href="https://karafra.github.io/ai-art/ "><strong>Explore the docs »</strong></a>
+    <a href="https://karafra.github.io/ai-art/"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://discord.gg/VDKhbrc73Z">View Demo</a>
@@ -213,9 +213,11 @@ __This network is not external, so it will not be accessible from outside.__
 
 Commands are separated into 2 command groups
 
+- `help` - Help command 
 - `/ai-art`
   - `cog-view-2` - Generates collage of 9 images using CogView2 model
-  - `dalle-mini` - Generates collage of 9 images using Dall-e mini model  
+  - `dalle-mini` - Generates collage of 9 images using Dall-e mini model
+  - `wombo-dream` - Generartes one image based on WomboDream model  
 - `/ai-story`
   - `story` - Generates story from given headline (Requires OpenAi API) token
 
@@ -227,7 +229,7 @@ Discord offers autocompletion so all you need is to start typing name of the com
   <img src="https://raw.githubusercontent.com/karafra/ai-art/main/.github/images/command-selection.png" />
 </p>
 
-_For more examples, please refer to the [Documentation](karafra.github.io/ai-art/)_
+_For more examples, please refer to the [Documentation]([karafra.github.io/ai-art/](https://karafra.github.io/ai-art/additional-documentation/commands.html))_
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -276,7 +278,8 @@ Project Link: [https://github.com/karafra/ai-art](https://github.com/karafra/ai-
   - Image generation model for `/ai-art cog-view-2`
 - [Open Ai](https://beta.openai.com/playground)
   - Story generation model for `/ai-story story`
-
+- [WomboDream](https://www.wombo.art/)
+  - Art generation model for `ai-art wombo-art`
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
