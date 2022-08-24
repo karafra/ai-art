@@ -229,7 +229,7 @@ Discord offers autocompletion so all you need is to start typing name of the com
   <img src="https://raw.githubusercontent.com/karafra/ai-art/main/.github/images/command-selection.png" />
 </p>
 
-_For more examples, please refer to the [Documentation]([karafra.github.io/ai-art/](https://karafra.github.io/ai-art/additional-documentation/commands.html))_
+_For more examples, please refer to the [Documentation](https://karafra.github.io/ai-art/additional-documentation/commands.html)_
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
