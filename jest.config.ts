@@ -26,6 +26,7 @@ const config: Config.InitialOptions = {
     '!**/config/**',
     '!**/main.ts',
     '!**/collectors/**',
+    '!**/migrations/**',
   ],
   coverageDirectory: '../coverage',
   testEnvironment: 'node',
