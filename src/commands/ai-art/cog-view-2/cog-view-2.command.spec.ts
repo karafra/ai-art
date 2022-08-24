@@ -19,7 +19,7 @@ describe('CogView2Service', () => {
     getArt: jest.fn(),
   };
   const mockJobResolver = {
-    update: jest.fn(),
+    create: jest.fn(),
   };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -98,8 +98,8 @@ describe('CogView2Service', () => {
       });
       expect(mockCogView2Service.getArt).toBeCalledTimes(1);
       expect(mockCogView2Service.getArt).toBeCalledWith(dto.prompt, dto.style);
-      expect(mockJobResolver.update).toBeCalledTimes(1);
-      expect(mockJobResolver.update).toBeCalledWith({
+      expect(mockJobResolver.create).toBeCalledTimes(1);
+      expect(mockJobResolver.create).toBeCalledWith({
         ...art.dbRecord,
         messageId: mockMessage.id,
         messageLink: mockMessage.url,
@@ -137,8 +137,8 @@ describe('CogView2Service', () => {
       // When
       await service.handler(dto, mockExecutionContext as any);
       // Then
-      expect(mockJobResolver.update).toBeCalledTimes(1);
-      expect(mockJobResolver.update).toBeCalledWith({
+      expect(mockJobResolver.create).toBeCalledTimes(1);
+      expect(mockJobResolver.create).toBeCalledWith({
         ...art.dbRecord,
         messageId: mockMessage.id,
         messageLink: mockMessage.url,
@@ -172,7 +172,7 @@ describe('CogView2Service', () => {
       // When
       await service.handler(dto, mockExecutionContext as any);
       // Then
-      expect(mockJobResolver.update).not.toBeCalled();
+      expect(mockJobResolver.create).not.toBeCalled();
       expect(mockAddBreadcrumb).toBeCalledTimes(1);
       expect(mockAddBreadcrumb).toBeCalledWith({
         category: 'Commands',
@@ -191,7 +191,7 @@ describe('CogView2Service', () => {
     it('Should handle database error', async () => {
       // Given
       const error = new Error('test error');
-      mockJobResolver.update.mockImplementation(() => {
+      mockJobResolver.create.mockImplementation(() => {
         throw error;
       });
       const dbId = 'dbId';
@@ -214,7 +214,7 @@ describe('CogView2Service', () => {
       // Then
       expect(mockCaptureException).toHaveBeenCalledTimes(1);
       expect(mockCaptureException).toBeCalledWith(error);
-      expect(mockJobResolver.update).toBeCalledTimes(1);
+      expect(mockJobResolver.create).toBeCalledTimes(1);
       expect(mockExecutionContext.interaction.deleteReply).toBeCalledTimes(1);
       expect(mockExecutionContext.interaction.channel.send).toBeCalledTimes(1);
       expect(mockExecutionContext.interaction.followUp).toBeCalledTimes(1);

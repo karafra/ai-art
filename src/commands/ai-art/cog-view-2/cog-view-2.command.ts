@@ -14,8 +14,10 @@ import { CogView2Service } from '../../../services/commands/art/cog-view-2/cog-v
 import { CogView2CommandDto } from './cog-view-2.dto';
 
 /**
- * Command generating art form prompt based on cog view 2 model
+ * Command generating art form prompt based on cog view 2 model.
  *
+ * @classdesc Top level command handling generation of images based on THUDM CogView2 model.
+ * @example /ai-art cog-view2
  * @author Karafra
  * @since 1.4.5
  */
@@ -50,8 +52,8 @@ export class CogView2Command
   /** Service service handling web requests to api.
    *
    * @param sentryService service handling error reporting
-   * @param jobResolver databse resolver for jobs entity
-   * @param cogView2Service service handling iage generation for cogView2 mode
+   * @param jobResolver database resolver for jobs entity
+   * @param cogView2Service service handling image generation for cogView2 mode
    *
    * @see JobResolver
    */
@@ -95,7 +97,7 @@ export class CogView2Command
       });
       dbRecord.messageId = message.id;
       dbRecord.messageLink = message.url;
-      await this.jobResolver.update(dbRecord);
+      await this.jobResolver.create(dbRecord);
       this.logger.debug('Cog-view-2 command execution finished successfully');
     } catch (err) {
       this.logger.error(

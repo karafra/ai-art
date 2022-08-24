@@ -7,6 +7,7 @@ import { DalleMiniCommandDto } from './dalle-mini.dto';
 
 describe('AiArtService', () => {
   let service: DalleMiniCommand;
+  const mockImageArray = ['1', '1', '1', '1', '1', '1', '1', '1', '1'];
   const mockAddBreadcrumb = jest.fn();
   const mockCaptureException = jest.fn();
   const mockSentryService = {
@@ -19,7 +20,7 @@ describe('AiArtService', () => {
     getArt: jest.fn(),
   };
   const mockJobResolver = {
-    update: jest.fn(),
+    create: jest.fn(),
   };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -69,10 +70,9 @@ describe('AiArtService', () => {
     });
     it('Should generate art', async () => {
       // Given
-      const dbId = 'dbId';
       const art = {
         dbRecord: {
-          _id: dbId,
+          images: mockImageArray,
         },
         attachment: 'attachment',
       };
@@ -87,8 +87,8 @@ describe('AiArtService', () => {
       // When
       await service.handler(dto, mockExecutionContext as any);
       // Then
-      expect(mockJobResolver.update).toBeCalledTimes(1);
-      expect(mockJobResolver.update).toBeCalledWith({
+      expect(mockJobResolver.create).toBeCalledTimes(1);
+      expect(mockJobResolver.create).toBeCalledWith({
         ...art.dbRecord,
         messageId: mockMessage.id,
         messageLink: mockMessage.url,
@@ -122,7 +122,7 @@ describe('AiArtService', () => {
       // When
       await service.handler(dto, mockExecutionContext as any);
       // Then
-      expect(mockJobResolver.update).toBeCalledTimes(0);
+      expect(mockJobResolver.create).toBeCalledTimes(0);
       expect(mockAddBreadcrumb).toBeCalledTimes(1);
       expect(mockAddBreadcrumb).toBeCalledWith({
         category: 'Commands',
@@ -141,13 +141,12 @@ describe('AiArtService', () => {
     it('Should handle database error', async () => {
       // Given
       const error = new Error('test error');
-      mockJobResolver.update.mockImplementation(() => {
+      mockJobResolver.create.mockImplementation(() => {
         throw error;
       });
-      const dbId = 'dbId';
       const art = {
         dbRecord: {
-          _id: dbId,
+          images: mockImageArray,
         },
         attachment: 'attachment',
       };
@@ -164,7 +163,7 @@ describe('AiArtService', () => {
       // Then
       expect(mockCaptureException).toHaveBeenCalledTimes(1);
       expect(mockCaptureException).toBeCalledWith(error);
-      expect(mockJobResolver.update).toBeCalledTimes(1);
+      expect(mockJobResolver.create).toBeCalledTimes(1);
       expect(mockExecutionContext.interaction.deleteReply).toBeCalledTimes(1);
       expect(mockExecutionContext.interaction.channel.send).toBeCalledTimes(1);
       expect(mockExecutionContext.interaction.followUp).toBeCalledTimes(1);

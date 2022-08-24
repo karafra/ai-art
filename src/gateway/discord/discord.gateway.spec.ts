@@ -1,7 +1,11 @@
 import { INJECT_DISCORD_CLIENT } from '@discord-nestjs/core';
 import { Test, TestingModule } from '@nestjs/testing';
 import { SENTRY_TOKEN } from '@ntegral/nestjs-sentry';
-import { MessageActionRow, MessageAttachment } from 'discord.js';
+import {
+  DiscordAPIError,
+  MessageActionRow,
+  MessageAttachment,
+} from 'discord.js';
 import { JobResolver } from '../../entity/job/job.resolver';
 import { BotGateway } from './discord.gateway';
 
@@ -87,23 +91,27 @@ describe('DiscordService', () => {
       });
     });
   });
-  describe('ibReactionAdd', () => {
+  describe('onReactionAdd', () => {
     let mockAuthorId;
     let mockAuthor;
     let mockMessage;
     let mockEmoji;
     let mockMessageReaction;
     let mockUser;
+    let mockGuild;
     const mockMessageReactionRemove = jest.fn();
     const mockUserSend = jest.fn();
     beforeEach(() => {
-      jest.clearAllMocks();
       mockAuthorId = 'authorId';
       mockAuthor = {
         id: mockAuthorId,
       };
+      mockGuild = {
+        name: 'Guild name',
+      };
       mockMessage = {
         author: mockAuthor,
+        guild: mockGuild,
       };
       mockEmoji = {
         identifier: '%E2%9C%89%EF%B8%8F',
@@ -116,6 +124,37 @@ describe('DiscordService', () => {
       mockUser = {
         send: mockUserSend,
       };
+      jest.clearAllMocks();
+    });
+    it('Should fail gracefully if record is not in database', async () => {
+      // Given
+      mockMessageReaction.message.author.id = mockDiscordClient.user.id;
+      mockJobResolver.findOneByMessageId.mockResolvedValue(null);
+      // When
+      await service.onMessageReactionAdd(mockMessageReaction, mockUser);
+      // Then
+      expect(mockMessageReactionRemove).toBeCalledTimes(1);
+      expect(mockJobResolver.findOneByMessageId).toBeCalledTimes(1);
+      expect(mockJobResolver.findOneByMessageId).toBeCalledWith(
+        mockMessageReaction.message.id,
+      );
+      expect(mockUserSend).toBeCalledTimes(0);
+      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(3);
+      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
+        level: 'info',
+        category: 'Gateway',
+        message: 'reaction collected',
+      });
+      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
+        level: 'debug',
+        category: 'Gateway',
+        message: 'Record was empty, stopping execution',
+      });
+      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
+        level: 'debug',
+        category: 'Gateway',
+        message: 'Fetched record from database',
+      });
     });
     it('Should run on reaction to non bot message', async () => {
       // Given
@@ -173,34 +212,47 @@ describe('DiscordService', () => {
         message: 'Fetched record from database',
       });
     });
-    it('Should fail gracefully if record is not in database', async () => {
+    it('Should catch DiscordApiError if bot does not have permission to delete messages', async () => {
       // Given
       mockMessageReaction.message.author.id = mockDiscordClient.user.id;
-      mockJobResolver.findOneByMessageId.mockResolvedValue(null);
+      const ex = Object.create(DiscordAPIError.prototype);
+      mockMessageReactionRemove.mockImplementation(async () => {
+        throw ex;
+      });
       // When
       await service.onMessageReactionAdd(mockMessageReaction, mockUser);
       // Then
       expect(mockMessageReactionRemove).toBeCalledTimes(1);
-      expect(mockJobResolver.findOneByMessageId).toBeCalledTimes(1);
-      expect(mockJobResolver.findOneByMessageId).toBeCalledWith(
-        mockMessageReaction.message.id,
-      );
-      expect(mockUserSend).toBeCalledTimes(0);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(3);
+      expect(mockJobResolver.findOneByMessageId).not.toBeCalled();
+      expect(mockUserSend).not.toBeCalled();
+      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(1);
       expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
         level: 'info',
         category: 'Gateway',
         message: 'reaction collected',
       });
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'debug',
-        category: 'Gateway',
-        message: 'Record was empty, stopping execution',
+    });
+    it('Should rethrow error if it is not DiscordApiError', async () => {
+      // Given
+      mockMessageReaction.message.author.id = mockDiscordClient.user.id;
+      const ex = new Error('Test error');
+      mockMessageReaction.remove.mockImplementation(async () => {
+        throw ex;
       });
+      // When
+      const shouldThrow = async () => {
+        await service.onMessageReactionAdd(mockMessageReaction, mockUser);
+      };
+      await expect(shouldThrow()).rejects.toThrow(ex);
+      // Then
+      expect(mockMessageReactionRemove).toBeCalledTimes(1);
+      expect(mockJobResolver.findOneByMessageId).not.toBeCalled();
+      expect(mockUserSend).not.toBeCalled();
+      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(1);
       expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'debug',
+        level: 'info',
         category: 'Gateway',
-        message: 'Fetched record from database',
+        message: 'reaction collected',
       });
     });
   });

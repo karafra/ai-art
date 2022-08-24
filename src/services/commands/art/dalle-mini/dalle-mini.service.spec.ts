@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { SENTRY_TOKEN } from '@ntegral/nestjs-sentry';
-import { JobResolver } from '../../../../entity/job/job.resolver';
 import { CouldNotGenerateArtException } from '../../../../exceptions/CouldNotGenerateArtException';
 import { AiArtModel } from '../../../../models/ai-art/ai-art.model';
 import { Collage } from '../../../../utilities/collage/collage';
@@ -28,9 +27,6 @@ describe('DalleMiniService', () => {
     constructCollage: jest.fn(),
     getAsAttachment: jest.fn(),
   };
-  const mockJobResolver = {
-    create: jest.fn(),
-  };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -51,10 +47,6 @@ describe('DalleMiniService', () => {
           provide: AmqpService,
           useValue: mockAmqpService,
         },
-        {
-          provide: JobResolver,
-          useValue: mockJobResolver,
-        },
       ],
     }).compile();
 
@@ -74,15 +66,13 @@ describe('DalleMiniService', () => {
       const prompt = 'prompt';
       mockAmqpService.popFromQueue.mockResolvedValue([prompt]);
       mockAiArtModel.getImageArray.mockResolvedValue(mockImageArray);
-      const dbRecord = 'dbRecord';
-      mockJobResolver.create.mockResolvedValue(dbRecord);
       const attachment = 'attachment';
       mockCollage.getAsAttachment.mockReturnValue(attachment);
       // When
       const result = await service.getArt(prompt);
       // Then
       expect(result.attachment).toBe(attachment);
-      expect(result.dbRecord).toBe(dbRecord);
+      expect(result.dbRecord.images).toBe(mockImageArray);
       expect(mockAddBreadcrumb).toBeCalledTimes(2);
       expect(mockAddBreadcrumb).toBeCalledWith({
         category: 'Service',
@@ -93,10 +83,6 @@ describe('DalleMiniService', () => {
         category: 'Service',
         level: 'debug',
         message: `Generated collage for ${prompt}`,
-      });
-      expect(mockJobResolver.create).toBeCalledTimes(1);
-      expect(mockJobResolver.create).toBeCalledWith({
-        images: mockImageArray,
       });
       expect(mockCollage.constructCollage).toBeCalledTimes(1);
       expect(mockCollage.constructCollage).toBeCalledWith(mockImageArray);
@@ -114,8 +100,6 @@ describe('DalleMiniService', () => {
       // Given
       const prompt = 'prompt';
       const attachment = 'attachment';
-      const dbRecord = 'dbRecord';
-      mockJobResolver.create.mockResolvedValue(dbRecord);
       let i = 0;
       mockAiArtModel.getImageArray.mockImplementation(() => {
         if (i == 29) {
@@ -128,12 +112,8 @@ describe('DalleMiniService', () => {
       // When
       const result = await service.getArt(prompt);
       // Then
-      expect(mockJobResolver.create).toBeCalledTimes(1);
-      expect(mockJobResolver.create).toBeCalledWith({
-        images: mockImageArray,
-      });
       expect(result.attachment).toBe(attachment);
-      expect(result.dbRecord).toBe(result.dbRecord);
+      expect(result.dbRecord.images).toBe(mockImageArray);
       expect(mockAddBreadcrumb).toBeCalledTimes(31);
       expect(mockAddBreadcrumb).toBeCalledWith({
         category: 'Service',
@@ -167,7 +147,6 @@ describe('DalleMiniService', () => {
         new CouldNotGenerateArtException(DalleMiniService.name, prompt).message,
       );
       // Then
-      expect(mockJobResolver.create).toBeCalledTimes(0);
       expect(mockAddBreadcrumb).toBeCalledTimes(32);
       expect(mockAddBreadcrumb).toBeCalledWith({
         category: 'Service',
