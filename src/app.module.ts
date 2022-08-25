@@ -71,6 +71,11 @@ import { UtilitiesModule } from './utilities/utilities.module';
     GraphQLModule.forRoot({
       driver: ApolloDriver,
       typePaths: ['./**/*.graphql'],
+      config: {
+        apolloServer: {
+          cache: 'bounded',
+        },
+      },
     }),
     ConfigModule.forRoot({
       load: [yamlConfigurationLoader],
