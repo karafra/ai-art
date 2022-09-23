@@ -53,6 +53,18 @@ export class WomboDreamStyle implements IWomboDreamStyle {
   public static readonly Sureal = new WomboDreamStyle(23, 'Sureal');
   public static readonly Radioactive = new WomboDreamStyle(27, 'Radioactive');
   public static readonly Arcane = new WomboDreamStyle(28, 'Arcane');
+  public static readonly Realistic = new WomboDreamStyle(32, 'Realistic');
+  public static readonly Throwback = new WomboDreamStyle(35, 'Throwback');
+  public static readonly Malevolent = new WomboDreamStyle(40, 'Malevolent');
+  public static readonly Comic = new WomboDreamStyle(45, 'Comic');
+  public static readonly Line_Art = new WomboDreamStyle(47, 'Line_Art');
+  public static readonly Gouache = new WomboDreamStyle(48, 'Gouache');
+  public static readonly Polygon = new WomboDreamStyle(49, 'Polygon');
+  public static readonly Paint = new WomboDreamStyle(50, 'Paint');
+  public static readonly HDR = new WomboDreamStyle(52, 'HDR');
+  public static readonly Analogue = new WomboDreamStyle(53, 'Analogue');
+  public static readonly Retro_Futurism = new WomboDreamStyle(54, 'Retro_Futurism');
+
 
   private constructor(
     public readonly value: number,
