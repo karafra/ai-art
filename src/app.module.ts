@@ -44,6 +44,7 @@ import { UtilitiesModule } from './utilities/utilities.module';
         shardCount: 'auto',
         token: configService.get<string>('discord.token'),
         discordClientOptions: {
+          shards: 'auto',
           intents: [
             Intents.FLAGS.GUILDS,
             Intents.FLAGS.GUILD_MESSAGES,
