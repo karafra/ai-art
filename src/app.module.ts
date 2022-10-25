@@ -41,7 +41,6 @@ import { UtilitiesModule } from './utilities/utilities.module';
     DiscordModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        shardCount: 'auto',
         token: configService.get<string>('discord.token'),
         discordClientOptions: {
           shards: 'auto',
