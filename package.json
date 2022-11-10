@@ -6,6 +6,7 @@
   "private": true,
   "license": "Apache 2.0",
   "scripts": {
+    "preinstall": "./scripts/install-system-dependencies.sh",
     "prebuild": "rimraf dist",
     "build": "npm run build:canvas && nest build",
     "build:canvas": "cd node_modules/canvas && npm run install && cd ../..",
