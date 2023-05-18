@@ -24,7 +24,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
   },
   "dependencies": {
-    "@discord-nestjs/common": "^3.4.2",
+    "@discord-nestjs/common": "^5.2.5",
     "@discord-nestjs/core": "^3.6.0",
     "@karafra/nestjs-amqp": "github:karafra/nestjs-amqp",
     "@nestjs/apollo": "^10.0.19",
@@ -33,11 +33,11 @@
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^8.0.0",
-    "@nestjs/graphql": "^10.0.21",
+    "@nestjs/graphql": "^10.2.1",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/typeorm": "^9.0.0",
-    "@ntegral/nestjs-sentry": "^3.0.7",
+    "@ntegral/nestjs-sentry": "^4.0.0",
     "@sentry/node": "^7.6.0",
     "@settlin/collage": "^2.0.1",
     "@types/mongodb": "^4.0.7",
