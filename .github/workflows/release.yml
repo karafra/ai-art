@@ -73,7 +73,7 @@ jobs:
     - name: install ssh key
       run: |
         install -m 600 -D /dev/null ~/.ssh/id_rsa
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
         ssh-keyscan -H 162.55.233.179 > ~/.ssh/known_hosts
     - name: connect and pull and start
       run: ssh root@162.55.233.179 "cd releases/ai-arts && git checkout main && git pull && npm start:prod && exit"
