@@ -76,6 +76,6 @@ jobs:
         echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
         ssh-keyscan -H 162.55.233.179 > ~/.ssh/known_hosts
     - name: connect and pull and start
-      run: ssh root@162.55.233.179 "cd releases/ai-arts && git checkout main && git pull && npm start:prod && exit"
+      run: ssh root@162.55.233.179 "cd releases/ai-arts && git checkout main && git pull && npm i && npm run start:prod && exit"
     - name: cleanup
       run: rm -rf ~/.ssh
