@@ -6,11 +6,12 @@ import {
   TransformedCommandExecutionContext,
   UsePipes,
 } from '@discord-nestjs/core';
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { IncludeInHelp } from '../../../decorators/includeInHelp.decorator';
 import { JobResolver } from '../../../entity/job/job.resolver';
 import { DalleMiniService } from '../../../services/commands/art/dalle-mini/dalle-mini.service';
 import { DalleMiniCommandDto } from './dalle-mini.dto';
+import { AiArtLoggerService } from '../../../logging/ai-art-logger.service';
 
 /**
  * Command handling interactions related to dalle-mini art generation,
@@ -42,9 +43,8 @@ import { DalleMiniCommandDto } from './dalle-mini.dto';
 export class DalleMiniCommand
   implements DiscordTransformedCommand<DalleMiniCommandDto>
 {
-  private readonly logger = new Logger(DalleMiniCommand.name);
-
   public constructor(
+    private readonly logger: AiArtLoggerService,
     private readonly jobsResolver: JobResolver,
     private readonly dalleMiniService: DalleMiniService,
   ) {}
