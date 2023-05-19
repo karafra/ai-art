@@ -6,6 +6,7 @@ import { AiStoryModel } from './ai-story/ai-story.model';
 import { CogView2Model } from './cog-view-2/cog-view-2.model';
 import { AuthModel } from './wombo-dream/auth/auth-model.model';
 import { WomboDreamModel } from './wombo-dream/wombo-dream.model';
+import { LoggerModule } from '../logging/logger.module';
 
 @Module({
   providers: [
@@ -15,7 +16,7 @@ import { WomboDreamModel } from './wombo-dream/wombo-dream.model';
     WomboDreamModel,
     AuthModel,
   ],
-  imports: [HttpModule, ConfigModule],
+  imports: [HttpModule, ConfigModule, LoggerModule],
   exports: [AiArtModel, AiStoryModel, CogView2Model, WomboDreamModel],
 })
 export class ModelsModule {}

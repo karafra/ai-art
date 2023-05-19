@@ -7,7 +7,9 @@ import {
   WomboTaskIdResponse,
 } from '../../types/api/wombo-dream';
 import { ConfigService } from '@nestjs/config';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class WomboDreamModel {
   private readonly API_URL;
 

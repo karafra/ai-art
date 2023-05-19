@@ -1,8 +1,10 @@
-import { LoggerService } from '@nestjs/common';
+import { Injectable, LoggerService } from '@nestjs/common';
 import winston from 'winston';
 import { ElasticsearchTransport } from 'winston-elasticsearch';
 import { ConfigService } from '@nestjs/config';
+import ecsFormat from '@elastic/ecs-winston-format';
 
+@Injectable()
 export class AiArtLoggerService implements LoggerService {
   private readonly LogLevels = {
     fatal: 0,
@@ -21,19 +23,13 @@ export class AiArtLoggerService implements LoggerService {
       levels: this.LogLevels,
       transports: [
         new winston.transports.File({
-          filename: 'ai-art.log',
+          filename: './logs/ai-art.log',
           level: 'debug',
-          format: winston.format.printf(
-            (debug) =>
-              `[${new Date().toISOString()}] [${debug.level}] ${debug.message}`,
-          ),
+          format: ecsFormat(),
         }),
         new winston.transports.Console({
           level: 'info',
-          format: winston.format.printf(
-            (debug) =>
-              `[${new Date().toISOString()}] [${debug.level}] ${debug.message}`,
-          ),
+          format: ecsFormat(),
         }),
         new ElasticsearchTransport({
           index: 'ai-art',
