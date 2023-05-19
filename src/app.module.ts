@@ -48,7 +48,6 @@ import { LoggerModule } from './logging/logger.module';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         type: 'mongodb',
-        auto_reconnect: true,
         useUnifiedTopology: true,
         entities: [Job],
         url: configService.get<string>('mongo.uri'),
