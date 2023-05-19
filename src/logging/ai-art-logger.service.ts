@@ -13,7 +13,7 @@ export class AiArtLoggerService implements LoggerService {
     trace: 5,
   };
 
-  private readonly logger;
+  private readonly logger: winston.Logger;
 
   public constructor(private readonly configService: ConfigService) {
     this.logger = winston.createLogger({
@@ -54,26 +54,34 @@ export class AiArtLoggerService implements LoggerService {
    * Write a 'log' level log.
    */
   log(message: any, ...optionalParams: any[]) {
-    console.log(message);
+    this.logger.log(message);
   }
 
   /**
    * Write an 'error' level log.
    */
-  error(message: any, ...optionalParams: any[]) {}
+  error(message: any, ...optionalParams: any[]) {
+    this.logger.error(message);
+  }
 
   /**
    * Write a 'warn' level log.
    */
-  warn(message: any, ...optionalParams: any[]) {}
+  warn(message: any, ...optionalParams: any[]) {
+    this.logger.warn(message);
+  }
 
   /**
    * Write a 'debug' level log.
    */
-  debug?(message: any, ...optionalParams: any[]) {}
+  debug?(message: any, ...optionalParams: any[]) {
+    this.logger.debug(message);
+  }
 
   /**
    * Write a 'verbose' level log.
    */
-  verbose?(message: any, ...optionalParams: any[]) {}
+  verbose?(message: any, ...optionalParams: any[]) {
+    this.logger.verbose(message);
+  }
 }

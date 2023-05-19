@@ -1,7 +1,7 @@
 elastic:
   username: elastic
   password: changeme
-  uri: http://127.0.0.1:9200
+  uri: http://localhost:9200
 openAi:
   token: ...
 amqp:
