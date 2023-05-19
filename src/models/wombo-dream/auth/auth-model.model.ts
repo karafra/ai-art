@@ -1,6 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { InjectSentry, SentryService } from '@ntegral/nestjs-sentry';
 import { AxiosResponse } from 'axios';
 import { GoogleApiAuthResponse } from '../../../types/api/wombo-dream';
 import { ConfigService } from '@nestjs/config';
@@ -18,8 +17,6 @@ export class AuthModel {
 
   public constructor(
     private readonly httpService: HttpService,
-    @InjectSentry()
-    private readonly sentryService: SentryService,
     private readonly configService: ConfigService,
   ) {}
 
@@ -29,25 +26,14 @@ export class AuthModel {
    * @returns AxiosResponse axios response containing authentication token for wombo art
    */
   public async authenticate(): Promise<AxiosResponse<GoogleApiAuthResponse>> {
-    this.sentryService.instance().addBreadcrumb({
-      level: 'debug',
-      category: 'model',
-      message: 'Authenticating for wombo art',
-    });
     this.logger.debug('Authenticating for wombo art');
     try {
-      const response = await this.httpService.axiosRef.post(
-        this.configService.get<string>('wombo-dream.googleAuthUrl'),
-        {},
-      );
-      this.sentryService.instance().addBreadcrumb({
-        level: 'debug',
-        category: 'model',
-        message: 'Authentication for wombo art completed successfully',
-      });
+      const response = await this.httpService.axiosRef.post<
+        GoogleApiAuthResponse,
+        any
+      >(this.configService.get<string>('wombo-dream.googleAuthUrl'), {});
       return response;
     } catch (err) {
-      this.sentryService.instance().captureException(err);
       this.logger.error(err.message);
       throw new GoogleAuthenticationToolkitError(err.message);
     }

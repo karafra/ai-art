@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SENTRY_TOKEN } from '@ntegral/nestjs-sentry';
 import { CouldNotGenerateArtException } from '../../../../exceptions/CouldNotGenerateArtException';
 import { AiArtModel } from '../../../../models/ai-art/ai-art.model';
 import { Collage } from '../../../../utilities/collage/collage';
@@ -10,11 +9,6 @@ describe('DalleMiniService', () => {
   let service: DalleMiniService;
   const mockImageArray = ['1', '1', '1', '1', '1', '1', '1', '1', '1'];
   const mockAddBreadcrumb = jest.fn();
-  const mockSentryService = {
-    instance: jest.fn(() => ({
-      addBreadcrumb: mockAddBreadcrumb,
-    })),
-  };
   const mockAmqpService = {
     popFromQueue: jest.fn(),
     purgeQueue: jest.fn(),
@@ -31,10 +25,6 @@ describe('DalleMiniService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         DalleMiniService,
-        {
-          provide: SENTRY_TOKEN,
-          useValue: mockSentryService,
-        },
         {
           provide: AiArtModel,
           useValue: mockAiArtModel,

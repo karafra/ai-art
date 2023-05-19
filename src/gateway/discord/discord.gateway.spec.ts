@@ -1,6 +1,5 @@
 import { INJECT_DISCORD_CLIENT } from '@discord-nestjs/core';
 import { Test, TestingModule } from '@nestjs/testing';
-import { SENTRY_TOKEN } from '@ntegral/nestjs-sentry';
 import {
   DiscordAPIError,
   MessageActionRow,
@@ -11,12 +10,6 @@ import { BotGateway } from './discord.gateway';
 
 describe('DiscordService', () => {
   let service: BotGateway;
-  const mockSentryInstance = {
-    addBreadcrumb: jest.fn(),
-  };
-  const mockSentryService = {
-    instance: jest.fn().mockReturnValue(mockSentryInstance),
-  };
   const mockJobResolver = {
     findOneByMessageId: jest.fn(),
   };
@@ -42,10 +35,6 @@ describe('DiscordService', () => {
           provide: INJECT_DISCORD_CLIENT,
           useValue: mockDiscordClient,
         },
-        {
-          provide: SENTRY_TOKEN,
-          useValue: mockSentryService,
-        },
       ],
     }).compile();
 
@@ -65,12 +54,6 @@ describe('DiscordService', () => {
       // When
       service.onReady();
       // Then
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(1);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'info',
-        message: 'Gateway connected to Discord',
-        category: 'Gateway',
-      });
     });
   });
   describe('onError', () => {
@@ -83,12 +66,6 @@ describe('DiscordService', () => {
       // When
       service.onError(error);
       // Then
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(1);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'error',
-        message: `Discord gateway WS connection failed with error ${error.message}`,
-        category: 'Gateway',
-      });
     });
   });
   describe('onReactionAdd', () => {
@@ -139,22 +116,6 @@ describe('DiscordService', () => {
         mockMessageReaction.message.id,
       );
       expect(mockUserSend).toBeCalledTimes(0);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(3);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'info',
-        category: 'Gateway',
-        message: 'reaction collected',
-      });
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'debug',
-        category: 'Gateway',
-        message: 'Record was empty, stopping execution',
-      });
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'debug',
-        category: 'Gateway',
-        message: 'Fetched record from database',
-      });
     });
     it('Should run on reaction to non bot message', async () => {
       // Given
@@ -162,17 +123,6 @@ describe('DiscordService', () => {
       // When
       await service.onMessageReactionAdd(mockMessageReaction, mockUser);
       // Then
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(2);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'info',
-        category: 'Gateway',
-        message: 'reaction collected',
-      });
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'debug',
-        category: 'Gateway',
-        message: 'Not dispatching, reaction is non related',
-      });
     });
     it('Should run on bot message without error', async () => {
       // Given
@@ -195,22 +145,6 @@ describe('DiscordService', () => {
         files: [expect.any(MessageAttachment)],
         components: [expect.any(MessageActionRow)],
       });
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(3);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'info',
-        category: 'Gateway',
-        message: 'reaction collected',
-      });
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'info',
-        category: 'Gateway',
-        message: 'Messages sent do DM successfully',
-      });
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'debug',
-        category: 'Gateway',
-        message: 'Fetched record from database',
-      });
     });
     it('Should catch DiscordApiError if bot does not have permission to delete messages', async () => {
       // Given
@@ -225,12 +159,6 @@ describe('DiscordService', () => {
       expect(mockMessageReactionRemove).toBeCalledTimes(1);
       expect(mockJobResolver.findOneByMessageId).not.toBeCalled();
       expect(mockUserSend).not.toBeCalled();
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(1);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'info',
-        category: 'Gateway',
-        message: 'reaction collected',
-      });
     });
     it('Should rethrow error if it is not DiscordApiError', async () => {
       // Given
@@ -248,12 +176,6 @@ describe('DiscordService', () => {
       expect(mockMessageReactionRemove).toBeCalledTimes(1);
       expect(mockJobResolver.findOneByMessageId).not.toBeCalled();
       expect(mockUserSend).not.toBeCalled();
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(1);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'info',
-        category: 'Gateway',
-        message: 'reaction collected',
-      });
     });
   });
 });

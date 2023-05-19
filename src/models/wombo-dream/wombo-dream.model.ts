@@ -1,6 +1,5 @@
 import { AuthModel } from './auth/auth-model.model';
 import { HttpService } from '@nestjs/axios';
-import { InjectSentry, SentryService } from '@ntegral/nestjs-sentry';
 import {
   IWomboDreamStyle,
   WomboDreamStyle,
@@ -16,8 +15,6 @@ export class WomboDreamModel {
     private readonly authModel: AuthModel,
     private readonly httpService: HttpService,
     private readonly configService: ConfigService,
-    @InjectSentry()
-    private readonly sentryService: SentryService,
   ) {
     this.API_URL = configService.get<string>('wombo-dream.api.url');
   }
@@ -28,11 +25,6 @@ export class WomboDreamModel {
     frequency = 20,
   ): Promise<WomboDreamTaskResponse> {
     const { idToken } = await this.authModel.getAuthentication();
-    this.sentryService.instance().addBreadcrumb({
-      category: 'Model',
-      level: 'debug',
-      message: 'Creating Wombo task',
-    });
     const { id } = await this.getTaskId(idToken);
     const response = await this.httpService.axiosRef.put(
       `${this.configService.get<string>('wombo-dream.api.url')}/tasks/${id}`,
@@ -47,11 +39,6 @@ export class WomboDreamModel {
         headers: this.defineWomboHeaders(idToken),
       },
     );
-    this.sentryService.instance().addBreadcrumb({
-      category: 'Model',
-      level: 'debug',
-      message: 'Created Wombo task',
-    });
     response.data.token = idToken;
     return response.data;
   }
@@ -60,22 +47,12 @@ export class WomboDreamModel {
     id: string,
     token: string,
   ): Promise<WomboDreamTaskResponse> {
-    this.sentryService.instance().addBreadcrumb({
-      category: 'model',
-      level: 'debug',
-      message: `Checking status of job with id ${id}`,
-    });
     const { data } = await this.httpService.axiosRef.get(
       `${this.configService.get<string>('wombo-dream.api.url')}/tasks/${id}`,
       {
         headers: this.defineWomboHeaders(token),
       },
     );
-    this.sentryService.instance().addBreadcrumb({
-      category: 'model',
-      level: 'debug',
-      message: `Job with id ${id} is currently "${data.state}"`,
-    });
     data.token = token;
     return data;
   }

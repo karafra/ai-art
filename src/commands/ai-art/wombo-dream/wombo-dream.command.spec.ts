@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { WomboDreamCommand } from './wombo-dream.command';
-import { SENTRY_TOKEN } from '@ntegral/nestjs-sentry';
 import { JobResolver } from '../../../entity/job/job.resolver';
 import { WomboDreamService } from '../../../services/commands/art/wombo-dream/wombo-dream.service';
 import { WomboDreamStyle } from '../../../types/api/wombo-dream';
@@ -10,12 +9,6 @@ describe('WomboDreamService', () => {
   let service: WomboDreamCommand;
   const mockAddBreadcrumb = jest.fn();
   const mockCaptureException = jest.fn();
-  const mockSentryService = {
-    instance: jest.fn(() => ({
-      addBreadcrumb: mockAddBreadcrumb,
-      captureException: mockCaptureException,
-    })),
-  };
   const mockWomboDreamService = {
     generateArt: jest.fn(),
   };
@@ -26,10 +19,6 @@ describe('WomboDreamService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         WomboDreamCommand,
-        {
-          provide: SENTRY_TOKEN,
-          useValue: mockSentryService,
-        },
         {
           provide: WomboDreamService,
           useValue: mockWomboDreamService,

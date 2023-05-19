@@ -5,7 +5,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { SentryModule } from '@ntegral/nestjs-sentry';
 import { Intents } from 'discord.js';
 import { CommandsModule } from './commands/commands.module';
 import yamlConfigurationLoader from './config/yamlConfigurationLoader';
@@ -15,9 +14,11 @@ import { BotGateway } from './gateway/discord/discord.gateway';
 import { ModelsModule } from './models/models.module';
 import { ServicesModule } from './services/services.module';
 import { UtilitiesModule } from './utilities/utilities.module';
+import { LoggerModule } from './logging/logger.module';
 
 @Module({
   imports: [
+    LoggerModule,
     ModelsModule,
     ServicesModule,
     ConfigModule.forRoot(),
@@ -25,16 +26,6 @@ import { UtilitiesModule } from './utilities/utilities.module';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         url: configService.get<string>('amqp.url'),
-      }),
-      inject: [ConfigService],
-    }),
-    SentryModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        dsn: configService.get<string>('sentry.dsn'),
-        logLevels: ['debug'],
-        release: configService.get<string>('sentry.release.name'),
-        environment: 'production',
       }),
       inject: [ConfigService],
     }),

@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SENTRY_TOKEN } from '@ntegral/nestjs-sentry';
 import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { HelpService } from '../../services/commands/help/help.service';
 import { HelpCommand } from './help.command';
@@ -12,12 +11,6 @@ describe('first', () => {
   const mockInteraction = {
     reply: jest.fn(),
   };
-  const mockSentryInstance = {
-    addBreadcrumb: jest.fn(),
-  };
-  const mockSentryService = {
-    instance: jest.fn().mockReturnValue(mockSentryInstance),
-  };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -25,10 +18,6 @@ describe('first', () => {
         {
           provide: HelpService,
           useValue: mockHelpService,
-        },
-        {
-          provide: SENTRY_TOKEN,
-          useValue: mockSentryService,
         },
       ],
     }).compile();
@@ -61,22 +50,6 @@ describe('first', () => {
         embeds: [expectedHelp],
         components: [expect.any(MessageActionRow)],
         ephemeral: true,
-      });
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(3);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'info',
-        category: 'Command',
-        message: '/help command called',
-      });
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'info',
-        category: 'Command',
-        message: `help at index ${0} fetched`,
-      });
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        category: 'Command',
-        level: 'info',
-        message: 'Help dispatched',
       });
     });
   });

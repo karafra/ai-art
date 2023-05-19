@@ -1,6 +1,5 @@
 import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import { SENTRY_TOKEN } from '@ntegral/nestjs-sentry';
 import { CouldNotGenerateArtException } from '../../../../exceptions/CouldNotGenerateArtException';
 import { AiStoryModel } from '../../../../models/ai-story/ai-story.model';
 import { Model } from '../../../../types/api/ai-story';
@@ -9,13 +8,6 @@ import { AiStoryService } from './ai-story.service';
 describe('AiStoryService', () => {
   let service: AiStoryService;
   const mockAddBreadcrumb = jest.fn();
-  const mockCaptureException = jest.fn();
-  const mockSentryService = {
-    instance: jest.fn(() => ({
-      addBreadcrumb: mockAddBreadcrumb,
-      captureException: mockCaptureException,
-    })),
-  };
   const mockConfigService = {
     get: jest.fn(),
   };
@@ -26,10 +18,6 @@ describe('AiStoryService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AiStoryService,
-        {
-          provide: SENTRY_TOKEN,
-          useValue: mockSentryService,
-        },
         {
           provide: ConfigService,
           useValue: mockConfigService,

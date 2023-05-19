@@ -1,6 +1,5 @@
 import { Command, DiscordCommand, UseCollectors } from '@discord-nestjs/core';
 import { Injectable } from '@nestjs/common';
-import { InjectSentry, SentryService } from '@ntegral/nestjs-sentry';
 import {
   CacheType,
   CommandInteraction,
@@ -17,25 +16,12 @@ import { HelpInteractionCollector } from './collectors/help.collector';
 @Injectable()
 @UseCollectors(HelpInteractionCollector)
 export class HelpCommand implements DiscordCommand {
-  public constructor(
-    private readonly helpService: HelpService,
-    @InjectSentry() private readonly sentryService: SentryService,
-  ) {}
+  public constructor(private readonly helpService: HelpService) {}
 
   public async handler(
     interaction: CommandInteraction<CacheType>,
   ): Promise<void> {
-    this.sentryService.instance().addBreadcrumb({
-      level: 'info',
-      category: 'Command',
-      message: '/help command called',
-    });
     const help = this.helpService.getHelpAtIndex(0);
-    this.sentryService.instance().addBreadcrumb({
-      level: 'info',
-      category: 'Command',
-      message: `help at index ${0} fetched`,
-    });
     const row = new MessageActionRow()
       .addComponents(
         new MessageButton({
@@ -55,11 +41,6 @@ export class HelpCommand implements DiscordCommand {
       embeds: [help],
       components: [row],
       ephemeral: true,
-    });
-    this.sentryService.instance().addBreadcrumb({
-      category: 'Command',
-      level: 'info',
-      message: 'Help dispatched',
     });
   }
 }

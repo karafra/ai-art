@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SENTRY_TOKEN } from '@ntegral/nestjs-sentry';
 import { JobResolver } from '../../../entity/job/job.resolver';
 import { DalleMiniService } from '../../../services/commands/art/dalle-mini/dalle-mini.service';
 import { DalleMiniCommand } from './dalle-mini.command';
@@ -10,12 +9,6 @@ describe('AiArtService', () => {
   const mockImageArray = ['1', '1', '1', '1', '1', '1', '1', '1', '1'];
   const mockAddBreadcrumb = jest.fn();
   const mockCaptureException = jest.fn();
-  const mockSentryService = {
-    instance: jest.fn(() => ({
-      addBreadcrumb: mockAddBreadcrumb,
-      captureException: mockCaptureException,
-    })),
-  };
   const mockDalleMiniService = {
     getArt: jest.fn(),
   };
@@ -29,10 +22,6 @@ describe('AiArtService', () => {
         {
           provide: JobResolver,
           useValue: mockJobResolver,
-        },
-        {
-          provide: SENTRY_TOKEN,
-          useValue: mockSentryService,
         },
         {
           provide: DalleMiniService,

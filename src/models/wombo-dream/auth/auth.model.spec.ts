@@ -2,23 +2,15 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AuthModel } from './auth-model.model';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
-import { SENTRY_TOKEN } from '@ntegral/nestjs-sentry';
 import { GoogleApiAuthResponse } from '../../../types/api/wombo-dream';
 import { GoogleAuthenticationToolkitError } from '../../../exceptions/GoogleAuthenticationToolkitError';
 
 describe('AuthModel', () => {
   let service: AuthModel;
-  const mockSentryInstance = {
-    addBreadcrumb: jest.fn(),
-    captureException: jest.fn(),
-  };
   const mockHttpService = {
     axiosRef: {
       post: jest.fn(),
     },
-  };
-  const mockSentryService = {
-    instance: () => mockSentryInstance,
   };
   const mockConfigService = {
     get: jest.fn(),
@@ -35,10 +27,6 @@ describe('AuthModel', () => {
         {
           provide: ConfigService,
           useValue: mockConfigService,
-        },
-        {
-          provide: SENTRY_TOKEN,
-          useValue: mockSentryService,
         },
       ],
     }).compile();
@@ -81,17 +69,6 @@ describe('AuthModel', () => {
       expect(mockHttpService.axiosRef.post).toBeCalledTimes(1);
       expect(mockHttpService.axiosRef.post).toBeCalledWith(authUrl, {});
       expect(mockHttpService.axiosRef.post).toBeCalledTimes(1);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(2);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'debug',
-        category: 'model',
-        message: 'Authenticating for wombo art',
-      });
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'debug',
-        category: 'model',
-        message: 'Authentication for wombo art completed successfully',
-      });
     });
     it('should capture error that occures during authentication', async () => {
       // Given
@@ -111,16 +88,6 @@ describe('AuthModel', () => {
       expect(mockHttpService.axiosRef.post).toBeCalledTimes(1);
       expect(mockHttpService.axiosRef.post).toBeCalledWith(authUrl, {});
       expect(mockHttpService.axiosRef.post).toBeCalledTimes(1);
-      expect(mockSentryInstance.captureException).toBeCalledTimes(1);
-      expect(mockSentryInstance.captureException).toBeCalledWith(
-        new GoogleAuthenticationToolkitError(testError.message),
-      );
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(1);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'debug',
-        category: 'model',
-        message: 'Authenticating for wombo art',
-      });
     });
   });
   describe('getAuthentication', () => {
@@ -153,17 +120,6 @@ describe('AuthModel', () => {
       expect(mockHttpService.axiosRef.post).toBeCalledTimes(1);
       expect(mockHttpService.axiosRef.post).toBeCalledWith(authUrl, {});
       expect(mockHttpService.axiosRef.post).toBeCalledTimes(1);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(2);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'debug',
-        category: 'model',
-        message: 'Authenticating for wombo art',
-      });
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'debug',
-        category: 'model',
-        message: 'Authentication for wombo art completed successfully',
-      });
     });
   });
 });

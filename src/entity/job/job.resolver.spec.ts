@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SENTRY_TOKEN } from '@ntegral/nestjs-sentry';
 import { UpdateJobInput } from './dto/update-job.input';
 import { JobResolver } from './job.resolver';
 import { JobService } from './job.service';
@@ -14,12 +13,6 @@ describe('JobResolver', () => {
     update: jest.fn(),
     remove: jest.fn(),
   };
-  const mockSentryInstance = {
-    addBreadcrumb: jest.fn(),
-  };
-  const mockSentryService = {
-    instance: jest.fn().mockReturnValue(mockSentryInstance),
-  };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -27,10 +20,6 @@ describe('JobResolver', () => {
         {
           provide: JobService,
           useValue: mockJobService,
-        },
-        {
-          provide: SENTRY_TOKEN,
-          useValue: mockSentryService,
         },
       ],
     }).compile();
@@ -53,17 +42,6 @@ describe('JobResolver', () => {
       // Then
       expect(mockJobService.create).toBeCalledTimes(1);
       expect(mockJobService.create).toBeCalledWith(id);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(2);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'info',
-        category: 'Resolver',
-        message: 'Creating job',
-      });
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'info',
-        category: 'Resolver',
-        message: 'Created job',
-      });
     });
   });
   describe('findAllJobs', () => {
@@ -80,17 +58,6 @@ describe('JobResolver', () => {
       expect(response).toBe(result);
       expect(mockJobService.findAll).toBeCalledTimes(1);
       expect(mockJobService.findAll).toBeCalledWith();
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(2);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'info',
-        category: 'Resolver',
-        message: 'Fetching all jobs',
-      });
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'info',
-        category: 'Resolver',
-        message: 'Fetched all jobs',
-      });
     });
   });
   describe('findOne', () => {
@@ -108,17 +75,6 @@ describe('JobResolver', () => {
       expect(response).toBe(result);
       expect(mockJobService.findOne).toBeCalledTimes(1);
       expect(mockJobService.findOne).toBeCalledWith(id);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(2);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'info',
-        category: 'Resolver',
-        message: `Fetching job with id ${id}`,
-      });
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'info',
-        category: 'Resolver',
-        message: `Fetched job with id ${id}`,
-      });
     });
   });
   describe('findOneByMessageId', () => {
@@ -136,17 +92,6 @@ describe('JobResolver', () => {
       expect(response).toBe(result);
       expect(mockJobService.findByMessageId).toBeCalledTimes(1);
       expect(mockJobService.findByMessageId).toBeCalledWith(id);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(2);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'info',
-        category: 'Resolver',
-        message: `Fetching job with messageId ${id}`,
-      });
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'info',
-        category: 'Resolver',
-        message: `Fetched job with messageId ${id}`,
-      });
     });
   });
   describe('findOneByMessageId', () => {
@@ -164,17 +109,6 @@ describe('JobResolver', () => {
       expect(response).toBe(result);
       expect(mockJobService.update).toBeCalledTimes(1);
       expect(mockJobService.update).toBeCalledWith(id, { _id: id });
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(2);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'info',
-        category: 'Resolver',
-        message: `Updating job with id ${id}`,
-      });
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'info',
-        category: 'Resolver',
-        message: `Updated job with id ${id}`,
-      });
     });
   });
   describe('remove', () => {
@@ -192,17 +126,6 @@ describe('JobResolver', () => {
       expect(response).toBe(result);
       expect(mockJobService.remove).toBeCalledTimes(1);
       expect(mockJobService.remove).toBeCalledWith(id);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(2);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'info',
-        category: 'Resolver',
-        message: `Removing job with id ${id}`,
-      });
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        level: 'info',
-        category: 'Resolver',
-        message: `Removed job with id ${id}`,
-      });
     });
   });
 });

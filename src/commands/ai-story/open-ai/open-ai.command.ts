@@ -7,7 +7,6 @@ import {
   UsePipes,
 } from '@discord-nestjs/core';
 import { Injectable, Logger } from '@nestjs/common';
-import { InjectSentry, SentryService } from '@ntegral/nestjs-sentry';
 import { IncludeInHelp } from '../../../decorators/includeInHelp.decorator';
 import { AiStoryService } from '../../../services/commands/story/ai-story/ai-story.service';
 import { OpenAiCommandDto } from './open-ai.dto';
@@ -39,10 +38,7 @@ export class OpenAiCommand
 {
   private readonly logger = new Logger(OpenAiCommand.name);
 
-  public constructor(
-    private readonly aiStoryService: AiStoryService,
-    @InjectSentry() private readonly sentryService: SentryService,
-  ) {}
+  public constructor(private readonly aiStoryService: AiStoryService) {}
 
   public async handler(
     @Payload() dto: OpenAiCommandDto,
@@ -50,25 +46,14 @@ export class OpenAiCommand
   ): Promise<void> {
     this.logger.debug('/ai-story open-ai command called');
     await interaction.deferReply();
-    this.sentryService.instance().addBreadcrumb({
-      category: 'Commands',
-      level: 'info',
-      message: '/ai-story open-ai command called',
-    });
     try {
       const story = await this.aiStoryService.getArt(dto.headline, dto.model);
-      this.sentryService.instance().addBreadcrumb({
-        category: 'Commands',
-        level: 'info',
-        message: '/ai-story open-ai story generated',
-      });
       await interaction.followUp(story);
       this.logger.debug('Open-ai command execution finished successfully');
     } catch (err) {
       this.logger.error(
         `Open-ai command failed with exception: ${err.message}`,
       );
-      this.sentryService.instance().captureException(err);
       await interaction.followUp(
         `:frowning: Could not process prompt due to internal error (${err.message}). Please try later.`,
       );

@@ -1,6 +1,5 @@
 import { TransformedCommandExecutionContext } from '@discord-nestjs/core';
 import { Test, TestingModule } from '@nestjs/testing';
-import { SENTRY_TOKEN } from '@ntegral/nestjs-sentry';
 import { AiStoryService } from '../../../services/commands/story/ai-story/ai-story.service';
 import { OpenAiCommand } from './open-ai.command';
 import { Model, OpenAiCommandDto } from './open-ai.dto';
@@ -9,12 +8,6 @@ describe('OpenAiService', () => {
   let service: OpenAiCommand;
   const mockAddBreadcrumb = jest.fn();
   const mockCaptureException = jest.fn();
-  const mockSentryService = {
-    instance: jest.fn(() => ({
-      addBreadcrumb: mockAddBreadcrumb,
-      captureException: mockCaptureException,
-    })),
-  };
   const mockAiStoryService = {
     getArt: jest.fn(),
   };
@@ -22,10 +15,6 @@ describe('OpenAiService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         OpenAiCommand,
-        {
-          provide: SENTRY_TOKEN,
-          useValue: mockSentryService,
-        },
         {
           provide: AiStoryService,
           useValue: mockAiStoryService,

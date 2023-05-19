@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SENTRY_TOKEN } from '@ntegral/nestjs-sentry';
 import { JobResolver } from '../../../entity/job/job.resolver';
 import { CogView2Service } from '../../../services/commands/art/cog-view-2/cog-view-2.service';
 import { CogView2Command } from './cog-view-2.command';
@@ -9,12 +8,6 @@ describe('CogView2Service', () => {
   let service: CogView2Command;
   const mockAddBreadcrumb = jest.fn();
   const mockCaptureException = jest.fn();
-  const mockSentryService = {
-    instance: jest.fn(() => ({
-      addBreadcrumb: mockAddBreadcrumb,
-      captureException: mockCaptureException,
-    })),
-  };
   const mockCogView2Service = {
     getArt: jest.fn(),
   };
@@ -25,10 +18,6 @@ describe('CogView2Service', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         CogView2Command,
-        {
-          provide: SENTRY_TOKEN,
-          useValue: mockSentryService,
-        },
         {
           provide: CogView2Service,
           useValue: mockCogView2Service,

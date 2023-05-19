@@ -1,17 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { SENTRY_TOKEN } from '@ntegral/nestjs-sentry';
 import { Job } from './entities/job.entity';
 import { JobService } from './job.service';
 
 describe('JobService', () => {
   let service: JobService;
-  const mockAddBreadcrumb = jest.fn();
-  const mockSentryService = {
-    instance: jest.fn(() => ({
-      addBreadcrumb: mockAddBreadcrumb,
-    })),
-  };
   const mockRepository = {
     save: jest.fn(),
     find: jest.fn(),
@@ -27,10 +20,6 @@ describe('JobService', () => {
         {
           provide: getRepositoryToken(Job),
           useValue: mockRepository,
-        },
-        {
-          provide: SENTRY_TOKEN,
-          useValue: mockSentryService,
         },
       ],
     }).compile();
@@ -55,18 +44,6 @@ describe('JobService', () => {
       const response = await service.create(input as any);
       // Then
       expect(response).toBe(result);
-      expect(mockSentryService.instance).toBeCalledTimes(2);
-      expect(mockAddBreadcrumb).toBeCalledTimes(2);
-      expect(mockAddBreadcrumb).toBeCalledWith({
-        category: 'Database',
-        level: 'info',
-        message: 'Creating job',
-      });
-      expect(mockAddBreadcrumb).toBeCalledWith({
-        category: 'Database',
-        level: 'info',
-        message: 'Job created',
-      });
     });
 
     it('Should create job with null', async () => {
@@ -78,18 +55,6 @@ describe('JobService', () => {
       const response = await service.create(input as any);
       // Then
       expect(response).toBe(result);
-      expect(mockSentryService.instance).toBeCalledTimes(2);
-      expect(mockAddBreadcrumb).toBeCalledTimes(2);
-      expect(mockAddBreadcrumb).toBeCalledWith({
-        category: 'Database',
-        level: 'info',
-        message: 'Creating job',
-      });
-      expect(mockAddBreadcrumb).toBeCalledWith({
-        category: 'Database',
-        level: 'info',
-        message: 'Job created',
-      });
     });
     describe('findAll', () => {
       beforeEach(() => {
@@ -103,18 +68,6 @@ describe('JobService', () => {
         const response = await service.findAll();
         // Then
         expect(response).toBe(result);
-        expect(mockSentryService.instance).toBeCalledTimes(2);
-        expect(mockAddBreadcrumb).toBeCalledTimes(2);
-        expect(mockAddBreadcrumb).toBeCalledWith({
-          category: 'Database',
-          level: 'info',
-          message: 'Finding all jobs in database',
-        });
-        expect(mockAddBreadcrumb).toBeCalledWith({
-          category: 'Database',
-          level: 'info',
-          message: `Found ${result.length} jobs in database`,
-        });
       });
       it('Should find one result', async () => {
         // Given
@@ -124,18 +77,6 @@ describe('JobService', () => {
         const response = await service.findAll();
         // Then
         expect(response).toBe(result);
-        expect(mockSentryService.instance).toBeCalledTimes(2);
-        expect(mockAddBreadcrumb).toBeCalledTimes(2);
-        expect(mockAddBreadcrumb).toBeCalledWith({
-          category: 'Database',
-          level: 'info',
-          message: 'Finding all jobs in database',
-        });
-        expect(mockAddBreadcrumb).toBeCalledWith({
-          category: 'Database',
-          level: 'info',
-          message: `Found ${result.length} jobs in database`,
-        });
       });
       it('Should find zero results', async () => {
         // Given
@@ -145,18 +86,6 @@ describe('JobService', () => {
         const response = await service.findAll();
         // Then
         expect(response).toBe(result);
-        expect(mockSentryService.instance).toBeCalledTimes(2);
-        expect(mockAddBreadcrumb).toBeCalledTimes(2);
-        expect(mockAddBreadcrumb).toBeCalledWith({
-          category: 'Database',
-          level: 'info',
-          message: 'Finding all jobs in database',
-        });
-        expect(mockAddBreadcrumb).toBeCalledWith({
-          category: 'Database',
-          level: 'info',
-          message: `Found ${result.length} jobs in database`,
-        });
       });
     });
     describe('findOne', () => {
@@ -178,17 +107,6 @@ describe('JobService', () => {
             _id: id,
           },
         });
-        expect(mockAddBreadcrumb).toBeCalledTimes(2);
-        expect(mockAddBreadcrumb).toBeCalledWith({
-          category: 'Database',
-          level: 'info',
-          message: `Querying for job with id ${id}`,
-        });
-        expect(mockAddBreadcrumb).toBeCalledWith({
-          category: 'Database',
-          level: 'info',
-          message: `Found job with id ${id}`,
-        });
       });
       it('Should not find job', async () => {
         // Given
@@ -204,17 +122,6 @@ describe('JobService', () => {
           where: {
             _id: id,
           },
-        });
-        expect(mockAddBreadcrumb).toBeCalledTimes(2);
-        expect(mockAddBreadcrumb).toBeCalledWith({
-          category: 'Database',
-          level: 'info',
-          message: `Querying for job with id ${id}`,
-        });
-        expect(mockAddBreadcrumb).toBeCalledWith({
-          category: 'Database',
-          level: 'info',
-          message: `Haven't found any jobs with id ${id}`,
         });
       });
     });
@@ -238,17 +145,6 @@ describe('JobService', () => {
           messageId: id,
         },
       });
-      expect(mockAddBreadcrumb).toBeCalledTimes(2);
-      expect(mockAddBreadcrumb).toBeCalledWith({
-        category: 'Database',
-        level: 'info',
-        message: `Finding job with messageId ${id} jobs in database`,
-      });
-      expect(mockAddBreadcrumb).toBeCalledWith({
-        category: 'Database',
-        level: 'info',
-        message: `Found job with messageId ${id} in database`,
-      });
     });
     it('Should not find job', async () => {
       // Given
@@ -264,17 +160,6 @@ describe('JobService', () => {
         where: {
           messageId: id,
         },
-      });
-      expect(mockAddBreadcrumb).toBeCalledTimes(2);
-      expect(mockAddBreadcrumb).toBeCalledWith({
-        category: 'Database',
-        level: 'info',
-        message: `Finding job with messageId ${id} jobs in database`,
-      });
-      expect(mockAddBreadcrumb).toBeCalledWith({
-        category: 'Database',
-        level: 'info',
-        message: `Found job with messageId ${id} in database`,
       });
     });
   });
@@ -305,17 +190,6 @@ describe('JobService', () => {
           $set: input,
         },
       );
-      expect(mockAddBreadcrumb).toBeCalledTimes(2);
-      expect(mockAddBreadcrumb).toBeCalledWith({
-        category: 'Database',
-        level: 'info',
-        message: `Updated job with id ${id}`,
-      });
-      expect(mockAddBreadcrumb).toBeCalledWith({
-        category: 'Database',
-        level: 'info',
-        message: `Updating job with id ${id}`,
-      });
     });
     it('Should not fail on update of non existent job', async () => {
       // Given
@@ -340,17 +214,6 @@ describe('JobService', () => {
           $set: input,
         },
       );
-      expect(mockAddBreadcrumb).toBeCalledTimes(2);
-      expect(mockAddBreadcrumb).toBeCalledWith({
-        category: 'Database',
-        level: 'info',
-        message: `Updated job with id ${id}`,
-      });
-      expect(mockAddBreadcrumb).toBeCalledWith({
-        category: 'Database',
-        level: 'info',
-        message: `Updating job with id ${id}`,
-      });
     });
   });
   describe('findOneByMessageId', () => {
@@ -372,17 +235,6 @@ describe('JobService', () => {
           messageId: id,
         },
       });
-      expect(mockAddBreadcrumb).toBeCalledTimes(2);
-      expect(mockAddBreadcrumb).toBeCalledWith({
-        category: 'Database',
-        level: 'info',
-        message: `Finding job with messageId ${id} jobs in database`,
-      });
-      expect(mockAddBreadcrumb).toBeCalledWith({
-        category: 'Database',
-        level: 'info',
-        message: `Found job with messageId ${id} in database`,
-      });
     });
     it('Should not find job', async () => {
       // Given
@@ -398,17 +250,6 @@ describe('JobService', () => {
         where: {
           messageId: id,
         },
-      });
-      expect(mockAddBreadcrumb).toBeCalledTimes(2);
-      expect(mockAddBreadcrumb).toBeCalledWith({
-        category: 'Database',
-        level: 'info',
-        message: `Finding job with messageId ${id} jobs in database`,
-      });
-      expect(mockAddBreadcrumb).toBeCalledWith({
-        category: 'Database',
-        level: 'info',
-        message: `Found job with messageId ${id} in database`,
       });
     });
   });
@@ -431,17 +272,6 @@ describe('JobService', () => {
       expect(mockRepository.findOneAndDelete).toBeCalledWith({
         _id: id,
       });
-      expect(mockAddBreadcrumb).toBeCalledTimes(2);
-      expect(mockAddBreadcrumb).toBeCalledWith({
-        category: 'Database',
-        level: 'info',
-        message: `Removing job with id ${id}`,
-      });
-      expect(mockAddBreadcrumb).toBeCalledWith({
-        category: 'Database',
-        level: 'info',
-        message: `Removed job with id ${id}`,
-      });
     });
     it('Should not fail on non existent document', async () => {
       // Given
@@ -457,17 +287,6 @@ describe('JobService', () => {
       expect(mockRepository.findOneAndDelete).toBeCalledTimes(1);
       expect(mockRepository.findOneAndDelete).toBeCalledWith({
         _id: id,
-      });
-      expect(mockAddBreadcrumb).toBeCalledTimes(2);
-      expect(mockAddBreadcrumb).toBeCalledWith({
-        category: 'Database',
-        level: 'info',
-        message: `Removing job with id ${id}`,
-      });
-      expect(mockAddBreadcrumb).toBeCalledWith({
-        category: 'Database',
-        level: 'info',
-        message: `Removed job with id ${id}`,
       });
     });
   });

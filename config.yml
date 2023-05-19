@@ -1,8 +1,7 @@
-sentry:
-  dsn: "{SENTRY_DSN}"
-  release:
-    name: "{SENTRY_RELEASE_NAME}"
-# This one is optional ... only if you want to use ai-story command
+elastic:
+  username: elastic
+  password: changeme
+  uri: http://127.0.0.1:9200
 openAi:
   token: ...
 amqp:

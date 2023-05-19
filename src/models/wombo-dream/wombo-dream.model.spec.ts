@@ -3,7 +3,6 @@ import { WomboDreamModel } from './wombo-dream.model';
 import { AuthModel } from './auth/auth-model.model';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
-import { SENTRY_TOKEN } from '@ntegral/nestjs-sentry';
 import { WomboTaskIdResponse } from '../../types/api/wombo-dream';
 import { AxiosResponse } from 'axios';
 
@@ -30,13 +29,6 @@ describe('WomboDreamService', () => {
   const mockConfigService = {
     get: jest.fn(),
   };
-  const mockSentryInstance = {
-    addBreadcrumb: jest.fn(),
-    captureException: jest.fn(),
-  };
-  const mockSentryService = {
-    instance: () => mockSentryInstance,
-  };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -52,10 +44,6 @@ describe('WomboDreamService', () => {
         {
           provide: ConfigService,
           useValue: mockConfigService,
-        },
-        {
-          provide: SENTRY_TOKEN,
-          useValue: mockSentryService,
         },
       ],
     }).compile();
@@ -105,17 +93,6 @@ describe('WomboDreamService', () => {
           },
         },
       );
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(2);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        category: 'Model',
-        level: 'debug',
-        message: 'Creating Wombo task',
-      });
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        category: 'Model',
-        level: 'debug',
-        message: 'Created Wombo task',
-      });
     });
   });
   describe('checkArtStatus', () => {
@@ -156,17 +133,6 @@ describe('WomboDreamService', () => {
           },
         },
       );
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(2);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        category: 'model',
-        level: 'debug',
-        message: `Checking status of job with id ${artId}`,
-      });
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        category: 'model',
-        level: 'debug',
-        message: `Job with id ${artId} is currently "${mockWomboTaskResponseProcessing.data.state}"`,
-      });
     });
   });
 });

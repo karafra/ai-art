@@ -7,7 +7,6 @@ import {
   UsePipes,
 } from '@discord-nestjs/core';
 import { Injectable, Logger } from '@nestjs/common';
-import { InjectSentry, SentryService } from '@ntegral/nestjs-sentry';
 import { IncludeInHelp } from '../../../decorators/includeInHelp.decorator';
 import { JobResolver } from '../../../entity/job/job.resolver';
 import { DalleMiniService } from '../../../services/commands/art/dalle-mini/dalle-mini.service';
@@ -48,7 +47,6 @@ export class DalleMiniCommand
   public constructor(
     private readonly jobsResolver: JobResolver,
     private readonly dalleMiniService: DalleMiniService,
-    @InjectSentry() private readonly sentryService: SentryService,
   ) {}
 
   public async handler(
@@ -57,20 +55,10 @@ export class DalleMiniCommand
   ): Promise<void> {
     this.logger.debug('Dalle mini command called');
     await executionContext.interaction.deferReply();
-    this.sentryService.instance().addBreadcrumb({
-      category: 'Commands',
-      level: 'info',
-      message: '/ai-art dalle-mini command called',
-    });
     try {
       const messageAttachmentWithDbRecord = await this.dalleMiniService.getArt(
         dto.prompt,
       );
-      this.sentryService.instance().addBreadcrumb({
-        category: 'Commands',
-        level: 'info',
-        message: 'dalle-mini collage generated',
-      });
       await executionContext.interaction.deleteReply();
       const message = await executionContext.interaction.channel.send({
         files: [messageAttachmentWithDbRecord.attachment],
@@ -85,7 +73,6 @@ export class DalleMiniCommand
       this.logger.error(
         `Dalle mini command failed with exception: ${err.message}`,
       );
-      this.sentryService.instance().captureException(err);
       await executionContext.interaction.followUp(
         `:frowning: could not process this query \`${dto.prompt}\`. Please try later.`,
       );

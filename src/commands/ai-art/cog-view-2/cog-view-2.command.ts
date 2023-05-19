@@ -7,7 +7,6 @@ import {
   UsePipes,
 } from '@discord-nestjs/core';
 import { Injectable, Logger } from '@nestjs/common';
-import { InjectSentry, SentryService } from '@ntegral/nestjs-sentry';
 import { IncludeInHelp } from '../../../decorators/includeInHelp.decorator';
 import { JobResolver } from '../../../entity/job/job.resolver';
 import { CogView2Service } from '../../../services/commands/art/cog-view-2/cog-view-2.service';
@@ -51,7 +50,6 @@ export class CogView2Command
 
   /** Service service handling web requests to api.
    *
-   * @param sentryService service handling error reporting
    * @param jobResolver database resolver for jobs entity
    * @param cogView2Service service handling image generation for cogView2 mode
    *
@@ -60,7 +58,6 @@ export class CogView2Command
   public constructor(
     private readonly jobResolver: JobResolver,
     private readonly cogView2Service: CogView2Service,
-    @InjectSentry() private readonly sentryService: SentryService,
   ) {}
 
   /**
@@ -75,21 +72,11 @@ export class CogView2Command
   ): Promise<void> {
     this.logger.debug('cog-view-2 command called');
     await executionContext.interaction.deferReply();
-    this.sentryService.instance().addBreadcrumb({
-      category: 'Commands',
-      level: 'info',
-      message: '/ai-art cog-view-2 command called',
-    });
     try {
       const { attachment, dbRecord } = await this.cogView2Service.getArt(
         dto.prompt,
         dto.style,
       );
-      this.sentryService.instance().addBreadcrumb({
-        category: 'Commands',
-        level: 'info',
-        message: 'cogView2 collage generated',
-      });
       await executionContext.interaction.deleteReply();
       const message = await executionContext.interaction.channel.send({
         files: [attachment],
@@ -103,7 +90,6 @@ export class CogView2Command
       this.logger.error(
         `Cog-view-2 mini command failed with exception: ${err.message}`,
       );
-      this.sentryService.instance().captureException(err);
       await executionContext.interaction.followUp(
         `:frowning: could not process this query \`${dto.prompt}\`. Please try later.`,
       );

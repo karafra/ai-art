@@ -1,6 +1,5 @@
 import { WomboDreamService } from './wombo-dream.service';
 import { Test, TestingModule } from '@nestjs/testing';
-import { SENTRY_TOKEN } from '@ntegral/nestjs-sentry';
 import { WomboDreamModel } from '../../../../models/wombo-dream/wombo-dream.model';
 import {
   WomboDreamStyle,
@@ -10,24 +9,14 @@ import { CouldNotGenerateWomboArtException } from '../../../../exceptions/CouldN
 
 describe('WomboDream service', () => {
   let service: WomboDreamService;
-  const mockSentryInstance = {
-    addBreadcrumb: jest.fn(),
-  };
   const mockWomboDreamModel = {
     createArt: jest.fn(),
     checkArtStatus: jest.fn(),
-  };
-  const mockSentryService = {
-    instance: () => mockSentryInstance,
   };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         WomboDreamService,
-        {
-          provide: SENTRY_TOKEN,
-          useValue: mockSentryService,
-        },
         {
           provide: WomboDreamModel,
           useValue: mockWomboDreamModel,
@@ -118,12 +107,6 @@ describe('WomboDream service', () => {
         womboTaskId,
         token,
       );
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledTimes(1);
-      expect(mockSentryInstance.addBreadcrumb).toBeCalledWith({
-        category: 'Service',
-        level: 'error',
-        message: `WomboDream image generation failed for prompt ${prompt} in style ${WomboDreamStyle.Etching}`,
-      });
     });
   });
 });

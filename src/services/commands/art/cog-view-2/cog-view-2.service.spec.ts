@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SENTRY_TOKEN } from '@ntegral/nestjs-sentry';
 import { CogView2Model } from '../../../../models/cog-view-2/cog-view-2.model';
 import { Style } from '../../../../types/api/cogView2';
 import { Collage } from '../../../../utilities/collage/collage';
@@ -11,12 +10,6 @@ describe('CogView2Service', () => {
   const mockImageArray = ['1', '1', '1', '1', '1', '1', '1', '1', '1'];
   const mockAddBreadcrumb = jest.fn();
   const mockCaptureException = jest.fn();
-  const mockSentryService = {
-    instance: jest.fn(() => ({
-      addBreadcrumb: mockAddBreadcrumb,
-      captureException: mockCaptureException,
-    })),
-  };
   const mockCollage = {
     constructCollage: jest.fn(),
     getAsAttachment: jest.fn(),
@@ -40,10 +33,6 @@ describe('CogView2Service', () => {
         {
           provide: Collage,
           useValue: mockCollage,
-        },
-        {
-          provide: SENTRY_TOKEN,
-          useValue: mockSentryService,
         },
         {
           provide: AmqpService,

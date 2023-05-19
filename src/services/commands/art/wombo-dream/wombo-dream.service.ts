@@ -1,5 +1,4 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { InjectSentry, SentryService } from '@ntegral/nestjs-sentry';
 import { WomboDreamModel } from '../../../../models/wombo-dream/wombo-dream.model';
 import { WomboDreamStyle } from '../../../../types/api/wombo-dream';
 import { CouldNotGenerateWomboArtException } from '../../../../exceptions/CouldNotGenerateWomboArtException';
@@ -17,14 +16,9 @@ export class WomboDreamService {
   /**
    * DI constructor for womboDream service.
    *
-   * @param sentryService service for error and performance evaluation
    * @param womboDreamModel model for handling wombo dream requests
    */
-  public constructor(
-    @InjectSentry()
-    private readonly sentryService: SentryService,
-    private readonly womboDreamModel: WomboDreamModel,
-  ) {}
+  public constructor(private readonly womboDreamModel: WomboDreamModel) {}
 
   /**
    * Generates images from given prompt and style based on WomboDream model.
@@ -51,11 +45,6 @@ export class WomboDreamService {
       );
       if (jobStatusResponse.state === 'failed') {
         this.logger.error(`Image generation failed`);
-        this.sentryService.instance().addBreadcrumb({
-          category: 'Service',
-          level: 'error',
-          message: `WomboDream image generation failed for prompt ${prompt} in style ${style}`,
-        });
         throw new CouldNotGenerateWomboArtException(
           'Wombo art processing failed',
         );
