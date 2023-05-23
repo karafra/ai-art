@@ -18,7 +18,7 @@ function install-on-linux {
   green 'Linux distribution detected'
   green 'Installing system dependent packages (using apt-get)'
 
-  sudo apt-get install build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
+  sudo apt-get install build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev --no-cache
 }
 
 function main() {

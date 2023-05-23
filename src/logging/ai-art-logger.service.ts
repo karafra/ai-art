@@ -50,7 +50,7 @@ export class AiArtLoggerService implements LoggerService {
    * Write a 'log' level log.
    */
   log(message: any, ...optionalParams: any[]) {
-    this.logger.log(message);
+    this.logger.debug(message);
   }
 
   /**

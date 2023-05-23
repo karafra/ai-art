@@ -1,6 +1,71 @@
-version: '3'
+version: '3.7'
 
 services:
+  setup:
+    build:
+      context: setup/
+      args:
+        ELASTIC_VERSION: 8.7.1
+    init: true
+    volumes:
+      - ./setup/entrypoint.sh:/entrypoint.sh:ro,Z
+      - ./setup/lib.sh:/lib.sh:ro,Z
+      - ./setup/roles:/roles:ro,Z
+    environment:
+      KIBANA_SYSTEM_PASSWORD: kibana
+    networks:
+      - elk
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+  elasticsearch:
+    build:
+      context: ./elastic/
+      dockerfile: Elastic.Dockerfile
+      args:
+        ELASTIC_VERSION: 8.7.1
+    volumes:
+      - ./elastic/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
+      - ./elastic:/usr/share/elasticsearch/data:Z
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      node.name: elasticsearch
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+      ELASTIC_PASSWORD: changeme
+      discovery.type: single-node
+    healthcheck:
+      test: curl -u elastic:changeme -s http://localhost:9200 >/dev/null || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 50
+    networks:
+      - elk
+    restart: unless-stopped
+
+  kibana:
+    build:
+      context: ./kibana/
+      dockerfile: Kibana.Dockerfile
+      args:
+        ELASTIC_VERSION: 8.7.1
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
+    ports:
+      - "5601:5601"
+    environment:
+      KIBANA_SYSTEM_PASSWORD: kibana
+    networks:
+      - elk
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      setup:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: 'rabbitmq'
@@ -10,10 +75,10 @@ services:
       timeout: 10s
       retries: 5
     ports:
-        - 5672:5672
-        - 15673:15672
+      - "5672:5672"
+      - "15673:15672"
     networks:
-        - ai-art
+      - ai-art
 
   mongodb:
     image: mongo:latest
@@ -24,16 +89,17 @@ services:
     networks:
       - database
     ports:
-      - 27017:27017
+      - "27017:27017"
+
   mongo-express:
     depends_on:
       mongodb:
         condition: service_started
-    
+
     image: mongo-express
     restart: always
     ports:
-      - 8081:8081
+      - "8081:8081"
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: root
@@ -46,18 +112,24 @@ services:
       mongo-express:
         condition: service_started
       rabbitmq:
-          condition: service_healthy
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+      kibana:
+        condition: service_started
     build:
       context: ../../
       dockerfile: ./docker/dev/Dockerfile
       args:
-        - DISCORD_TOKEN=$TOKEN
+        - DISCORD_TOKEN=OTg0ODIxODI2MDk2MDkxMjA2.GpLY8J.Z3pd7KX19GF2ZeYpgowRQy4N9tpt5hbnQvfz-k
         - OPEN_AI_TOKEN="none"
         - AMQP_URL=amqp://guest:guest@rabbitmq:5672
         - MONGO_URI=mongodb://root:root@mongodb:27017?authSource=admin
     networks:
+      - elk
       - ai-art
-      - database 
+      - database
 networks:
+  elk:
   ai-art:
   database:
