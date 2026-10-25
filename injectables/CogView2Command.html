@@ -1,0 +1,507 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>AiArt documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">AiArt documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li >CogView2Command</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/commands/ai-art/cog-view-2/cog-view-2.command.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Command generating art form prompt based on cog view 2 model.</p>
+<div><pre class="line-numbers"><code class="language-html"></code></pre></div>
+            </p>
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#logger" >logger</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#handler" >handler</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                                <span class="modifier">Public</span>
+                        <code>constructor(jobResolver: <a href="../classes/JobResolver.html" target="_self">JobResolver</a>, cogView2Service: <a href="../injectables/CogView2Service.html" target="_self">CogView2Service</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/commands/ai-art/cog-view-2/cog-view-2.command.ts:49</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Service service handling web requests to api.</p>
+<p>See JobResolver</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>jobResolver</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../classes/JobResolver.html" target="_self" >JobResolver</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>database resolver for jobs entity</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>cogView2Service</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CogView2Service.html" target="_self" >CogView2Service</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>service handling image generation for cogView2 mode</p>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handler"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>handler</b></span>
+                        <a href="#handler"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>handler(dto: <a href="../injectables/CogView2Command.html" target="_self">CogView2CommandDto</a>, executionContext: TransformedCommandExecutionContext<any>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="69"
+                            class="link-to-prism">src/commands/ai-art/cog-view-2/cog-view-2.command.ts:69</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Handles command call.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>dto</td>
+                                    <td>
+                                                <code><a href="../injectables/CogView2Command.html" target="_self" >CogView2CommandDto</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>dto containing all parameters of command.</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>executionContext</td>
+                                    <td>
+                                            <code>TransformedCommandExecutionContext&lt;any&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>full execution context.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="logger"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>logger</b></span>
+                        <a href="#logger"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Logger(CogView2Command.name)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/commands/ai-art/cog-view-2/cog-view-2.command.ts:49</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { TransformPipe } from &#x27;@discord-nestjs/common&#x27;;
+import {
+  DiscordTransformedCommand,
+  Payload,
+  SubCommand,
+  TransformedCommandExecutionContext,
+  UsePipes,
+} from &#x27;@discord-nestjs/core&#x27;;
+import { Injectable, Logger } from &#x27;@nestjs/common&#x27;;
+import { IncludeInHelp } from &#x27;../../../decorators/includeInHelp.decorator&#x27;;
+import { JobResolver } from &#x27;../../../entity/job/job.resolver&#x27;;
+import { CogView2Service } from &#x27;../../../services/commands/art/cog-view-2/cog-view-2.service&#x27;;
+import { CogView2CommandDto } from &#x27;./cog-view-2.dto&#x27;;
+
+/**
+ * Command generating art form prompt based on cog view 2 model.
+ *
+ * @classdesc Top level command handling generation of images based on THUDM CogView2 model.
+ * @example /ai-art cog-view2
+ * @author Karafra
+ * @since 1.4.5
+ */
+@IncludeInHelp({
+  name: &#x27;/ai-art cog-view-2&#x27;,
+  description:
+    &#x27;Generates collage of 9 images from given prompt using CogView2 model.&#x27;,
+  usage:
+    &#x27;/ai-art cog-view-2 prompt: Homer Simpson in the scream by edward munch&#x27;,
+  parameters: [
+    {
+      name: &#x27;prompt&#x27;,
+      description: &#x27;Description of images&#x27;,
+    },
+    {
+      name: &#x27;style&#x27;,
+      description: &#x27;style in which image is to be drawn&#x27;,
+    },
+  ],
+})
+@SubCommand({
+  name: &#x27;cog-view2&#x27;,
+  description: &#x27;generate AiArt based on given prompt using dall-e mini model&#x27;,
+})
+@Injectable()
+@UsePipes(TransformPipe)
+export class CogView2Command
+  implements DiscordTransformedCommand&lt;CogView2CommandDto&gt;
+{
+  private readonly logger &#x3D; new Logger(CogView2Command.name);
+
+  /** Service service handling web requests to api.
+   *
+   * @param jobResolver database resolver for jobs entity
+   * @param cogView2Service service handling image generation for cogView2 mode
+   *
+   * @see JobResolver
+   */
+  public constructor(
+    private readonly jobResolver: JobResolver,
+    private readonly cogView2Service: CogView2Service,
+  ) {}
+
+  /**
+   * Handles command call.
+   *
+   * @param dto dto containing all parameters of command.
+   * @param executionContext full execution context.
+   */
+  public async handler(
+    @Payload() dto: CogView2CommandDto,
+    executionContext: TransformedCommandExecutionContext&lt;any&gt;,
+  ): Promise&lt;void&gt; {
+    this.logger.debug(&#x27;cog-view-2 command called&#x27;);
+    await executionContext.interaction.deferReply();
+    try {
+      const { attachment, dbRecord } &#x3D; await this.cogView2Service.getArt(
+        dto.prompt,
+        dto.style,
+      );
+      await executionContext.interaction.deleteReply();
+      const message &#x3D; await executionContext.interaction.channel.send({
+        files: [attachment],
+        content: &#x60;&lt;@${executionContext.interaction.user.id}&gt; \n\n :art: ${dto.prompt} :frame_photo:&#x60;,
+      });
+      dbRecord.messageId &#x3D; message.id;
+      dbRecord.messageLink &#x3D; message.url;
+      await this.jobResolver.create(dbRecord);
+      this.logger.debug(&#x27;Cog-view-2 command execution finished successfully&#x27;);
+    } catch (err) {
+      this.logger.error(
+        &#x60;Cog-view-2 mini command failed with exception: ${err.message}&#x60;,
+      );
+      await executionContext.interaction.followUp(
+        &#x60;:frowning: could not process this query \&#x60;${dto.prompt}\&#x60;. Please try later.&#x60;,
+      );
+    }
+  }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'CogView2Command.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
